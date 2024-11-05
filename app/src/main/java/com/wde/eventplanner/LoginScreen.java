@@ -1,27 +1,81 @@
 package com.wde.eventplanner;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.regex.Pattern;
 
 public class LoginScreen extends AppCompatActivity {
+
+    private final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    private final int MIN_PASSWORD_LENGTH = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_screen);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        TextInputEditText emailInput = findViewById(R.id.emailInput);
+        TextInputEditText passwordInput = findViewById(R.id.passwordInput);
+        MaterialButton loginButton = findViewById(R.id.loginButton);
+
+        loginButton.setOnClickListener(v -> {
+            String email = emailInput.getText().toString().trim();
+            String password = passwordInput.getText().toString();
+            if(email.isEmpty() || password.isEmpty()){
+                showSnackbar("Please fill in the fields");
+            }
+            else if (!isValidEmail(email)) {
+                showSnackbar("Invalid email format");
+            } else if (!isStrongPassword(password)) {
+                showSnackbar("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
+            } else {
+                Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
+                startActivity(intent);
+                finish(); //backing from homepage should not return to login page
+            }
         });
+        MaterialButton registerOrganizerButton = findViewById(R.id.registerOrganizerButton);
+
+        registerOrganizerButton.setOnClickListener(v ->{
+            Intent intent = new Intent(LoginScreen.this,RegisterScreen.class);
+            startActivity(intent);
+            //no finish for back stack
+        });
+
+        MaterialButton registerSellerButton = findViewById(R.id.registerSellerButton);
+
+        registerSellerButton.setOnClickListener(v ->{
+            Intent intent = new Intent(LoginScreen.this,RegisterScreen.class);
+            startActivity(intent);
+            //no finish for back stack
+        });
+
     }
 
+    private boolean isValidEmail(String email) {
+        return Pattern.compile(EMAIL_REGEX).matcher(email).matches();
+    }
+
+    private boolean isStrongPassword(String password) {
+        if (password.length() < MIN_PASSWORD_LENGTH) return false;
+        boolean hasUppercase = !password.equals(password.toLowerCase());
+        boolean hasLowercase = !password.equals(password.toUpperCase());
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasSpecialChar = password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*");
+
+        return hasUppercase && hasLowercase && hasDigit && hasSpecialChar;
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar.make(findViewById(R.id.main_layout), message, Snackbar.LENGTH_LONG).show();
+    }
     @Override
     protected void onStart() {
         super.onStart();
