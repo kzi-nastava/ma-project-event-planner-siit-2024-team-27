@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class LoginScreen extends AppCompatActivity {
@@ -15,8 +16,16 @@ public class LoginScreen extends AppCompatActivity {
     private final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private final int MIN_PASSWORD_LENGTH = 8;
 
+    private List<DemoUser> userList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userList = new ArrayList<>();
+        userList.add(new DemoUser("email@email.com", "Faks1312!"));
+        userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
+        userList.add(new DemoUser("a@a.com", "Faks1312!"));
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
 
@@ -32,9 +41,12 @@ public class LoginScreen extends AppCompatActivity {
             }
             else if (!isValidEmail(email)) {
                 showSnackbar("Invalid email format");
-            } else if (!isStrongPassword(password)) {
-                showSnackbar("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
-            } else {
+//            } else if (!isStrongPassword(password)) {
+//                showSnackbar("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.")
+            }
+            else if(!isValidUser(email,password)){
+                showSnackbar("Wrong email or password");
+            }else{
                 Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
                 startActivity(intent);
@@ -75,6 +87,15 @@ public class LoginScreen extends AppCompatActivity {
 
     private void showSnackbar(String message) {
         Snackbar.make(findViewById(R.id.main_layout), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    private boolean isValidUser(String email, String password) {
+        for (DemoUser user : userList) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
     }
     @Override
     protected void onStart() {
