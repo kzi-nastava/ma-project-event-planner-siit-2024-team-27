@@ -64,7 +64,7 @@ public class LoginScreen extends AppCompatActivity {
         MaterialButton registerSellerButton = findViewById(R.id.registerSellerButton);
 
         registerSellerButton.setOnClickListener(v ->{
-            Intent intent = new Intent(LoginScreen.this,RegisterScreen.class);
+            Intent intent = new Intent(LoginScreen.this,SellerRegistrationScreen.class);
             startActivity(intent);
             //no finish for back stack
         });
