@@ -1,5 +1,10 @@
 package com.wde.eventplanner;
 
+import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
+import static com.wde.eventplanner.constants.RegexConstants.HAS_DIGIT_REGEX;
+import static com.wde.eventplanner.constants.RegexConstants.HAS_SPECIAL_CHAR_REGEX;
+import static com.wde.eventplanner.constants.RegexConstants.MIN_PASSWORD_LENGTH;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -13,8 +18,6 @@ import java.util.regex.Pattern;
 
 public class LoginScreen extends AppCompatActivity {
 
-    private final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-    private final int MIN_PASSWORD_LENGTH = 8;
 
     private List<DemoUser> userList;
 
@@ -49,6 +52,7 @@ public class LoginScreen extends AppCompatActivity {
             }else{
                 Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
                 finish(); //backing from homepage should not return to login page
             }
@@ -79,8 +83,8 @@ public class LoginScreen extends AppCompatActivity {
         if (password.length() < MIN_PASSWORD_LENGTH) return false;
         boolean hasUppercase = !password.equals(password.toLowerCase());
         boolean hasLowercase = !password.equals(password.toUpperCase());
-        boolean hasDigit = password.matches(".*\\d.*");
-        boolean hasSpecialChar = password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*");
+        boolean hasDigit = password.matches(HAS_DIGIT_REGEX);
+        boolean hasSpecialChar = password.matches(HAS_SPECIAL_CHAR_REGEX);
 
         return hasUppercase && hasLowercase && hasDigit && hasSpecialChar;
     }

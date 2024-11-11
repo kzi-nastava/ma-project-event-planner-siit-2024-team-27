@@ -2,6 +2,15 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.EventPlanner" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+
+    <style name="Theme.EventPlanner" parent="Base.Theme.EventPlanner">
+        <!-- Set the button style specifically for dark mode -->
+        <item name="buttonStyle">@style/CustomButtonStyle.Dark</item>
+    </style>
+
+    <style name="CustomButtonStyle.Dark" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">#745697</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

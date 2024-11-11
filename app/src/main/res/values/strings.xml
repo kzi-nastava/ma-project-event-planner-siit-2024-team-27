@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">EventPlanner</string>
+    <string name="phone">Phone</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register_as_an_organizer">Register as an Organizer</string>
+    <string name="register_as_a_seller">Register as a Seller</string>
 </resources>

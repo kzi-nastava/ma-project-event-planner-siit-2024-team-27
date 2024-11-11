@@ -6,8 +6,6 @@
     android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/main_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -17,7 +15,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +25,12 @@
         android:id="@+id/emailInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInput"
@@ -44,11 +43,12 @@
         android:id="@+id/passwordInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password"
         app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordInput"
@@ -61,27 +61,30 @@
         android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
         app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="70dp"/>
+        android:layout_marginTop="70dp"
+        style="@style/CustomButtonStyle"/>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerOrganizerButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Register as an Oranizer"
+        android:text="@string/register_as_an_organizer"
         app:layout_constraintTop_toBottomOf="@id/loginButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="45dp"/>
+        android:layout_marginTop="45dp"
+        style="@style/CustomButtonStyle"/>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerSellerButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Register as a Seller"
+        android:text="@string/register_as_a_seller"
         app:layout_constraintTop_toBottomOf="@id/registerOrganizerButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/CustomButtonStyle"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
