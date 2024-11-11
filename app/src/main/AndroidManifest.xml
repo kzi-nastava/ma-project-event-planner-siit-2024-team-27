@@ -15,18 +15,6 @@
         android:theme="@style/Theme.EventPlanner"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterScreen"
-            android:exported="false" />
-        <activity
-            android:name=".SellerRegistrationScreen"
-            android:exported="false" />
-        <activity
-            android:name=".OrganizerRegistrationScreen"
-            android:exported="false" />
-        <activity
-            android:name=".LoginScreen"
-            android:exported="false" />
-        <activity
             android:name=".activites.SplashScreen"
             android:exported="true">
             <intent-filter>

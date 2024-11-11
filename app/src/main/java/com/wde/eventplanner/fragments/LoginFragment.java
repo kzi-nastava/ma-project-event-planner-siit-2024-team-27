@@ -3,14 +3,12 @@ package com.wde.eventplanner.fragments;
 import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.isStrongPassword;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -20,10 +18,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.DemoUser;
-import com.wde.eventplanner.LoginScreen;
-import com.wde.eventplanner.OrganizerRegistrationScreen;
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.activites.HomeScreen;
 
 import java.util.ArrayList;
 import java.util.List;
