@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/loginFragment"
+        android:icon="@drawable/ic_login"
+        android:title="Login/registration" />
+    <item
+        android:id="@+id/homepageFragment"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+</menu>

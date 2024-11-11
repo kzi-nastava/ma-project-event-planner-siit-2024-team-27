@@ -1,13 +1,16 @@
-package com.wde.eventplanner;
+package com.wde.eventplanner.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.wde.eventplanner.R;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -28,10 +31,16 @@ public class SplashScreen extends AppCompatActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            Intent openLoginScreenIntent = new Intent(SplashScreen.this, LoginScreen.class);
+            Intent openLoginScreenIntent = new Intent(SplashScreen.this, HomeScreen.class);
             startActivity(openLoginScreenIntent);
             finish();
         }).start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.nav_menu, menu);
+        return true;
     }
 
     @Override

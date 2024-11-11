@@ -1,9 +1,6 @@
 package com.wde.eventplanner;
 
 import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
-import static com.wde.eventplanner.constants.RegexConstants.HAS_DIGIT_REGEX;
-import static com.wde.eventplanner.constants.RegexConstants.HAS_SPECIAL_CHAR_REGEX;
-import static com.wde.eventplanner.constants.RegexConstants.MIN_PASSWORD_LENGTH;
 import static com.wde.eventplanner.constants.RegexConstants.isStrongPassword;
 
 import android.content.Intent;
@@ -13,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.wde.eventplanner.activites.HomeScreen;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;

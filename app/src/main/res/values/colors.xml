@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="on_surface_variant">#B0BEC5</color>
     <color name="on_surface_container_highest">#212121</color>
+    <color name="secondary_background">#181818</color>
+    <color name="secondary_button">#383838</color>
 </resources>

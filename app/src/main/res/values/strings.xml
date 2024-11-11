@@ -20,4 +20,6 @@
     <string name="register">Register</string>
     <string name="organizer_registration">Organizer Registration</string>
     <string name="user_details">User Details</string>
+    <string name="logo">Logo</string>
+    <string name="profile_icon">Profile Icon</string>
 </resources>

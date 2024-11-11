@@ -27,7 +27,7 @@
             android:name=".LoginScreen"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".activites.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeScreen"
+            android:name=".activites.HomeScreen"
             android:exported="false" />
     </application>
 

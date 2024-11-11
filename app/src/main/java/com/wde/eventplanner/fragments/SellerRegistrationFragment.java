@@ -1,4 +1,5 @@
-package com.wde.eventplanner;
+package com.wde.eventplanner.fragments;
+
 
 import static com.wde.eventplanner.constants.RegexConstants.ADDRESS_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.CITY_REGEX;
@@ -11,23 +12,25 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.wde.eventplanner.DemoUser;
+import com.wde.eventplanner.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrganizerRegistrationScreen extends AppCompatActivity {
+public class SellerRegistrationFragment extends Fragment {
+
     private static final int PICK_IMAGE_REQUEST = 1;  // Request code for image selection
-    // constant to compare
-    // the activity result code
-    int SELECT_PICTURE = 200;
     private TextInputEditText inputName, inputSurname, inputEmail, inputPassword, inputRepeatPassword;
     private TextInputEditText inputCompanyName, inputPhone, inputDescription, inputCity, inputAddress;
     private MaterialButton selectImageButton, registerButton;
@@ -35,43 +38,44 @@ public class OrganizerRegistrationScreen extends AppCompatActivity {
     private Uri selectedImageUri;
     private List<DemoUser> userList;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_organizer_registration_screen);
+    public SellerRegistrationFragment() {
+        // Required empty public constructor
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_seller_registration_screen, container, false);
+
+        // Initialize the userList
         userList = new ArrayList<>();
         userList.add(new DemoUser("email@email.com", "Faks1312!"));
         userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
         userList.add(new DemoUser("a@a.com", "Faks1312!"));
 
-        inputName = findViewById(R.id.inputName);
-        inputSurname = findViewById(R.id.inputSurname);
-        inputEmail = findViewById(R.id.inputEmail);
-        inputPassword = findViewById(R.id.inputPassword);
-        inputRepeatPassword = findViewById(R.id.inputRepeatPassword);
-        inputPhone = findViewById(R.id.inputPhone);
-        inputCity = findViewById(R.id.inputCity);
-        inputAddress = findViewById(R.id.inputAddress);
+        // Bind views
+        inputName = rootView.findViewById(R.id.inputName);
+        inputSurname = rootView.findViewById(R.id.inputSurname);
+        inputEmail = rootView.findViewById(R.id.inputEmail);
+        inputPassword = rootView.findViewById(R.id.inputPassword);
+        inputRepeatPassword = rootView.findViewById(R.id.inputRepeatPassword);
+        inputCompanyName = rootView.findViewById(R.id.inputCompanyName);
+        inputPhone = rootView.findViewById(R.id.inputPhone);
+        inputDescription = rootView.findViewById(R.id.inputDescription);
+        inputCity = rootView.findViewById(R.id.inputCity);
+        inputAddress = rootView.findViewById(R.id.inputAddress);
 
-        selectImageButton = findViewById(R.id.selectImageButton);
-        registerButton = findViewById(R.id.registerButton);
-        selectedImageView = findViewById(R.id.selectedImageView);
+        selectImageButton = rootView.findViewById(R.id.selectImageButton);
+        registerButton = rootView.findViewById(R.id.registerButton);
+        selectedImageView = rootView.findViewById(R.id.selectedImageView);
 
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //showSnackbar("Seller image clicked");
-                openImagePicker();
-            }
-        });
+        // Set up listeners
+        selectImageButton.setOnClickListener(v -> openImagePicker());
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerSeller();
-            }
-        });
+        registerButton.setOnClickListener(v -> registerSeller());
+
+        return rootView;
     }
 
     private void openImagePicker() {
@@ -81,10 +85,10 @@ public class OrganizerRegistrationScreen extends AppCompatActivity {
 
     // Handle the result of the image selection
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             selectedImageView.setImageURI(selectedImageUri);
         }
@@ -124,7 +128,7 @@ public class OrganizerRegistrationScreen extends AppCompatActivity {
             return;
         }
 
-        //check if user has account
+        // Check if user has an account
         if (!isValidUser(email)){
             showSnackbar("There is an existing account with the same email.");
             return;
@@ -170,6 +174,7 @@ public class OrganizerRegistrationScreen extends AppCompatActivity {
         showSnackbar("Successful registration. Confirmation email sent.");
         // Proceed with further registration logic, like saving data to a database, etc.
     }
+
     private boolean isValidUser(String email) {
         for (DemoUser user : userList) {
             if (user.getEmail().equals(email)) {
@@ -178,7 +183,8 @@ public class OrganizerRegistrationScreen extends AppCompatActivity {
         }
         return true;
     }
+
     private void showSnackbar(String message) {
-        Snackbar.make(findViewById(R.id.main), message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getView().findViewById(R.id.main), message, Snackbar.LENGTH_LONG).show();
     }
 }

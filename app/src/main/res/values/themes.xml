@@ -13,6 +13,14 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textAllCaps">false</item>
     </style>
+    <style name="NavigationItemTextStyle">
+        <item name="android:textSize">18sp</item> <!-- Set the desired text size -->
+    </style>
+    <style name="CustomSecondaryButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/secondary_button</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
     <style name="CustomTextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox.Dense">
         <!-- Fill color for the text input background -->
         <item name="boxBackgroundColor">@color/on_surface_container_highest</item>
