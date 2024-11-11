@@ -13,8 +13,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -23,8 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SellerRegistrationScreen extends AppCompatActivity {
-
+public class OrganizerRegistrationScreen extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;  // Request code for image selection
     // constant to compare
     // the activity result code
@@ -39,7 +38,7 @@ public class SellerRegistrationScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seller_registration_screen);
+        setContentView(R.layout.activity_organizer_registration_screen);
 
         userList = new ArrayList<>();
         userList.add(new DemoUser("email@email.com", "Faks1312!"));

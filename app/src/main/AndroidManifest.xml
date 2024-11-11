@@ -21,6 +21,9 @@
             android:name=".SellerRegistrationScreen"
             android:exported="false" />
         <activity
+            android:name=".OrganizerRegistrationScreen"
+            android:exported="false" />
+        <activity
             android:name=".LoginScreen"
             android:exported="false" />
         <activity

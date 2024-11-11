@@ -4,6 +4,7 @@ import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.HAS_DIGIT_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.HAS_SPECIAL_CHAR_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.MIN_PASSWORD_LENGTH;
+import static com.wde.eventplanner.constants.RegexConstants.isStrongPassword;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,8 +45,8 @@ public class LoginScreen extends AppCompatActivity {
             }
             else if (!isValidEmail(email)) {
                 showSnackbar("Invalid email format");
-//            } else if (!isStrongPassword(password)) {
-//                showSnackbar("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.")
+            } else if (!isStrongPassword(password)) {
+                showSnackbar("Password is too weak. Use 8+ chars, upper & lowercase, number and special char.");
             }
             else if(!isValidUser(email,password)){
                 showSnackbar("Wrong email or password");
@@ -60,7 +61,7 @@ public class LoginScreen extends AppCompatActivity {
         MaterialButton registerOrganizerButton = findViewById(R.id.registerOrganizerButton);
 
         registerOrganizerButton.setOnClickListener(v ->{
-            Intent intent = new Intent(LoginScreen.this,RegisterScreen.class);
+            Intent intent = new Intent(LoginScreen.this,OrganizerRegistrationScreen.class);
             startActivity(intent);
             //no finish for back stack
         });
@@ -77,16 +78,6 @@ public class LoginScreen extends AppCompatActivity {
 
     private boolean isValidEmail(String email) {
         return Pattern.compile(EMAIL_REGEX).matcher(email).matches();
-    }
-
-    private boolean isStrongPassword(String password) {
-        if (password.length() < MIN_PASSWORD_LENGTH) return false;
-        boolean hasUppercase = !password.equals(password.toLowerCase());
-        boolean hasLowercase = !password.equals(password.toUpperCase());
-        boolean hasDigit = password.matches(HAS_DIGIT_REGEX);
-        boolean hasSpecialChar = password.matches(HAS_SPECIAL_CHAR_REGEX);
-
-        return hasUppercase && hasLowercase && hasDigit && hasSpecialChar;
     }
 
     private void showSnackbar(String message) {

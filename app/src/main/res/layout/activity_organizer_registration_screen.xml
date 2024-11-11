@@ -17,7 +17,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/seller_registration"
+            android:text="@string/organizer_registration"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
@@ -141,10 +141,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/companyInfoLabel"
+            android:id="@+id/userDetailsLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/company_info"
+            android:text="@string/user_details"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -156,23 +156,6 @@
             android:layout_marginBottom="8dp"
             tools:ignore="RtlSymmetry" />
 
-        <!-- Company Name -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/companyNameLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:hint="@string/company_name"
-            app:layout_constraintTop_toBottomOf="@id/companyInfoLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            style="@style/CustomTextInputLayout">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputCompanyName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Phone -->
         <com.google.android.material.textfield.TextInputLayout
@@ -181,7 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:hint="@string/phone"
-            app:layout_constraintTop_toBottomOf="@id/companyNameLayout"
+            app:layout_constraintTop_toBottomOf="@id/userDetailsLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
@@ -194,28 +177,6 @@
                 android:inputType="phone"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Description -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/descriptionLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:hint="@string/description"
-            app:layout_constraintTop_toBottomOf="@id/phoneLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            style="@style/CustomTextInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:minHeight="120dp"
-                android:lines="4"
-                android:gravity="top"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- City -->
         <com.google.android.material.textfield.TextInputLayout
@@ -224,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:hint="@string/city"
-            app:layout_constraintTop_toBottomOf="@id/descriptionLayout"
+            app:layout_constraintTop_toBottomOf="@id/phoneLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
