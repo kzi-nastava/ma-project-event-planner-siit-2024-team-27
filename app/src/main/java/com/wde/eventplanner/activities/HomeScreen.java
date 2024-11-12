@@ -1,7 +1,7 @@
-package com.wde.eventplanner.activites;
+package com.wde.eventplanner.activities;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
