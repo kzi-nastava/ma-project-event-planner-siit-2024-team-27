@@ -22,4 +22,6 @@
     <string name="user_details">User Details</string>
     <string name="logo">Logo</string>
     <string name="profile_icon">Profile Icon</string>
+    <string name="login_register">Login / Register</string>
+    <string name="home">Home</string>
 </resources>

@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.EventPlanner" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:windowBackground">@color/background</item> <!-- Reference a color here -->
+        <item name="colorPrimaryDark">@color/background</item>
         <!-- Other theme properties here -->
     </style>
 

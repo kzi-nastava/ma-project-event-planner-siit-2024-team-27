@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/HomepageFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/HomepageFragment"
+        android:name="com.wde.eventplanner.fragments.HomepageFragment"
+        tools:layout="@layout/fragment_homepage_screen"  />
+
+    <fragment
+        android:id="@+id/LoginFragment"
         android:name="com.wde.eventplanner.fragments.LoginFragment"
-        android:label="Login"
         tools:layout="@layout/fragment_login_screen" >
         <action
             android:id="@+id/action_login_to_organizer_registration"
@@ -18,20 +22,13 @@
             app:destination="@id/SellerRegistrationFragment" />
     </fragment>
 
-
     <fragment
         android:id="@+id/OrganizerRegistrationFragment"
         android:name="com.wde.eventplanner.fragments.OrganizerRegistrationFragment"
-        android:label="Organizer registration"
         tools:layout="@layout/fragment_organizer_registration_screen" />
     <fragment
         android:id="@+id/SellerRegistrationFragment"
         android:name="com.wde.eventplanner.fragments.SellerRegistrationFragment"
-        android:label="Seller registration"
         tools:layout="@layout/fragment_seller_registration_screen"  />
-    <fragment
-        android:id="@+id/HomepageFragment"
-        android:name="com.wde.eventplanner.fragments.HomepageFragment"
-        android:label="Homepage"
-        tools:layout="@layout/fragment_homepage_screen"  />
+    
 </navigation>
