@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.DemoUser;
 import com.wde.eventplanner.R;
@@ -46,13 +44,13 @@ public class LoginFragment extends Fragment {
             String password = passwordInput.getText().toString();
 
             if (email.isEmpty() || password.isEmpty()) {
-                showSnackbar(view, "Please fill in the fields");
+                showToast("Please fill in the fields");
             } else if (!isValidEmail(email)) {
-                showSnackbar(view, "Invalid email format");
+                showToast("Invalid email format");
             } else if (!isStrongPassword(password)) {
-                showSnackbar(view, "Password is too weak. Use 8+ chars, upper & lowercase, number and special char.");
+                showToast("Password is too weak. Use 8+ chars, upper & lowercase, number and special char.");
             } else if (!isValidUser(email, password)) {
-                showSnackbar(view, "Wrong email or password");
+                showToast("Wrong email or password");
             } else {
                 Toast.makeText(getContext(), "Successful login", Toast.LENGTH_SHORT).show();
                 // Navigate to HomeScreen or trigger other actions
@@ -66,10 +64,6 @@ public class LoginFragment extends Fragment {
 
             // Navigate to RegistrationFragment
             navController.navigate(R.id.action_login_to_organizer_registration);
-
-            // Update the toolbar title
-            Toolbar toolbar = requireActivity().findViewById(R.id.toolbar); // Adjust toolbar ID
-            toolbar.setTitle("Registration"); // Set the title for the registration screen
         });
 
         MaterialButton registerSellerButton = view.findViewById(R.id.registerSellerButton);
@@ -80,10 +74,6 @@ public class LoginFragment extends Fragment {
 
             // Navigate to RegistrationFragment
             navController.navigate(R.id.action_login_to_seller_registration);
-
-            // Update the toolbar title
-            Toolbar toolbar = requireActivity().findViewById(R.id.toolbar); // Adjust toolbar ID
-            toolbar.setTitle("Registration"); // Set the title for the registration screen
         });
 
 
@@ -94,8 +84,8 @@ public class LoginFragment extends Fragment {
         return Pattern.compile(EMAIL_REGEX).matcher(email).matches();
     }
 
-    private void showSnackbar(View view, String message) {
-        Snackbar.make(view.findViewById(R.id.main_layout), message, Snackbar.LENGTH_LONG).show();
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     private boolean isValidUser(String email, String password) {

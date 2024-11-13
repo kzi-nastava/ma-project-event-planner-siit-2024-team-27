@@ -1,4 +1,4 @@
-package com.wde.eventplanner.activites;
+package com.wde.eventplanner.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +27,7 @@ public class SplashScreen extends AppCompatActivity {
 
         new Thread(() -> {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

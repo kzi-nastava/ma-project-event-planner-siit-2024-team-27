@@ -16,11 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.DemoUser;
 import com.wde.eventplanner.R;
@@ -108,70 +108,70 @@ public class SellerRegistrationFragment extends Fragment {
 
         // Validate required fields (name, surname, email, password, repeatPassword, companyName, city)
         if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || companyName.isEmpty() || city.isEmpty()) {
-            showSnackbar("Please fill in all the required fields");
+            showToast("Please fill in all the required fields");
             return;
         }
 
         // Validate name and surname
         if (!name.matches(NAME_REGEX)) {
-            showSnackbar("Invalid name format");
+            showToast("Invalid name format");
             return;
         }
         if (!surname.matches(NAME_REGEX)) {
-            showSnackbar("Invalid surname format");
+            showToast("Invalid surname format");
             return;
         }
 
         // Validate email format
         if (!email.matches(EMAIL_REGEX)) {
-            showSnackbar("Invalid email format");
+            showToast("Invalid email format");
             return;
         }
 
         // Check if user has an account
         if (!isValidUser(email)){
-            showSnackbar("There is an existing account with the same email.");
+            showToast("There is an existing account with the same email.");
             return;
         }
 
         // Validate password strength
         if (!isStrongPassword(password)) {
-            showSnackbar("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
+            showToast("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
             return;
         }
 
         // Check if passwords match
         if (!password.equals(repeatPassword)) {
-            showSnackbar("Passwords do not match");
+            showToast("Passwords do not match");
             return;
         }
 
         // Validate phone number format
         if (!phone.isEmpty() && !phone.matches(PHONE_REGEX)) {
-            showSnackbar("Invalid phone number format");
+            showToast("Invalid phone number format");
             return;
         }
 
         // Validate city format
         if (!city.matches(CITY_REGEX)) {
-            showSnackbar("Invalid city format");
+            showToast("Invalid city format");
             return;
         }
 
         // Validate address format
         if (!address.matches(ADDRESS_REGEX)) {
-            showSnackbar("Invalid address format");
+            showToast("Invalid address format");
             return;
         }
 
         // Description can be empty or a valid string
         if (!description.isEmpty() && description.length() < 10) {
-            showSnackbar("Description is too short. Please provide at least 10 characters.");
+            showToast("Description is too short. Please provide at least 10 characters.");
             return;
         }
 
         // Successful validation
-        showSnackbar("Successful registration. Confirmation email sent.");
+        showToast("Successful registration. Confirmation email sent.");
         // Proceed with further registration logic, like saving data to a database, etc.
     }
 
@@ -184,7 +184,7 @@ public class SellerRegistrationFragment extends Fragment {
         return true;
     }
 
-    private void showSnackbar(String message) {
-        Snackbar.make(getView().findViewById(R.id.main), message, Snackbar.LENGTH_LONG).show();
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

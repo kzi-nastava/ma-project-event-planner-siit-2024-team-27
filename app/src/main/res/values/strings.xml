@@ -22,4 +22,9 @@
     <string name="user_details">User Details</string>
     <string name="logo">Logo</string>
     <string name="profile_icon">Profile Icon</string>
+    <string name="login_register">Login / Register</string>
+    <string name="home">Home</string>
+    <string name="top_events">Top events</string>
+    <string name="top_products_and_services">Top products and services</string>
+    <string name="discounted_price"><strike>200€</strike></string>
 </resources>
