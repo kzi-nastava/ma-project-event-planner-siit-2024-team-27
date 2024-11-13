@@ -1,15 +1,18 @@
 package com.wde.eventplanner.activities;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.navigation.NavigationView;
 import com.wde.eventplanner.R;
 
@@ -30,11 +33,12 @@ public class HomeScreen extends AppCompatActivity {
         // Set up navigation drawer
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        Button loginButton = findViewById(R.id.login_button);
 
         // Set up NavController
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.loginFragment, R.id.registerSellerButton,R.id.registerOrganizerButton, R.id.HomepageFragment)
+                R.id.LoginFragment, R.id.registerSellerButton, R.id.registerOrganizerButton, R.id.HomepageFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
@@ -44,17 +48,27 @@ public class HomeScreen extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.homepageFragment) {
-                // Navigate to HomepageFragment
+            // Check if the current destination is not HomepageFragment
+            if (id == R.id.homepageTab && notCurrent(navController, R.id.HomepageFragment)) {
                 navController.navigate(R.id.HomepageFragment);
-            }
-            if(id == R.id.loginFragment){
-                navController.navigate(R.id.loginFragment);
             }
             // Close the drawer after item selection
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
+
+        loginButton.setOnClickListener(view -> {
+            // Check if the current destination is not LoginFragment
+            if (notCurrent(navController, R.id.LoginFragment)) {
+                navController.navigate(R.id.LoginFragment);
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+    }
+
+    private boolean notCurrent(NavController navController, int id) {
+        NavDestination currentDestination = navController.getCurrentDestination();
+        return currentDestination == null || currentDestination.getId() != id;
     }
 
     @Override
