@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -104,56 +105,56 @@ public class OrganizerRegistrationFragment extends Fragment {
 
         // Validate fields and show Snackbar if needed
         if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || city.isEmpty()) {
-            showSnackbar("Please fill in all the required fields");
+            showToast("Please fill in all the required fields");
             return;
         }
 
         if (!name.matches(NAME_REGEX)) {
-            showSnackbar("Invalid name format");
+            showToast("Invalid name format");
             return;
         }
 
         if (!surname.matches(NAME_REGEX)) {
-            showSnackbar("Invalid surname format");
+            showToast("Invalid surname format");
             return;
         }
 
         if (!email.matches(EMAIL_REGEX)) {
-            showSnackbar("Invalid email format");
+            showToast("Invalid email format");
             return;
         }
 
         if (!isValidUser(email)) {
-            showSnackbar("There is an existing account with the same email.");
+            showToast("There is an existing account with the same email.");
             return;
         }
 
         if (!isStrongPassword(password)) {
-            showSnackbar("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
+            showToast("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
             return;
         }
 
         if (!password.equals(repeatPassword)) {
-            showSnackbar("Passwords do not match");
+            showToast("Passwords do not match");
             return;
         }
 
         if (!phone.isEmpty() && !phone.matches(PHONE_REGEX)) {
-            showSnackbar("Invalid phone number format");
+            showToast("Invalid phone number format");
             return;
         }
 
         if (!city.matches(CITY_REGEX)) {
-            showSnackbar("Invalid city format");
+            showToast("Invalid city format");
             return;
         }
 
         if (!address.matches(ADDRESS_REGEX)) {
-            showSnackbar("Invalid address format");
+            showToast("Invalid address format");
             return;
         }
 
-        showSnackbar("Successful registration. Confirmation email sent.");
+        showToast("Successful registration. Confirmation email sent.");
     }
 
     private boolean isValidUser(String email) {
@@ -165,7 +166,7 @@ public class OrganizerRegistrationFragment extends Fragment {
         return true;
     }
 
-    private void showSnackbar(String message) {
-        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }
