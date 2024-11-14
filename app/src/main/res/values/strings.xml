@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">EventPlanner</string>
+    <string name="phone">Phone</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register_as_an_organizer">Register as an Organizer</string>
+    <string name="register_as_a_seller">Register as a Seller</string>
+    <string name="seller_registration">Seller Registration</string>
+    <string name="profile_info">Profile Info</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="company_info">Company Info</string>
+    <string name="company_name">Company Name</string>
+    <string name="description">Description</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
+    <string name="select_image">Select Image (optional)</string>
+    <string name="register">Register</string>
+    <string name="organizer_registration">Organizer Registration</string>
+    <string name="user_details">User Details</string>
+    <string name="logo">Logo</string>
+    <string name="profile_icon">Profile Icon</string>
+    <string name="login_register">Login / Register</string>
+    <string name="home">Home</string>
+    <string name="top_events">Top events</string>
+    <string name="top_products_and_services">Top products and services</string>
+    <string name="discounted_price"><strike>200€</strike></string>
 </resources>

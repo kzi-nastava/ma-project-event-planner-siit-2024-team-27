@@ -1,9 +1,42 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.EventPlanner" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.EventPlanner" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/background</item> <!-- Reference a color here -->
+        <item name="colorPrimaryDark">@color/background</item>
+        <!-- Other theme properties here -->
     </style>
 
-    <style name="Theme.EventPlanner" parent="Base.Theme.EventPlanner" />
+    <style name="Theme.EventPlanner" parent="Base.Theme.EventPlanner">
+        <item name="buttonStyle">@style/CustomButtonStyle</item>
+    </style>
+
+    <style name="CustomButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">#745697</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="NavigationItemTextStyle">
+        <item name="android:textSize">18sp</item> <!-- Set the desired text size -->
+    </style>
+
+    <style name="CustomSecondaryButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/secondary_button</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="CustomTextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox.Dense">
+        <!-- Fill color for the text input background -->
+        <item name="boxBackgroundColor">@color/on_surface_container_highest</item>
+
+        <!-- Outline color for focused state -->
+        <item name="boxStrokeColor">?attr/colorOnSurfaceVariant</item>
+
+        <!-- Hint text color -->
+        <item name="hintTextColor">#745697</item>
+
+        <!-- Text color inside the input field -->
+        <item name="android:textColor">@color/on_surface_container_highest</item>
+    </style>
 </resources>
