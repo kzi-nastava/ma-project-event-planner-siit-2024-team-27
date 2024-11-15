@@ -52,9 +52,6 @@ public class HomeScreen extends AppCompatActivity {
             if (id == R.id.homepageTab && notCurrent(navController, R.id.HomepageFragment)) {
                 navController.navigate(R.id.HomepageFragment);
             }
-            if (id == R.id.myListingsTab && notCurrent(navController, R.id.SellerMyListingsFragment)) {
-                navController.navigate(R.id.SellerMyListingsFragment);
-            }
             // Close the drawer after item selection
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
