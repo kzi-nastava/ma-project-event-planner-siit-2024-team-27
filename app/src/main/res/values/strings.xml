@@ -24,6 +24,7 @@
     <string name="profile_icon">Profile Icon</string>
     <string name="login_register">Login / Register</string>
     <string name="home">Home</string>
+    <string name="my_listings">My listings</string>
     <string name="top_events">Top events</string>
     <string name="top_products_and_services">Top products and services</string>
     <string name="new_product">New product</string>
@@ -42,4 +43,9 @@
     <string name="confirmation_type">Confirmation type</string>
     <string name="cancellation_period">Cancellation period</string>
     <string name="create_service">Create service</string>
+    <string name="create_product">Create product</string>
+    <string name="seller_my_listings_title">My listings</string>
+    <string name="filter_button">Filter</string>
+    <string name="sort_by_button">Sort by</string>
+    <string name="search_listings">Search listings</string>
 </resources>

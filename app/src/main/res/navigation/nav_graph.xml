@@ -30,5 +30,9 @@
         android:id="@+id/SellerRegistrationFragment"
         android:name="com.wde.eventplanner.fragments.SellerRegistrationFragment"
         tools:layout="@layout/fragment_seller_registration_screen"  />
-    
+    <fragment
+        android:id="@+id/SellerMyListingsFragment"
+        android:name="com.wde.eventplanner.fragments.SellerMyListingsFragment"
+        tools:layout="@layout/fragment_seller_my_listings_screen"  />
+
 </navigation>
