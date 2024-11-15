@@ -34,5 +34,9 @@
         android:id="@+id/SellerMyListingsFragment"
         android:name="com.wde.eventplanner.fragments.SellerMyListingsFragment"
         tools:layout="@layout/fragment_seller_my_listings_screen"  />
+    <fragment
+        android:id="@+id/SellerCreateServiceFragment"
+        android:name="com.wde.eventplanner.fragments.SellerCreateServiceFragment"
+        tools:layout="@layout/fragment_seller_create_service_screen" />
 
 </navigation>
