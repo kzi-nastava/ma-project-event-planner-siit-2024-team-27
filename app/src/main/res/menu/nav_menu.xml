@@ -3,4 +3,8 @@
         android:id="@+id/homepageTab"
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
+    <item
+        android:id="@+id/myListingsTab"
+        android:icon="@drawable/ic_storefront"
+        android:title="@string/my_listings" />
 </menu>
