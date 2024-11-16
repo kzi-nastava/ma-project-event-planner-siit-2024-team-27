@@ -27,9 +27,9 @@
     <string name="my_listings">My listings</string>
     <string name="top_events">Top events</string>
     <string name="top_products_and_services">Top products and services</string>
-    <string name="new_product">New product</string>
+    <string name="new_service">New service</string>
     <string name="discounted_price"><strike>200€</strike></string>
-    <string name="product_info">Product info</string>
+    <string name="service_info">Service info</string>
     <string name="price">Price</string>
     <string name="discount">Discount</string>
     <string name="product_category">Product category</string>
@@ -48,4 +48,15 @@
     <string name="filter_button">Filter</string>
     <string name="sort_by_button">Sort by</string>
     <string name="search_listings">Search listings</string>
+    <string name="sort_by">Sort by</string>
+    <string name="best_service_ever">Best service ever</string>
+    <string name="best_company_ever">Best company ever</string>
+    <string name="_4_6">4.6</string>
+    <string name="_59_99_hr">59.99€/hr</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="edit">Edit</string>
+    <string name="hide">Hide</string>
+    <string name="delete">Delete</string>
+    <string name="comments">Comments</string>
+    <string name="john_smith">John Smith</string>
 </resources>

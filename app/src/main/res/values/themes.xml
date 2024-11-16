@@ -1,7 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.EventPlanner" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:windowBackground">@color/background</item> <!-- Reference a color here -->
+        <item name="android:windowBackground">@color/background
+        </item> <!-- Reference a color here -->
         <item name="colorPrimaryDark">@color/background</item>
         <!-- Other theme properties here -->
     </style>
@@ -14,6 +15,14 @@
         <item name="backgroundTint">#745697</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="GrayButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:paddingVertical">10dp</item>
+        <item name="backgroundTint">@color/edge2</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">8dp</item>
     </style>
 
     <style name="NavigationItemTextStyle">
