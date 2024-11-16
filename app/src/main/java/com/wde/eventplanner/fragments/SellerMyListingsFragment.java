@@ -5,20 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.ListingAdapter;
-import com.wde.eventplanner.models.Event;
 import com.wde.eventplanner.models.Listing;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class SellerMyListingsFragment extends Fragment {
             navController.navigate(R.id.SellerCreateServiceFragment);
         });
 
-        Spinner spinner = view.findViewById(R.id.spinner);
+        Spinner spinner = view.findViewById(R.id.sortSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"});
         spinner.setAdapter(adapter);
 
@@ -55,7 +53,7 @@ public class SellerMyListingsFragment extends Fragment {
         listingsList.add(new Listing("Best service ever", "60€/hr", "59.99€/hr", 4.5f));
         listingsList.add(new Listing("Best product ever", "200€", "199.99€", 4.5f));
 
-        ListingAdapter listingAdapter = new ListingAdapter(listingsList);
+        ListingAdapter listingAdapter = new ListingAdapter(listingsList, NavHostFragment.findNavController(this));
         listingsRecyclerView.setAdapter(listingAdapter);
 
         return view;

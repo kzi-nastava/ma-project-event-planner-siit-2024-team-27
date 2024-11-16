@@ -38,7 +38,7 @@ public class HomeScreen extends AppCompatActivity {
         // Set up NavController
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.LoginFragment, R.id.registerSellerButton, R.id.registerOrganizerButton, R.id.HomepageFragment)
+                R.id.HomepageFragment, R.id.LoginFragment, R.id.SellerMyListingsFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
