@@ -1,7 +1,6 @@
 package com.wde.eventplanner.adapters;
 
 import android.graphics.Paint;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.wde.eventplanner.models.Listing;
 
 import java.util.List;
 
-public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.EventViewHolder> {
+public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingViewHolder> {
 
     private List<Listing> listingList;
     private NavController navController;
@@ -34,13 +33,13 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.EventVie
 
     @NonNull
     @Override
-    public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_listing, parent, false);
-        return new EventViewHolder(view);
+        return new ListingViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListingViewHolder holder, int position) {
         Listing listing = listingList.get(position);
         holder.titleTextView.setText(listing.getTitle());
         holder.originalPriceTextView.setText(listing.getOriginalPrice());
@@ -56,11 +55,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.EventVie
         return listingList.size();
     }
 
-    public static class EventViewHolder extends RecyclerView.ViewHolder {
+    public static class ListingViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView, originalPriceTextView, priceTextView, ratingTextView;
         CardView cardView;
 
-        public EventViewHolder(@NonNull View itemView) {
+        public ListingViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // Find the views in the layout

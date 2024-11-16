@@ -1,90 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="72dp"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputLayout"
+            style="@style/CustomTextInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
             android:hint="@string/email"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            style="@style/CustomTextInputLayout">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
+            style="@style/CustomTextInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
-            app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
-            style="@style/CustomTextInputLayout">
+            android:hint="@string/password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emailInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/loginButton"
+            style="@style/CustomButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="48dp"
             android:text="@string/login"
-            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="70dp"
-            style="@style/CustomButtonStyle"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registerOrganizerButton"
+            style="@style/CustomSecondaryButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="2dp"
             android:text="@string/register_as_an_organizer"
-            app:layout_constraintTop_toBottomOf="@id/loginButton"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="45dp"
-            style="@style/CustomSecondaryButtonStyle"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registerSellerButton"
+            style="@style/CustomSecondaryButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="2dp"
             android:text="@string/register_as_a_seller"
-            app:layout_constraintTop_toBottomOf="@id/registerOrganizerButton"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/CustomSecondaryButtonStyle"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registerOrganizerButton" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
