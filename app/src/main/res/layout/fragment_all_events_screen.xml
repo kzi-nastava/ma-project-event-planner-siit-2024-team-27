@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.SellerMyListingsFragment">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderText="@string/search_listings">
+            app:placeholderText="@string/search_events">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputSearch"
@@ -43,7 +42,6 @@
             android:layout_marginEnd="4dp"
             android:backgroundTint="@color/button"
             android:text="@string/filter_button"
-            app:layout_constraintBottom_toTopOf="@+id/createProductButton"
             app:layout_constraintEnd_toStartOf="@id/sortSpinnerCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchLayout" />
@@ -56,7 +54,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="10dp"
             app:cardCornerRadius="4dp"
-            app:layout_constraintBottom_toTopOf="@id/createServiceButton"
+            app:layout_constraintBottom_toBottomOf="@id/filterButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/filterButton"
             app:layout_constraintTop_toBottomOf="@id/searchLayout">
@@ -80,33 +78,6 @@
                 android:textColor="@color/text" />
         </androidx.cardview.widget.CardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/createProductButton"
-            style="@style/CustomButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="4dp"
-            android:backgroundTint="@color/button"
-            android:text="@string/create_product"
-            app:layout_constraintBottom_toTopOf="@id/listingsRecyclerView"
-            app:layout_constraintEnd_toStartOf="@id/createServiceButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filterButton" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/createServiceButton"
-            style="@style/CustomButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/button"
-            android:text="@string/create_service"
-            app:layout_constraintBottom_toBottomOf="@id/createProductButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/createProductButton" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listingsRecyclerView"
             android:layout_width="match_parent"
@@ -115,7 +86,7 @@
             android:layout_marginTop="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createProductButton" />
+            app:layout_constraintTop_toBottomOf="@+id/filterButton" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

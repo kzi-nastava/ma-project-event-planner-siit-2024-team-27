@@ -11,6 +11,16 @@
         tools:layout="@layout/fragment_homepage_screen" />
 
     <fragment
+        android:id="@+id/AllEventsFragment"
+        android:name="com.wde.eventplanner.fragments.AllEventsFragment"
+        tools:layout="@layout/fragment_all_events_screen" />
+
+    <fragment
+        android:id="@+id/AllListingsFragment"
+        android:name="com.wde.eventplanner.fragments.AllListingsFragment"
+        tools:layout="@layout/fragment_all_listings_screen" />
+
+    <fragment
         android:id="@+id/SellerMyListingsFragment"
         android:name="com.wde.eventplanner.fragments.SellerMyListingsFragment"
         tools:layout="@layout/fragment_seller_my_listings_screen">
