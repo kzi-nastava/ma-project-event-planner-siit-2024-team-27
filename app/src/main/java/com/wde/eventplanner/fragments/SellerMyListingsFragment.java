@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
@@ -39,7 +40,7 @@ public class SellerMyListingsFragment extends Fragment {
         });
 
         Spinner spinner = view.findViewById(R.id.sortSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"});
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_spinner_dropdown_item, new String[]{"Price", "Rating", "Name"});
         spinner.setAdapter(adapter);
 
         RecyclerView listingsRecyclerView = view.findViewById(R.id.listingsRecyclerView);
@@ -55,6 +56,10 @@ public class SellerMyListingsFragment extends Fragment {
 
         ListingAdapter listingAdapter = new ListingAdapter(listingsList, NavHostFragment.findNavController(this));
         listingsRecyclerView.setAdapter(listingAdapter);
+
+        FilterDialogFragment filterDialog = new FilterDialogFragment();
+        Button filterButton = view.findViewById(R.id.filterButton);
+        filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
         return view;
     }
