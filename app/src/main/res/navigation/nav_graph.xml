@@ -42,16 +42,27 @@
         <action
             android:id="@+id/action_login_to_seller_registration"
             app:destination="@id/SellerRegistrationFragment" />
+        <action
+            android:id="@+id/action_login_to_homepage"
+            app:destination="@id/HomepageFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/OrganizerRegistrationFragment"
         android:name="com.wde.eventplanner.fragments.OrganizerRegistrationFragment"
-        tools:layout="@layout/fragment_organizer_registration_screen" />
+        tools:layout="@layout/fragment_organizer_registration_screen">
+        <action
+            android:id="@+id/action_organizer_registration_to_homepage"
+            app:destination="@id/HomepageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/SellerRegistrationFragment"
         android:name="com.wde.eventplanner.fragments.SellerRegistrationFragment"
-        tools:layout="@layout/fragment_seller_registration_screen" />
+        tools:layout="@layout/fragment_seller_registration_screen" >
+        <action
+            android:id="@+id/action_seller_registration_to_homepage"
+            app:destination="@id/HomepageFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/SellerCreateServiceFragment"
