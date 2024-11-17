@@ -59,4 +59,7 @@
     <string name="delete">Delete</string>
     <string name="comments">Comments</string>
     <string name="john_smith">John Smith</string>
+    <string name="events">Events</string>
+    <string name="market">Market</string>
+    <string name="search_events">Search events</string>
 </resources>

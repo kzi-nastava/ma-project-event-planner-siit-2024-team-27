@@ -38,7 +38,7 @@ public class HomeScreen extends AppCompatActivity {
         // Set up NavController
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.HomepageFragment, R.id.LoginFragment, R.id.SellerMyListingsFragment)
+                R.id.HomepageFragment, R.id.LoginFragment, R.id.SellerMyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
@@ -48,14 +48,17 @@ public class HomeScreen extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            // Check if the current destination is not HomepageFragment
+
             if (id == R.id.homepageTab && notCurrent(navController, R.id.HomepageFragment)) {
                 navController.navigate(R.id.HomepageFragment);
-            }
-            if (id == R.id.myListingsTab && notCurrent(navController, R.id.SellerMyListingsFragment)) {
+            } else if (id == R.id.eventsTab && notCurrent(navController, R.id.AllEventsFragment)) {
+                navController.navigate(R.id.AllEventsFragment);
+            } else if (id == R.id.marketTab && notCurrent(navController, R.id.AllListingsFragment)) {
+                navController.navigate(R.id.AllListingsFragment);
+            } else if (id == R.id.myListingsTab && notCurrent(navController, R.id.SellerMyListingsFragment)) {
                 navController.navigate(R.id.SellerMyListingsFragment);
             }
-            // Close the drawer after item selection
+
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
