@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,14 +42,13 @@ public class OrganizerRegistrationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_organizer_registration_screen, container, false); // Inflate the layout
+        View view = inflater.inflate(R.layout.fragment_organizer_registration_screen, container, false);
 
         userList = new ArrayList<>();
         userList.add(new DemoUser("email@email.com", "Faks1312!"));
         userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
         userList.add(new DemoUser("a@a.com", "Faks1312!"));
 
-        // Initialize views
         inputName = view.findViewById(R.id.inputName);
         inputSurname = view.findViewById(R.id.inputSurname);
         inputEmail = view.findViewById(R.id.inputEmail);
@@ -60,7 +62,7 @@ public class OrganizerRegistrationFragment extends Fragment {
         registerButton = view.findViewById(R.id.registerButton);
         selectedImageView = view.findViewById(R.id.selectedImageView);
 
-        // Image picker button listener
+
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +70,7 @@ public class OrganizerRegistrationFragment extends Fragment {
             }
         });
 
-        // Register button listener
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +105,7 @@ public class OrganizerRegistrationFragment extends Fragment {
         String city = inputCity.getText().toString().trim();
         String address = inputAddress.getText().toString().trim();
 
-        // Validate fields and show Snackbar if needed
+        // Input Validation
         if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || city.isEmpty()) {
             showToast("Please fill in all the required fields");
             return;
@@ -155,6 +157,12 @@ public class OrganizerRegistrationFragment extends Fragment {
         }
 
         showToast("Successful registration. Confirmation email sent.");
+
+        NavController navController = Navigation.findNavController(requireView());
+        NavOptions navOptions = new NavOptions.Builder()
+                .setPopUpTo(navController.getGraph().getStartDestinationId(), true)
+                .build(); // Clear Backstack
+        navController.navigate(R.id.action_organizer_registration_to_homepage, null, navOptions);
     }
 
     private boolean isValidUser(String email) {

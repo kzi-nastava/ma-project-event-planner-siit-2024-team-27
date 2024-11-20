@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
@@ -40,6 +41,8 @@ public class LoginFragment extends Fragment {
         MaterialButton loginButton = view.findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(v -> {
+
+            // check if user exists
             String email = emailInput.getText().toString().trim();
             String password = passwordInput.getText().toString();
 
@@ -53,26 +56,26 @@ public class LoginFragment extends Fragment {
                 showToast("Wrong email or password");
             } else {
                 Toast.makeText(getContext(), "Successful login", Toast.LENGTH_SHORT).show();
-                // Navigate to HomeScreen or trigger other actions
+
+                // login User
+                NavController navController = Navigation.findNavController(v);
+                NavOptions navOptions = new NavOptions.Builder()
+                        .setPopUpTo(navController.getGraph().getStartDestinationId(), true)
+                        .build();
+                navController.navigate(R.id.action_login_to_homepage,null,navOptions); //pops full backstack
             }
         });
         MaterialButton registerOrganizerButton = view.findViewById(R.id.registerOrganizerButton);
 
         registerOrganizerButton.setOnClickListener(v -> {
-            // Get the NavController
             NavController navController = Navigation.findNavController(v);
-
-            // Navigate to RegistrationFragment
             navController.navigate(R.id.action_login_to_organizer_registration);
         });
 
         MaterialButton registerSellerButton = view.findViewById(R.id.registerSellerButton);
 
         registerSellerButton.setOnClickListener(v -> {
-            // Get the NavController
             NavController navController = Navigation.findNavController(v);
-
-            // Navigate to RegistrationFragment
             navController.navigate(R.id.action_login_to_seller_registration);
         });
 
