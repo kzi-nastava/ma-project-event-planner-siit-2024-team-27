@@ -38,7 +38,7 @@ public class HomeScreen extends AppCompatActivity {
         // Set up NavController
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.HomepageFragment, R.id.LoginFragment, R.id.SellerMyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment)
+                R.id.HomepageFragment, R.id.LoginFragment, R.id.SellerMyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment, R.id.NotificationsFragment)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
@@ -57,6 +57,8 @@ public class HomeScreen extends AppCompatActivity {
                 navController.navigate(R.id.AllListingsFragment);
             } else if (id == R.id.myListingsTab && notCurrent(navController, R.id.SellerMyListingsFragment)) {
                 navController.navigate(R.id.SellerMyListingsFragment);
+            } else if (id == R.id.notificationsTab && notCurrent(navController, R.id.NotificationsFragment)) {
+                navController.navigate(R.id.NotificationsFragment);
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
