@@ -25,7 +25,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.wde.eventplanner.DemoUser;
+import com.wde.eventplanner.models.DemoUser;
 import com.wde.eventplanner.R;
 
 import java.util.ArrayList;

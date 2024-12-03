@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Comment {
-    private String author;
-    private String text;
+public class DemoUser {
+    private String email;
+    private String password;
 }

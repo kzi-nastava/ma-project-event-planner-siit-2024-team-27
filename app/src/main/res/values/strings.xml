@@ -64,4 +64,6 @@
     <string name="search_events">Search events</string>
     <string name="_1_10">1 / 10</string>
     <string name="filters">Filters</string>
+    <string name="notifications">Notifications</string>
+    <string name="close">Close</string>
 </resources>
