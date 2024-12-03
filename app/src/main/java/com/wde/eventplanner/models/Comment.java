@@ -1,19 +1,11 @@
 package com.wde.eventplanner.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class Comment {
     private String author;
     private String text;
-
-    public Comment(String author, String text) {
-        this.author = author;
-        this.text = text;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getText() {
-        return text;
-    }
 }
