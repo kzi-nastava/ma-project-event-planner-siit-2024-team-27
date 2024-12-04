@@ -1,5 +1,6 @@
 package com.wde.eventplanner.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -24,6 +25,10 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final Intent intent = new Intent(HomeScreen.this, SplashScreen.class);
+        startActivity(intent);
+
         setContentView(R.layout.activity_home_screen);
 
         // Set up toolbar

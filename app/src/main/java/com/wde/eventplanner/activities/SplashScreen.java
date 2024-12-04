@@ -1,7 +1,8 @@
 package com.wde.eventplanner.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 
 import androidx.activity.EdgeToEdge;
@@ -25,16 +26,7 @@ public class SplashScreen extends AppCompatActivity {
             return insets;
         });
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            Intent openLoginScreenIntent = new Intent(SplashScreen.this, HomeScreen.class);
-            startActivity(openLoginScreenIntent);
-            finish();
-        }).start();
+        new Handler(Looper.getMainLooper()).postDelayed(this::finish, 1500);
     }
 
     @Override
