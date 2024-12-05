@@ -30,5 +30,6 @@ public class ClientUtils {
             .build();
 
     public static NotificationsService notificationsService = retrofit.create(NotificationsService.class);
+    public static ListingCategoryService listingCategoryService = retrofit.create(ListingCategoryService.class);
 }
 
