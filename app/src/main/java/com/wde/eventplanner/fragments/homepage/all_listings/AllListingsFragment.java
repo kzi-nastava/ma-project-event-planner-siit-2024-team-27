@@ -1,4 +1,4 @@
-package com.wde.eventplanner.fragments.homepage.all_events;
+package com.wde.eventplanner.fragments.homepage.all_listings;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -18,33 +18,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.adapters.EventAdapter;
+import com.wde.eventplanner.adapters.ListingAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
-import com.wde.eventplanner.fragments.homepage.EventsViewModel;
+import com.wde.eventplanner.fragments.homepage.ListingsViewModel;
 import com.wde.eventplanner.fragments.homepage.SortSpinner;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
-public class AllEventsFragment extends Fragment {
+public class AllListingsFragment extends Fragment {
     private final AtomicInteger selectedPosition = new AtomicInteger(0);
     private final AtomicBoolean orderDesc = new AtomicBoolean(true);
     private String selectedValue = "name";
-    private RecyclerView eventsRecyclerView;
-    private String searchTerms, category, city, after, before, minRating, maxRating;
+    private RecyclerView listingsRecyclerView;
+    private String searchTerms, type, category, minPrice, maxPrice, minRating, maxRating;
     private TextInputEditText searchInput;
-    private EventsViewModel eventsViewModel;
+    private ListingsViewModel listingsViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_events_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_listings_screen, container, false);
 
         SortSpinner spinner = view.findViewById(R.id.sortSpinner);
-        spinner.setAdapter(new SortSpinnerAdapter(view.getContext(), new String[]{"Name", "Date", "Rating"}, selectedPosition, orderDesc));
+        spinner.setAdapter(new SortSpinnerAdapter(view.getContext(), new String[]{"Name", "Price", "Rating"}, selectedPosition, orderDesc));
         spinner.setOnItemSelectedEvenIfUnchangedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -60,16 +56,15 @@ public class AllEventsFragment extends Fragment {
             }
         });
 
-        eventsRecyclerView = view.findViewById(R.id.listingsRecyclerView);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        eventsRecyclerView.setNestedScrollingEnabled(false);
+        listingsRecyclerView = view.findViewById(R.id.listingsRecyclerView);
+        listingsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        listingsRecyclerView.setNestedScrollingEnabled(false);
 
-        EventFilterDialogFragment filterDialog = new EventFilterDialogFragment(this);
+        ListingFilterDialogFragment filterDialog = new ListingFilterDialogFragment(this);
         Button filterButton = view.findViewById(R.id.filterButton);
         filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
         searchInput = view.findViewById(R.id.inputSearch);
-
         searchInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 searchTerms = null;
@@ -83,13 +78,13 @@ public class AllEventsFragment extends Fragment {
             return false;
         });
 
-        eventsViewModel = new ViewModelProvider(this).get(EventsViewModel.class);
+        listingsViewModel = new ViewModelProvider(this).get(ListingsViewModel.class);
 
-        eventsViewModel.getEvents().observe(getViewLifecycleOwner(), events -> {
-            eventsRecyclerView.setAdapter(new EventAdapter(events));
+        listingsViewModel.getListings().observe(getViewLifecycleOwner(), listings -> {
+            listingsRecyclerView.setAdapter(new ListingAdapter(listings));
         });
 
-        eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+        listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
         });
 
@@ -102,11 +97,11 @@ public class AllEventsFragment extends Fragment {
         refreshEvents();
     }
 
-    public void onFilterPressed(String category, String city, Date after, Date before, String minRating, String maxRating) {
+    public void onFilterPressed(String type, String category, String minPrice, String maxPrice, String minRating, String maxRating) {
+        this.type = type;
         this.category = category;
-        this.city = city;
-        this.after = after != null ? after.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_INSTANT) : null;
-        this.before = before != null ? before.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_INSTANT) : null;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
         this.minRating = minRating;
         this.maxRating = maxRating;
         refreshEvents();
@@ -114,6 +109,6 @@ public class AllEventsFragment extends Fragment {
 
     public void refreshEvents() {
         String order = orderDesc.get() ? "desc" : "asc";
-        eventsViewModel.fetchEvents(searchTerms, city, category, after, before, minRating, maxRating, selectedValue, order, "0", "10");
+        listingsViewModel.fetchListings(searchTerms, type, category, minPrice, maxPrice, minRating, maxRating, selectedValue, order, "0", "10");
     }
 }

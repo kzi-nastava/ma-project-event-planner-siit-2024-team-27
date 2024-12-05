@@ -58,6 +58,6 @@ public class HomepageFragment extends Fragment {
         });
 
         eventsViewModel.fetchTopEvents();
-        listingsViewModel.fetchListings();
+        listingsViewModel.fetchTopListings();
     }
 }

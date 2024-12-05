@@ -61,7 +61,10 @@
                 android:id="@+id/typeDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="12dp" />
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
+                android:paddingStart="11dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +88,9 @@
                 android:id="@+id/categoryDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingHorizontal="12dp" />
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingStart="11dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,10 +98,11 @@
             android:id="@+id/minPriceLayout"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="36dp"
+            android:layout_marginStart="36dp"
             android:layout_marginTop="14dp"
+            android:layout_marginEnd="7dp"
             app:expandedHintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/maxPriceLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/categoryDropdownLayout"
             app:placeholderText="Min. price"
@@ -106,7 +112,10 @@
                 android:id="@+id/minPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingVertical="10dp" />
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:paddingVertical="10dp"
+                android:paddingStart="11dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,12 +123,13 @@
             android:id="@+id/maxPriceLayout"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="36dp"
+            android:layout_marginStart="7dp"
             android:layout_marginTop="14dp"
+            android:layout_marginEnd="36dp"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/minPriceLayout"
+            app:layout_constraintStart_toEndOf="@id/minPriceLayout"
+            app:layout_constraintTop_toBottomOf="@id/categoryDropdownLayout"
             app:placeholderText="Max. price"
             app:placeholderTextColor="@color/pale_text">
 
@@ -127,15 +137,67 @@
                 android:id="@+id/maxPrice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingVertical="10dp" />
+                android:inputType="numberDecimal"
+                android:paddingVertical="10dp"
+                android:paddingStart="11dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/minRatingLayout"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="7dp"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@id/maxRatingLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/minPriceLayout"
+            app:placeholderText="Min. rating"
+            app:placeholderTextColor="@color/pale_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/minRating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:paddingVertical="10dp"
+                android:paddingStart="11dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/maxRatingLayout"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="36dp"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/minRatingLayout"
+            app:layout_constraintTop_toBottomOf="@id/minPriceLayout"
+            app:placeholderText="Max. rating"
+            app:placeholderTextColor="@color/pale_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/maxRating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:paddingVertical="10dp"
+                android:paddingStart="11dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filterButton"
             style="@style/CustomButtonStyle"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_width="132dp"
+            android:layout_height="58dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="36dp"
             android:backgroundTint="@color/accent2"
@@ -144,7 +206,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/maxPriceLayout" />
+            app:layout_constraintTop_toBottomOf="@id/minRatingLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -26,8 +26,28 @@ public class ListingsViewModel extends ViewModel {
         return errorMessage;
     }
 
-    public void fetchListings() {
+    public void fetchTopListings() {
         ClientUtils.listingsService.getTopListings().enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<Listing>> call, @NonNull Response<ArrayList<Listing>> response) {
+                if (response.isSuccessful()) {
+                    listingsLiveData.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch listings. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<Listing>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void fetchListings(String searchTerms, String type, String category, String minPrice, String maxPrice,
+                              String minRating, String maxRating, String sortBy, String order, String page, String size) {
+        ClientUtils.listingsService.getListings(searchTerms, type, category, minPrice, maxPrice,
+                minRating, maxRating, sortBy, order, page, size).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Listing>> call, @NonNull Response<ArrayList<Listing>> response) {
                 if (response.isSuccessful()) {

@@ -58,9 +58,9 @@ public class SellerMyListingsFragment extends Fragment {
         ListingAdapter listingAdapter = new ListingAdapter(listingsList, NavHostFragment.findNavController(this));
         listingsRecyclerView.setAdapter(listingAdapter);
 
-        EventFilterDialogFragment filterDialog = new EventFilterDialogFragment();
-        Button filterButton = view.findViewById(R.id.filterButton);
-        filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
+//        EventFilterDialogFragment filterDialog = new EventFilterDialogFragment();
+//        Button filterButton = view.findViewById(R.id.filterButton);
+//        filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
         return view;
     }

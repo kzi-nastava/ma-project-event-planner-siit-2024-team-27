@@ -1,4 +1,4 @@
-package com.wde.eventplanner.fragments.homepage.all_events;
+package com.wde.eventplanner.fragments.homepage.all_listings;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,32 +21,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.fragments.AdminListingCategories.AdminListingCategoriesViewModel;
 import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
+import com.wde.eventplanner.models.listingCategory.ListingType;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Optional;
 
-public class EventFilterDialogFragment extends DialogFragment {
+public class ListingFilterDialogFragment extends DialogFragment {
     private MaterialAutoCompleteTextView categoryAutoCompleteTextView;
+    private MaterialAutoCompleteTextView typeAutoCompleteTextView;
     private ArrayList<ListingCategoryDTO> categories;
-    private final Date before = new Date(0);
-    private final Date after = new Date(0);
-    private final AllEventsFragment parent;
-    private boolean calendarIsOpen = false;
-    private String[] cities;
+    private final AllListingsFragment parent;
 
-    public EventFilterDialogFragment(AllEventsFragment fragment) {
+    public ListingFilterDialogFragment(AllListingsFragment fragment) {
         this.parent = fragment;
     }
 
@@ -68,32 +61,26 @@ public class EventFilterDialogFragment extends DialogFragment {
     @Nullable
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_event_filter_dialog, null);
+        View view = inflater.inflate(R.layout.fragment_listing_filter_dialog, null);
 
         categoryAutoCompleteTextView = view.findViewById(R.id.categoryDropdown);
-
-        cities = view.getContext().getResources().getStringArray(R.array.cities);
-        ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, cities);
-        MaterialAutoCompleteTextView cityAutoCompleteTextView = view.findViewById(R.id.cityDropdown);
-        cityAutoCompleteTextView.setAdapter(cityAdapter);
-        cityAutoCompleteTextView.setOnClickListener(v -> cityAutoCompleteTextView.showDropDown());
-        cityAutoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
-            String input = cityAutoCompleteTextView.getText().toString().trim();
-            if (hasFocus) cityAutoCompleteTextView.showDropDown();
-            else {
-                Optional<String> found = Arrays.stream(cities).filter(city -> city.equalsIgnoreCase(input)).findFirst();
-                cityAutoCompleteTextView.setText(found.orElse(""));
-            }
+        typeAutoCompleteTextView = view.findViewById(R.id.typeDropdown);
+        categoryAutoCompleteTextView.setOnClickListener(v -> categoryAutoCompleteTextView.showDropDown());
+        typeAutoCompleteTextView.setOnClickListener(v -> typeAutoCompleteTextView.showDropDown());
+        typeAutoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) typeAutoCompleteTextView.showDropDown();
         });
+        typeAutoCompleteTextView.setOnItemClickListener((parent, v, position, id) -> {
+            String selected = parent.getItemAtPosition(position).toString();
+            ListingType type = selected.equals("Products") ? ListingType.PRODUCT : (selected.equals("Services") ? ListingType.SERVICE : null);
+            String[] categories = this.categories.stream().filter(dto -> dto.getListingType() == type || type == null).map(ListingCategoryDTO::getName).toArray(String[]::new);
+            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, categories);
+            categoryAutoCompleteTextView.setAdapter(categoryAdapter);
+        });
+        typeAutoCompleteTextView.setAdapter(getTypeArrayAdapter());
 
         view.setOnTouchListener((v, event) -> {
             Rect rect = new Rect();
-            cityAutoCompleteTextView.getGlobalVisibleRect(rect);
-            if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                cityAutoCompleteTextView.clearFocus();
-                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(cityAutoCompleteTextView.getWindowToken(), 0);
-            }
             categoryAutoCompleteTextView.getGlobalVisibleRect(rect);
             if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
                 categoryAutoCompleteTextView.clearFocus();
@@ -103,25 +90,11 @@ public class EventFilterDialogFragment extends DialogFragment {
             return false;
         });
 
-        TextInputEditText afterDate = view.findViewById(R.id.afterDate);
-        TextInputEditText beforeDate = view.findViewById(R.id.beforeDate);
-
-        afterDate.setOnClickListener(v -> {
-            if (!calendarIsOpen) {
-                calendarIsOpen = true;
-                openDatePicker(afterDate, after);
-            }
-        });
-        beforeDate.setOnClickListener(v -> {
-            if (!calendarIsOpen) {
-                calendarIsOpen = true;
-                openDatePicker(beforeDate, before);
-            }
-        });
-
         Button closeButton = view.findViewById(R.id.closeButton);
         closeButton.setOnClickListener(v -> dismiss());
 
+        TextInputEditText minPriceInput = view.findViewById(R.id.minPrice);
+        TextInputEditText maxPriceInput = view.findViewById(R.id.maxPrice);
         TextInputEditText minRatingInput = view.findViewById(R.id.minRating);
         TextInputEditText maxRatingInput = view.findViewById(R.id.maxRating);
 
@@ -129,14 +102,16 @@ public class EventFilterDialogFragment extends DialogFragment {
         filterButton.setOnClickListener(v -> {
             String categoryInput = categoryAutoCompleteTextView.getText().toString().trim();
             String category = categories.stream().filter(dto -> dto.getName().equalsIgnoreCase(categoryInput)).findFirst().map(ListingCategoryDTO::getId).orElse(null);
+            String typeInput = typeAutoCompleteTextView.getText().toString().trim();
+            String type = (typeInput.equals("Products") ? "PRODUCT" : (typeInput.equals("Services") ? "SERVICE" : null));
 
-            String cityInput = cityAutoCompleteTextView.getText().toString().trim();
-            String city = Arrays.stream(cities).filter(ct -> ct.equalsIgnoreCase(cityInput)).findFirst().orElse(null);
-
-            Date afterReturn = after.after(new Date(1)) ? after : null;
-            Date beforeReturn = before.after(new Date(1)) ? before : null;
-
-            String minRating, maxRating;
+            String minPrice, maxPrice, minRating, maxRating;
+            if (minPriceInput.getText() != null && !minPriceInput.getText().toString().isBlank())
+                minPrice = minPriceInput.getText().toString();
+            else minPrice = null;
+            if (maxPriceInput.getText() != null && !maxPriceInput.getText().toString().isBlank())
+                maxPrice = maxPriceInput.getText().toString();
+            else maxPrice = null;
             if (minRatingInput.getText() != null && !minRatingInput.getText().toString().isBlank())
                 minRating = minRatingInput.getText().toString();
             else minRating = null;
@@ -144,26 +119,51 @@ public class EventFilterDialogFragment extends DialogFragment {
                 maxRating = maxRatingInput.getText().toString();
             else maxRating = null;
 
-            parent.onFilterPressed(category, city, afterReturn, beforeReturn, minRating, maxRating);
+            parent.onFilterPressed(type, category, minPrice, maxPrice, minRating, maxRating);
             dismiss();
         });
 
         return view;
     }
 
+    @NonNull
+    private ArrayAdapter<String> getTypeArrayAdapter() {
+        String[] types = new String[]{"All listings", "Products", "Services"};
+        return new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, types) {
+            @NonNull
+            @Override
+            public Filter getFilter() {
+                return new Filter() {
+                    @Override
+                    protected FilterResults performFiltering(CharSequence constraint) {
+                        FilterResults results = new FilterResults();
+                        results.count = types.length;
+                        results.values = types;
+                        return results;
+                    }
+
+                    @Override
+                    protected void publishResults(CharSequence constraint, FilterResults results) {
+                        notifyDataSetChanged();
+                    }
+                };
+            }
+        };
+    }
+
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Zameniti posle sa event categories
         AdminListingCategoriesViewModel listingCategoriesViewModel = new ViewModelProvider(this).get(AdminListingCategoriesViewModel.class);
 
         listingCategoriesViewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), categoryDTOs -> {
             this.categories = categoryDTOs;
-            String[] categories = categoryDTOs.stream().map(ListingCategoryDTO::getName).toArray(String[]::new);
+            String selected = typeAutoCompleteTextView.getText().toString();
+            ListingType type = selected.equals("Products") ? ListingType.PRODUCT : (selected.equals("Services") ? ListingType.SERVICE : null);
+            String[] categories = categoryDTOs.stream().filter(dto -> dto.getListingType() == type || type == null).map(ListingCategoryDTO::getName).toArray(String[]::new);
             ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, categories);
             categoryAutoCompleteTextView.setAdapter(categoryAdapter);
-            categoryAutoCompleteTextView.setOnClickListener(v -> categoryAutoCompleteTextView.showDropDown());
             categoryAutoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
                 String input = categoryAutoCompleteTextView.getText().toString().trim();
                 if (hasFocus) categoryAutoCompleteTextView.showDropDown();
@@ -180,28 +180,5 @@ public class EventFilterDialogFragment extends DialogFragment {
         });
 
         listingCategoriesViewModel.fetchActiveListingCategories();
-    }
-
-    private void openDatePicker(TextInputEditText editText, Date date) {
-        CalendarConstraints constraint = new CalendarConstraints.Builder().setFirstDayOfWeek(Calendar.MONDAY).build();
-
-        MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker().setCalendarConstraints(constraint)
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).setTheme(R.style.DatePickerWithoutHeader).build();
-
-        datePicker.show(requireActivity().getSupportFragmentManager(), "DATE_PICKER");
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            date.setTime(selection);
-            editText.setText(new SimpleDateFormat("d.M.yyyy.", Locale.ENGLISH).format(date));
-            calendarIsOpen = false;
-        });
-
-        datePicker.addOnNegativeButtonClickListener(selection -> {
-            date.setTime(0);
-            editText.setText("");
-            calendarIsOpen = false;
-        });
-
-        datePicker.addOnNegativeButtonClickListener(v -> calendarIsOpen = false);
     }
 }
