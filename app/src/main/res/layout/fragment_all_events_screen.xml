@@ -74,7 +74,8 @@
                 android:layout_height="match_parent"
                 android:background="@color/button"
                 android:dropDownVerticalOffset="44dp"
-                android:foreground="@color/button" />
+                android:foreground="@color/button"
+                android:popupBackground="@drawable/background_spinner_dropdown" />
 
             <TextView
                 style="@style/CustomButtonStyle"

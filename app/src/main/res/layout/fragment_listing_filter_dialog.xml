@@ -61,8 +61,9 @@
                 android:id="@+id/typeDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:backgroundTint="@android:color/transparent"
                 android:cursorVisible="false"
-                android:focusable="false"
+                android:dropDownVerticalOffset="1dp"
                 android:inputType="none"
                 android:paddingStart="11dp" />
 
@@ -88,6 +89,7 @@
                 android:id="@+id/categoryDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:paddingStart="11dp" />

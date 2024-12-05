@@ -61,6 +61,7 @@
                 android:id="@+id/categoryDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:paddingHorizontal="15dp" />
@@ -87,6 +88,7 @@
                 android:id="@+id/cityDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:paddingHorizontal="15dp" />
