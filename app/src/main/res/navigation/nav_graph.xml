@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/HomepageFragment"
-        android:name="com.wde.eventplanner.fragments.HomepageFragment"
+        android:name="com.wde.eventplanner.fragments.homepage.HomepageFragment"
         tools:layout="@layout/fragment_homepage_screen" />
 
     <fragment
         android:id="@+id/AllEventsFragment"
-        android:name="com.wde.eventplanner.fragments.AllEventsFragment"
+        android:name="com.wde.eventplanner.fragments.homepage.all_events.AllEventsFragment"
         tools:layout="@layout/fragment_all_events_screen" />
 
     <fragment
         android:id="@+id/AllListingsFragment"
-        android:name="com.wde.eventplanner.fragments.AllListingsFragment"
+        android:name="com.wde.eventplanner.fragments.homepage.all_listings.AllListingsFragment"
         tools:layout="@layout/fragment_all_listings_screen" />
 
     <fragment

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.ListingAdapter;
+import com.wde.eventplanner.fragments.homepage.all_events.EventFilterDialogFragment;
 import com.wde.eventplanner.models.Listing;
 
 import java.util.ArrayList;
@@ -48,16 +49,16 @@ public class SellerMyListingsFragment extends Fragment {
         listingsRecyclerView.setNestedScrollingEnabled(false);
 
         List<Listing> listingsList = new ArrayList<>();
-        listingsList.add(new Listing("Best product ever", "200€", "199.99€", 4.5f));
-        listingsList.add(new Listing("Best service ever", "60€/hr", "59.99€/hr", 4.5f));
-        listingsList.add(new Listing("Best product ever", "200€", "199.99€", 4.5f));
-        listingsList.add(new Listing("Best service ever", "60€/hr", "59.99€/hr", 4.5f));
-        listingsList.add(new Listing("Best product ever", "200€", "199.99€", 4.5f));
+//        listingsList.add(new Listing("Best product ever", "200€", "199.99€", 4.5f));
+//        listingsList.add(new Listing("Best service ever", "60€/hr", "59.99€/hr", 4.5f));
+//        listingsList.add(new Listing("Best product ever", "200€", "199.99€", 4.5f));
+//        listingsList.add(new Listing("Best service ever", "60€/hr", "59.99€/hr", 4.5f));
+//        listingsList.add(new Listing("Best product ever", "200€", "199.99€", 4.5f));
 
         ListingAdapter listingAdapter = new ListingAdapter(listingsList, NavHostFragment.findNavController(this));
         listingsRecyclerView.setAdapter(listingAdapter);
 
-        FilterDialogFragment filterDialog = new FilterDialogFragment();
+        EventFilterDialogFragment filterDialog = new EventFilterDialogFragment();
         Button filterButton = view.findViewById(R.id.filterButton);
         filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
