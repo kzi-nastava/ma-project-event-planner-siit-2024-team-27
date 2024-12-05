@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,10 +12,13 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.models.Listing;
+import com.wde.eventplanner.models.ListingType;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingViewHolder> {
 
@@ -41,10 +45,13 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     @Override
     public void onBindViewHolder(@NonNull ListingViewHolder holder, int position) {
         Listing listing = listingList.get(position);
-        holder.titleTextView.setText(listing.getTitle());
-        holder.originalPriceTextView.setText(listing.getOriginalPrice());
-        holder.priceTextView.setText(listing.getPrice());
-        holder.ratingTextView.setText(String.format("%2.1f", listing.getRating()));
+        Picasso.get().load(listing.getImages().get(0)).into(holder.listingCardPicture);
+        holder.titleTextView.setText(listing.getName());
+        String priceEnding = listing.getType() == ListingType.SERVICE ? "€/hr" : "€";
+        if (listing.getOldPrice() != null)
+            holder.oldPriceTextView.setText(String.format(Locale.ENGLISH, "%.2f%s", listing.getOldPrice(), priceEnding));
+        holder.priceTextView.setText(String.format(Locale.ENGLISH, "%.2f%s", listing.getPrice(), priceEnding));
+        holder.ratingTextView.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
 
         if (navController != null)
             holder.cardView.setOnClickListener(v -> navController.navigate(R.id.SellerListingDetailFragment));
@@ -56,16 +63,17 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     }
 
     public static class ListingViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView, originalPriceTextView, priceTextView, ratingTextView;
+        TextView titleTextView, oldPriceTextView, priceTextView, ratingTextView;
+        ImageView listingCardPicture;
         CardView cardView;
 
         public ListingViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            // Find the views in the layout
+            listingCardPicture = itemView.findViewById(R.id.listingCardPicture);
             titleTextView = itemView.findViewById(R.id.listingCardTitle);
-            originalPriceTextView = itemView.findViewById(R.id.listingCardOriginalPrice);
-            originalPriceTextView.setPaintFlags(originalPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            oldPriceTextView = itemView.findViewById(R.id.listingCardOldPrice);
+            oldPriceTextView.setPaintFlags(oldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             priceTextView = itemView.findViewById(R.id.listingCardPrice);
             ratingTextView = itemView.findViewById(R.id.listingCardRating);
             cardView = itemView.findViewById(R.id.cardView);

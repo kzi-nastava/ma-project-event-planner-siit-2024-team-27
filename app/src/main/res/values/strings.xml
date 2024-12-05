@@ -26,7 +26,7 @@
     <string name="home">Home</string>
     <string name="my_listings">My listings</string>
     <string name="top_events">Top events</string>
-    <string name="top_products_and_services">Top products and services</string>
+    <string name="top_listings">Top listings</string>
     <string name="new_service">New service</string>
     <string name="discounted_price"><strike>200€</strike></string>
     <string name="service_info">Service info</string>
@@ -47,7 +47,7 @@
     <string name="seller_my_listings_title">My listings</string>
     <string name="filter_button">Filter</string>
     <string name="sort_by_button">Sort by</string>
-    <string name="search_listings">Search listings</string>
+    <string name="search_listings">Search listings…</string>
     <string name="sort_by">Sort by</string>
     <string name="best_service_ever">Best service ever</string>
     <string name="best_company_ever">Best company ever</string>
@@ -61,7 +61,7 @@
     <string name="john_smith">John Smith</string>
     <string name="events">Events</string>
     <string name="market">Market</string>
-    <string name="search_events">Search events</string>
+    <string name="search_events">Search events…</string>
     <string name="_1_10">1 / 10</string>
     <string name="filters">Filters</string>
     <string name="notifications">Notifications</string>

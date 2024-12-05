@@ -18,7 +18,7 @@
         android:theme="@style/Theme.EventPlanner"
         tools:targetApi="31">
         <activity
-            android:name=".activities.SplashScreen"
+            android:name=".activities.HomeScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HomeScreen"
+            android:name=".activities.SplashScreen"
             android:exported="false" />
     </application>
 

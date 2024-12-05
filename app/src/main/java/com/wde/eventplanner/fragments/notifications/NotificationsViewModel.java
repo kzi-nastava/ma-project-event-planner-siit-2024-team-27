@@ -54,7 +54,7 @@ public class NotificationsViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
-                errorMessage.postValue(t.getMessage());
+                errorMessage.postValue("Error: " + t.getMessage());
             }
         });
     }

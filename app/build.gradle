@@ -51,6 +51,7 @@ dependencies {
     implementation libs.navigation.fragment.ktx
     implementation libs.navigation.ui.ktx
 
+    implementation libs.picasso
     compileOnly libs.lombok.v11836
     annotationProcessor libs.lombok.v11836
     implementation libs.retrofit

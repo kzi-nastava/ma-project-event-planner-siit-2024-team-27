@@ -62,11 +62,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/listingCardOriginalPrice"
+                        android:id="@+id/listingCardOldPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        android:text="@string/discounted_price"
                         android:textColor="@color/edge3"
                         android:textSize="15sp" />
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DatePickerWithoutHeader" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="materialCalendarHeaderLayout">@style/App.Material3.MaterialCalendar.HeaderLayout</item>
+    </style>
+
+    <style name="App.Material3.MaterialCalendar.HeaderLayout" parent="@style/Widget.Material3.MaterialCalendar.HeaderLayout">
+        <item name="android:visibility">gone</item>
+    </style>
+</resources>

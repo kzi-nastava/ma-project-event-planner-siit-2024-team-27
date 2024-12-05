@@ -42,9 +42,7 @@ public class NotificationsFragment extends Fragment {
         });
 
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
-            }
+            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
         });
 
         viewModel.fetchNotifications();
