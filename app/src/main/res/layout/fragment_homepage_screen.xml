@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.HomepageFragment">
+    tools:context=".fragments.homepage.HomepageFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:paddingBottom="12dp"
-            android:text="@string/top_products_and_services"
+            android:text="@string/top_listings"
             android:textColor="@color/text"
             android:textSize="28sp"
             app:layout_constraintTop_toBottomOf="@id/eventsRecyclerView" />

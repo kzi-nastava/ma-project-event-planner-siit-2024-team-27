@@ -26,7 +26,7 @@ public class EventsViewModel extends ViewModel {
         return errorMessage;
     }
 
-    public void fetchEvents() {
+    public void fetchTopEvents() {
         ClientUtils.eventsService.getTopEvents().enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Event>> call, @NonNull Response<ArrayList<Event>> response) {
@@ -39,7 +39,27 @@ public class EventsViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<Event>> call, @NonNull Throwable t) {
-                errorMessage.postValue("Error: " +t.getMessage());
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void fetchEvents(String searchTerms, String city, String category, String dateRangeStart, String dateRangeEnd,
+                            String minRating, String maxRating, String sortBy, String order, String page, String size) {
+        ClientUtils.eventsService.getEvents(searchTerms, city, category, dateRangeStart,
+                dateRangeEnd, minRating, maxRating, sortBy, order, page, size).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<Event>> call, @NonNull Response<ArrayList<Event>> response) {
+                if (response.isSuccessful()) {
+                    eventsLiveData.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch events. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<Event>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
             }
         });
     }

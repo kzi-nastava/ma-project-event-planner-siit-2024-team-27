@@ -57,7 +57,7 @@ public class HomepageFragment extends Fragment {
             if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
         });
 
-        eventsViewModel.fetchEvents();
+        eventsViewModel.fetchTopEvents();
         listingsViewModel.fetchListings();
     }
 }
