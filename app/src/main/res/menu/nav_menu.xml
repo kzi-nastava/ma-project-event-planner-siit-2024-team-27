@@ -23,4 +23,8 @@
         android:id="@+id/notificationsTab"
         android:icon="@drawable/ic_notifications"
         android:title="@string/notifications" />
+    <item
+        android:id="@+id/adminListingCategoriesTab"
+        android:icon="@drawable/ic_storefront"
+        android:title="@string/listing_categories" />
 </menu>

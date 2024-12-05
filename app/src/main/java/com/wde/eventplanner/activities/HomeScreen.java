@@ -64,6 +64,8 @@ public class HomeScreen extends AppCompatActivity {
                 navController.navigate(R.id.SellerMyListingsFragment);
             } else if (id == R.id.notificationsTab && notCurrent(navController, R.id.NotificationsFragment)) {
                 navController.navigate(R.id.NotificationsFragment);
+            } else if (id == R.id.adminListingCategoriesTab && notCurrent(navController, R.id.AdminListingCategoriesFragment)) {
+                navController.navigate(R.id.AdminListingCategoriesFragment);
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
