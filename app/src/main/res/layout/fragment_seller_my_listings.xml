@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".fragments.SellerMyListingsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,26 +18,18 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeWidthFocused="0dp"
             app:endIconDrawable="@drawable/ic_search"
             app:endIconMode="custom"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderText="@string/search_listings"
-            app:placeholderTextColor="@color/pale_text">
+            app:placeholderText="@string/search_listings">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputSearch"
+                android:id="@+id/search_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
                 android:paddingVertical="10dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,13 +37,13 @@
             android:id="@+id/filterButton"
             style="@style/CustomButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:backgroundTint="@color/button"
             android:text="@string/filter_button"
-            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/createProductButton"
             app:layout_constraintEnd_toStartOf="@id/sortSpinnerCard"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchLayout" />
@@ -58,24 +51,23 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/sortSpinnerCard"
             android:layout_width="0dp"
-            android:layout_height="44dp"
+            android:layout_height="38dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="10dp"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/filterButton"
+            app:cardCornerRadius="4dp"
+            app:layout_constraintBottom_toTopOf="@id/createServiceButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/filterButton"
             app:layout_constraintTop_toBottomOf="@id/searchLayout">
 
-            <com.wde.eventplanner.fragments.homepage.SortSpinner
+            <Spinner
                 android:id="@+id/sortSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/button"
-                android:dropDownVerticalOffset="44dp"
-                android:foreground="@color/button"
-                android:popupBackground="@drawable/background_spinner_dropdown" />
+                android:dropDownVerticalOffset="36dp"
+                android:foreground="@color/button" />
 
             <TextView
                 style="@style/CustomButtonStyle"
@@ -88,6 +80,33 @@
                 android:textColor="@color/text" />
         </androidx.cardview.widget.CardView>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createProductButton"
+            style="@style/CustomButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="@color/button"
+            android:text="@string/create_product"
+            app:layout_constraintBottom_toTopOf="@id/listingsRecyclerView"
+            app:layout_constraintEnd_toStartOf="@id/createServiceButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filterButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createServiceButton"
+            style="@style/CustomButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/button"
+            android:text="@string/create_service"
+            app:layout_constraintBottom_toBottomOf="@id/createProductButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/createProductButton" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listingsRecyclerView"
             android:layout_width="match_parent"
@@ -96,7 +115,7 @@
             android:layout_marginTop="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filterButton" />
+            app:layout_constraintTop_toBottomOf="@+id/createProductButton" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -1,18 +1,12 @@
 package com.wde.eventplanner.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wde.eventplanner.R;
+import com.wde.eventplanner.databinding.CardListingCategoryPendingBinding;
 import com.wde.eventplanner.fragments.AdminListingCategories.AdminListingCategoriesFragment;
 import com.wde.eventplanner.fragments.AdminListingCategories.EditListingCategoryDialogFragment;
 import com.wde.eventplanner.fragments.AdminListingCategories.ReplaceListingCategoryDialogFragment;
@@ -36,23 +30,22 @@ public class AdminListingCategoryPendingListAdapter extends RecyclerView.Adapter
     @NonNull
     @Override
     public AdminListingCategoryPendingListAdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_listing_category_pending, parent, false);
-        return new AdminListingCategoryPendingListAdapter.AdminListingCategoryPendingListAdapterHolder(view);
+        CardListingCategoryPendingBinding binding = CardListingCategoryPendingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new AdminListingCategoryPendingListAdapterHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AdminListingCategoryPendingListAdapterHolder holder, int position) {
         ListingCategoryDTO listingCategoryDTO = pendingListingCategories.get(position);
-        holder.listingCategoryTitleTextView.setText(listingCategoryDTO.getName());
-        holder.listingCategoryTypeTextView.setText(listingCategoryDTO.getListingType().toString());
+        holder.binding.pendingListingCategoryTitleTextView.setText(listingCategoryDTO.getName());
+        holder.binding.pendingListingCategoryTypeTextView.setText(listingCategoryDTO.getListingType().toString());
 
         EditListingCategoryDialogFragment editDialog = new EditListingCategoryDialogFragment(listingCategoryDTO, parentFragment, false);
-        ReplaceListingCategoryDialogFragment replaceDialog = new ReplaceListingCategoryDialogFragment(activeListingCategories,
-                listingCategoryDTO, parentFragment);
+        ReplaceListingCategoryDialogFragment replaceDialog = new ReplaceListingCategoryDialogFragment(activeListingCategories, listingCategoryDTO, parentFragment);
 
-        holder.replaceImageButton.setOnClickListener(v -> replaceDialog.show(parentFragment.getParentFragmentManager(), "replaceDialog"));
-        holder.approveImageButton.setOnClickListener(v -> parentFragment.approvePendingListing(listingCategoryDTO));
-        holder.editImageButton.setOnClickListener(v -> editDialog.show(parentFragment.getParentFragmentManager(), "editDialog"));
+        holder.binding.replaceButton.setOnClickListener(v -> replaceDialog.show(parentFragment.getParentFragmentManager(), "replaceDialog"));
+        holder.binding.approveButton.setOnClickListener(v -> parentFragment.approvePendingListing(listingCategoryDTO));
+        holder.binding.editButton.setOnClickListener(v -> editDialog.show(parentFragment.getParentFragmentManager(), "editDialog"));
     }
 
     @Override
@@ -61,19 +54,11 @@ public class AdminListingCategoryPendingListAdapter extends RecyclerView.Adapter
     }
 
     public static class AdminListingCategoryPendingListAdapterHolder extends RecyclerView.ViewHolder {
-        TextView listingCategoryTitleTextView, listingCategoryTypeTextView;
-        CardView listingCategoryPendingCard;
-        ImageButton replaceImageButton, editImageButton, approveImageButton;
+        final CardListingCategoryPendingBinding binding;
 
-        public AdminListingCategoryPendingListAdapterHolder(@NonNull View itemView) {
-            super(itemView);
-
-            listingCategoryTitleTextView = itemView.findViewById(R.id.pendingListingCategoryTitleTextView);
-            listingCategoryTypeTextView = itemView.findViewById(R.id.pendingListingCategoryTypeTextView);
-            replaceImageButton = itemView.findViewById(R.id.replaceButton);
-            editImageButton = itemView.findViewById(R.id.editButton);
-            approveImageButton = itemView.findViewById(R.id.approveButton);
-            listingCategoryPendingCard = itemView.findViewById(R.id.listingCategoryPendingCard);
+        public AdminListingCategoryPendingListAdapterHolder(CardListingCategoryPendingBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

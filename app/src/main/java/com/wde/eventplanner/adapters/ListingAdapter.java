@@ -2,18 +2,15 @@ package com.wde.eventplanner.adapters;
 
 import android.graphics.Paint;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.databinding.CardListingBinding;
 import com.wde.eventplanner.models.Listing;
 import com.wde.eventplanner.models.ListingType;
 
@@ -38,23 +35,24 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     @NonNull
     @Override
     public ListingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_listing, parent, false);
-        return new ListingViewHolder(view);
+        CardListingBinding binding = CardListingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ListingViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListingViewHolder holder, int position) {
         Listing listing = listingList.get(position);
-        Picasso.get().load(listing.getImages().get(0)).into(holder.listingCardPicture);
-        holder.titleTextView.setText(listing.getName());
+        Picasso.get().load(listing.getImages().get(0)).into(holder.binding.listingCardPicture);
+        holder.binding.listingCardTitle.setText(listing.getName());
         String priceEnding = listing.getType() == ListingType.SERVICE ? "€/hr" : "€";
         if (listing.getOldPrice() != null)
-            holder.oldPriceTextView.setText(String.format(Locale.ENGLISH, "%.2f%s", listing.getOldPrice(), priceEnding));
-        holder.priceTextView.setText(String.format(Locale.ENGLISH, "%.2f%s", listing.getPrice(), priceEnding));
-        holder.ratingTextView.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
+            holder.binding.listingCardOldPrice.setText(String.format(Locale.ENGLISH, "%.2f%s", listing.getOldPrice(), priceEnding));
+        holder.binding.listingCardOldPrice.setPaintFlags(holder.binding.listingCardOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        holder.binding.listingCardPrice.setText(String.format(Locale.ENGLISH, "%.2f%s", listing.getPrice(), priceEnding));
+        holder.binding.listingCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
 
         if (navController != null)
-            holder.cardView.setOnClickListener(v -> navController.navigate(R.id.SellerListingDetailFragment));
+            holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.SellerListingDetailFragment));
     }
 
     @Override
@@ -63,20 +61,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
     }
 
     public static class ListingViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView, oldPriceTextView, priceTextView, ratingTextView;
-        ImageView listingCardPicture;
-        CardView cardView;
+        CardListingBinding binding;
 
-        public ListingViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            listingCardPicture = itemView.findViewById(R.id.listingCardPicture);
-            titleTextView = itemView.findViewById(R.id.listingCardTitle);
-            oldPriceTextView = itemView.findViewById(R.id.listingCardOldPrice);
-            oldPriceTextView.setPaintFlags(oldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            priceTextView = itemView.findViewById(R.id.listingCardPrice);
-            ratingTextView = itemView.findViewById(R.id.listingCardRating);
-            cardView = itemView.findViewById(R.id.cardView);
+        public ListingViewHolder(CardListingBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

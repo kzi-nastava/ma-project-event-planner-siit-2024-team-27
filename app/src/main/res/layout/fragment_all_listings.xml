@@ -28,11 +28,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderText="@string/search_events"
+            app:placeholderText="@string/search_listings"
             app:placeholderTextColor="@color/pale_text">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputSearch"
+                android:id="@+id/search_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionSearch"

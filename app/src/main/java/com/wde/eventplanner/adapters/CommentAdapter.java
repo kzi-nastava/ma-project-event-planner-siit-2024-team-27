@@ -1,14 +1,12 @@
 package com.wde.eventplanner.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wde.eventplanner.R;
+import com.wde.eventplanner.databinding.CardCommentBinding;
 import com.wde.eventplanner.models.Comment;
 
 import java.util.List;
@@ -24,15 +22,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_comment, parent, false);
-        return new CommentViewHolder(view);
+        CardCommentBinding binding = CardCommentBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new CommentViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = comments.get(position);
-        holder.authorTextView.setText(comment.getAuthor());
-        holder.textTextView.setText(comment.getText());
+        holder.binding.authorTextView.setText(comment.getAuthor());
+        holder.binding.textTextView.setText(comment.getText());
     }
 
     @Override
@@ -41,13 +39,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
-        TextView authorTextView, textTextView;
+        CardCommentBinding binding;
 
-        public CommentViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            authorTextView = itemView.findViewById(R.id.authorTextView);
-            textTextView = itemView.findViewById(R.id.textTextView);
+        public CommentViewHolder(CardCommentBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

@@ -12,6 +12,10 @@ android {
     namespace 'com.wde.eventplanner'
     compileSdk 34
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.wde.eventplanner"
         minSdk 30

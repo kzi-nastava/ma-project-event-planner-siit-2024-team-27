@@ -6,42 +6,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.ListingAdapter;
+import com.wde.eventplanner.databinding.FragmentHomepageBinding;
 
 public class HomepageFragment extends Fragment {
     private ListingsViewModel listingsViewModel;
     private EventsViewModel eventsViewModel;
-    private RecyclerView listingsRecyclerView;
-    private RecyclerView eventsRecyclerView;
+    private FragmentHomepageBinding binding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_homepage_screen, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentHomepageBinding.inflate(inflater, container, false);
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         ViewModelProvider viewModelProvider = new ViewModelProvider(navController.getBackStackEntry(R.id.HomepageFragment));
 
         listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         eventsViewModel = viewModelProvider.get(EventsViewModel.class);
 
-        eventsRecyclerView = view.findViewById(R.id.eventsRecyclerView);
-        eventsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        eventsRecyclerView.setNestedScrollingEnabled(false);
+        binding.eventsRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.eventsRecyclerView.setNestedScrollingEnabled(false);
 
-        listingsRecyclerView = view.findViewById(R.id.listingsRecyclerView);
-        listingsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        listingsRecyclerView.setNestedScrollingEnabled(false);
+        binding.listingsRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.listingsRecyclerView.setNestedScrollingEnabled(false);
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -49,11 +47,11 @@ public class HomepageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         eventsViewModel.getEvents().observe(getViewLifecycleOwner(), events -> {
-            eventsRecyclerView.setAdapter(new EventAdapter(events));
+            binding.eventsRecyclerView.setAdapter(new EventAdapter(events));
         });
 
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), listings -> {
-            listingsRecyclerView.setAdapter(new ListingAdapter(listings));
+            binding.listingsRecyclerView.setAdapter(new ListingAdapter(listings));
         });
 
         eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {

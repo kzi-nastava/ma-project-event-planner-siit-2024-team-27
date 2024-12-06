@@ -8,14 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.wde.eventplanner.databinding.FragmentLoginBinding;
 import com.wde.eventplanner.models.DemoUser;
 import com.wde.eventplanner.R;
 
@@ -24,27 +24,22 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class LoginFragment extends Fragment {
-
+    private FragmentLoginBinding binding;
     private List<DemoUser> userList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login_screen, container, false);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
 
         userList = new ArrayList<>();
         userList.add(new DemoUser("email@email.com", "Faks1312!"));
         userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
         userList.add(new DemoUser("a@a.com", "Faks1312!"));
 
-        TextInputEditText emailInput = view.findViewById(R.id.emailInput);
-        TextInputEditText passwordInput = view.findViewById(R.id.passwordInput);
-        MaterialButton loginButton = view.findViewById(R.id.loginButton);
-
-        loginButton.setOnClickListener(v -> {
-
+        binding.loginButton.setOnClickListener(v -> {
             // check if user exists
-            String email = emailInput.getText().toString().trim();
-            String password = passwordInput.getText().toString();
+            String email = binding.emailInput.getText().toString().trim();
+            String password = binding.passwordInput.getText().toString();
 
             if (email.isEmpty() || password.isEmpty()) {
                 showToast("Please fill in the fields");
@@ -62,25 +57,21 @@ public class LoginFragment extends Fragment {
                 NavOptions navOptions = new NavOptions.Builder()
                         .setPopUpTo(navController.getGraph().getStartDestinationId(), true)
                         .build();
-                navController.navigate(R.id.action_login_to_homepage,null,navOptions); //pops full backstack
+                navController.navigate(R.id.action_login_to_homepage, null, navOptions); //pops full backstack
             }
         });
-        MaterialButton registerOrganizerButton = view.findViewById(R.id.registerOrganizerButton);
 
-        registerOrganizerButton.setOnClickListener(v -> {
+        binding.registerOrganizerButton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_login_to_organizer_registration);
         });
 
-        MaterialButton registerSellerButton = view.findViewById(R.id.registerSellerButton);
-
-        registerSellerButton.setOnClickListener(v -> {
+        binding.registerSellerButton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_login_to_seller_registration);
         });
 
-
-        return view;
+        return binding.getRoot();
     }
 
     private boolean isValidEmail(String email) {

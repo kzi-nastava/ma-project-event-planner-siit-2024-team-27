@@ -14,16 +14,15 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.wde.eventplanner.databinding.FragmentOrganizerRegistrationBinding;
 import com.wde.eventplanner.models.DemoUser;
 import com.wde.eventplanner.R;
 
@@ -31,53 +30,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizerRegistrationFragment extends Fragment {
+    private FragmentOrganizerRegistrationBinding binding;
     private static final int PICK_IMAGE_REQUEST = 1;  // Request code for image selection
-    private TextInputEditText inputName, inputSurname, inputEmail, inputPassword, inputRepeatPassword;
-    private TextInputEditText  inputPhone, inputCity, inputAddress;
-    private MaterialButton selectImageButton, registerButton;
-    private ImageView selectedImageView;
-    private Uri selectedImageUri;
     private List<DemoUser> userList;
+    private Uri selectedImageUri;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_organizer_registration_screen, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentOrganizerRegistrationBinding.inflate(inflater, container, false);
 
         userList = new ArrayList<>();
         userList.add(new DemoUser("email@email.com", "Faks1312!"));
         userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
         userList.add(new DemoUser("a@a.com", "Faks1312!"));
 
-        inputName = view.findViewById(R.id.inputName);
-        inputSurname = view.findViewById(R.id.inputSurname);
-        inputEmail = view.findViewById(R.id.inputEmail);
-        inputPassword = view.findViewById(R.id.inputPassword);
-        inputRepeatPassword = view.findViewById(R.id.inputRepeatPassword);
-        inputPhone = view.findViewById(R.id.inputPhone);
-        inputCity = view.findViewById(R.id.inputCity);
-        inputAddress = view.findViewById(R.id.inputAddress);
+        binding.selectImageButton.setOnClickListener(v -> openImagePicker());
+        binding.registerButton.setOnClickListener(v -> registerSeller());
 
-        selectImageButton = view.findViewById(R.id.selectImageButton);
-        registerButton = view.findViewById(R.id.registerButton);
-        selectedImageView = view.findViewById(R.id.selectedImageView);
-
-
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImagePicker();
-            }
-        });
-
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerSeller();
-            }
-        });
-
-        return view;
+        return binding.getRoot();
     }
 
     private void openImagePicker() {
@@ -90,19 +60,19 @@ public class OrganizerRegistrationFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            selectedImageView.setImageURI(selectedImageUri);
+            binding.selectedImageView.setImageURI(selectedImageUri);
         }
     }
 
     private void registerSeller() {
-        String name = inputName.getText().toString().trim();
-        String surname = inputSurname.getText().toString().trim();
-        String email = inputEmail.getText().toString().trim();
-        String password = inputPassword.getText().toString().trim();
-        String repeatPassword = inputRepeatPassword.getText().toString().trim();
-        String phone = inputPhone.getText().toString().trim();
-        String city = inputCity.getText().toString().trim();
-        String address = inputAddress.getText().toString().trim();
+        String name = binding.inputName.getText().toString().trim();
+        String surname = binding.inputSurname.getText().toString().trim();
+        String email = binding.inputEmail.getText().toString().trim();
+        String password = binding.inputPassword.getText().toString().trim();
+        String repeatPassword = binding.inputRepeatPassword.getText().toString().trim();
+        String phone = binding.inputPhone.getText().toString().trim();
+        String city = binding.inputCity.getText().toString().trim();
+        String address = binding.inputAddress.getText().toString().trim();
 
         // Input Validation
         if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || city.isEmpty()) {

@@ -1,16 +1,13 @@
 package com.wde.eventplanner.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.wde.eventplanner.R;
+import com.wde.eventplanner.databinding.CardEventBinding;
 import com.wde.eventplanner.models.Event;
 
 import java.time.format.DateTimeFormatter;
@@ -28,20 +25,19 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     @NonNull
     @Override
     public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_event, parent, false);
-        return new EventViewHolder(view);
+        CardEventBinding binding = CardEventBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new EventViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = eventList.get(position);
-        holder.titleTextView.setText(event.getName());
-        Picasso.get().load(event.getImages().get(0)).into(holder.eventCardPicture);
-        holder.titleTextView.setText(event.getName());
-        holder.timeTextView.setText(event.getDate().format(DateTimeFormatter.ofPattern("HH:mm")));
-        holder.dateTextView.setText(event.getDate().format(DateTimeFormatter.ofPattern("d.M.yyyy.")));
-        holder.locationTextView.setText(event.getCity());
-        holder.ratingTextView.setText(String.format(Locale.ENGLISH, "%2.1f", event.getRating()));
+        Picasso.get().load(event.getImages().get(0)).into(holder.binding.eventCardPicture);
+        holder.binding.eventCardTitle.setText(event.getName());
+        holder.binding.eventCardTime.setText(event.getDate().format(DateTimeFormatter.ofPattern("HH:mm")));
+        holder.binding.eventCardDate.setText(event.getDate().format(DateTimeFormatter.ofPattern("d.M.yyyy.")));
+        holder.binding.eventCardLocation.setText(event.getCity());
+        holder.binding.eventCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", event.getRating()));
     }
 
     @Override
@@ -50,18 +46,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView, timeTextView, dateTextView, locationTextView, ratingTextView;
-        ImageView eventCardPicture;
+        CardEventBinding binding;
 
-        public EventViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            eventCardPicture = itemView.findViewById(R.id.eventCardPicture);
-            titleTextView = itemView.findViewById(R.id.eventCardTitle);
-            timeTextView = itemView.findViewById(R.id.eventCardTime);
-            dateTextView = itemView.findViewById(R.id.eventCardDate);
-            locationTextView = itemView.findViewById(R.id.eventCardLocation);
-            ratingTextView = itemView.findViewById(R.id.eventCardRating);
+        public EventViewHolder(CardEventBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

@@ -13,7 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Toast;
 
@@ -22,9 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
-import com.google.android.material.textfield.TextInputEditText;
-import com.wde.eventplanner.R;
+import com.wde.eventplanner.databinding.DialogListingFilterBinding;
 import com.wde.eventplanner.fragments.AdminListingCategories.AdminListingCategoriesViewModel;
 import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
 import com.wde.eventplanner.models.listingCategory.ListingType;
@@ -34,10 +31,9 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public class ListingFilterDialogFragment extends DialogFragment {
-    private MaterialAutoCompleteTextView categoryAutoCompleteTextView;
-    private MaterialAutoCompleteTextView typeAutoCompleteTextView;
     private ArrayList<ListingCategoryDTO> categories;
     private String[] categoryNames = new String[]{};
+    private DialogListingFilterBinding binding;
     private final AllListingsFragment parent;
 
     public ListingFilterDialogFragment(AllListingsFragment fragment) {
@@ -63,86 +59,76 @@ public class ListingFilterDialogFragment extends DialogFragment {
     @Nullable
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listing_filter_dialog, null);
+        binding = DialogListingFilterBinding.inflate(inflater, container, false);
 
-        categoryAutoCompleteTextView = view.findViewById(R.id.categoryDropdown);
-        categoryAutoCompleteTextView.setOnClickListener(v -> categoryAutoCompleteTextView.showDropDown());
-        categoryAutoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
-            String input = categoryAutoCompleteTextView.getText().toString().trim();
-            if (hasFocus) categoryAutoCompleteTextView.showDropDown();
+        binding.categoryDropdown.setOnClickListener(v -> binding.categoryDropdown.showDropDown());
+        binding.categoryDropdown.setOnFocusChangeListener((v, hasFocus) -> {
+            String input = binding.categoryDropdown.getText().toString().trim();
+            if (hasFocus) binding.categoryDropdown.showDropDown();
             else {
                 Optional<String> found = Arrays.stream(categoryNames).filter(category -> category.equalsIgnoreCase(input)).findFirst();
-                categoryAutoCompleteTextView.setText(found.orElse(""));
+                binding.categoryDropdown.setText(found.orElse(""));
             }
         });
 
-        typeAutoCompleteTextView = view.findViewById(R.id.typeDropdown);
-        typeAutoCompleteTextView.setAdapter(getTypeArrayAdapter());
-        typeAutoCompleteTextView.setOnClickListener(v -> typeAutoCompleteTextView.showDropDown());
-        typeAutoCompleteTextView.setOnItemClickListener((parent, v, position, id) -> {
+        binding.typeDropdown.setAdapter(getTypeArrayAdapter());
+        binding.typeDropdown.setOnClickListener(v -> binding.typeDropdown.showDropDown());
+        binding.typeDropdown.setOnItemClickListener((parent, v, position, id) -> {
             String selected = parent.getItemAtPosition(position).toString();
             ListingType type = selected.equals("Products") ? ListingType.PRODUCT : (selected.equals("Services") ? ListingType.SERVICE : null);
             String[] categories = this.categories != null ? this.categories.stream().filter(dto -> dto.getListingType() == type || type == null)
                     .map(ListingCategoryDTO::getName).toArray(String[]::new) : new String[]{};
             ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, categories);
-            categoryAutoCompleteTextView.setAdapter(categoryAdapter);
+            binding.categoryDropdown.setAdapter(categoryAdapter);
         });
-        typeAutoCompleteTextView.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) typeAutoCompleteTextView.showDropDown();
+        binding.typeDropdown.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) binding.typeDropdown.showDropDown();
         });
 
-        view.setOnTouchListener((v, event) -> {
+        binding.getRoot().setOnTouchListener((v, event) -> {
             Rect rect = new Rect();
-            categoryAutoCompleteTextView.getGlobalVisibleRect(rect);
+            binding.categoryDropdown.getGlobalVisibleRect(rect);
             if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                categoryAutoCompleteTextView.clearFocus();
-                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(categoryAutoCompleteTextView.getWindowToken(), 0);
+                binding.categoryDropdown.clearFocus();
+                InputMethodManager imm = (InputMethodManager) binding.getRoot().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.categoryDropdown.getWindowToken(), 0);
             }
-            typeAutoCompleteTextView.getGlobalVisibleRect(rect);
+            binding.typeDropdown.getGlobalVisibleRect(rect);
             if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                typeAutoCompleteTextView.clearFocus();
-                InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(typeAutoCompleteTextView.getWindowToken(), 0);
+                binding.typeDropdown.clearFocus();
+                InputMethodManager imm = (InputMethodManager) binding.getRoot().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.typeDropdown.getWindowToken(), 0);
             }
             return false;
         });
 
-        Button closeButton = view.findViewById(R.id.closeButton);
-        categoryAutoCompleteTextView.clearFocus();
-        closeButton.setOnClickListener(v -> dismiss());
-
-        TextInputEditText minPriceInput = view.findViewById(R.id.minPrice);
-        TextInputEditText maxPriceInput = view.findViewById(R.id.maxPrice);
-        TextInputEditText minRatingInput = view.findViewById(R.id.minRating);
-        TextInputEditText maxRatingInput = view.findViewById(R.id.maxRating);
-
-        Button filterButton = view.findViewById(R.id.filterButton);
-        filterButton.setOnClickListener(v -> {
-            String categoryInput = categoryAutoCompleteTextView.getText().toString().trim();
+        binding.categoryDropdown.clearFocus();
+        binding.closeButton.setOnClickListener(v -> dismiss());
+        binding.filterButton.setOnClickListener(v -> {
+            String categoryInput = binding.categoryDropdown.getText().toString().trim();
             String category = categories.stream().filter(dto -> dto.getName().equalsIgnoreCase(categoryInput)).findFirst().map(ListingCategoryDTO::getId).orElse(null);
-            String typeInput = typeAutoCompleteTextView.getText().toString().trim();
+            String typeInput = binding.typeDropdown.getText().toString().trim();
             String type = (typeInput.equals("Products") ? "PRODUCT" : (typeInput.equals("Services") ? "SERVICE" : null));
 
             String minPrice, maxPrice, minRating, maxRating;
-            if (minPriceInput.getText() != null && !minPriceInput.getText().toString().isBlank())
-                minPrice = minPriceInput.getText().toString();
+            if (binding.minPrice.getText() != null && !binding.minPrice.getText().toString().isBlank())
+                minPrice = binding.minPrice.getText().toString();
             else minPrice = null;
-            if (maxPriceInput.getText() != null && !maxPriceInput.getText().toString().isBlank())
-                maxPrice = maxPriceInput.getText().toString();
+            if (binding.maxPrice.getText() != null && !binding.maxPrice.getText().toString().isBlank())
+                maxPrice = binding.maxPrice.getText().toString();
             else maxPrice = null;
-            if (minRatingInput.getText() != null && !minRatingInput.getText().toString().isBlank())
-                minRating = minRatingInput.getText().toString();
+            if (binding.minRating.getText() != null && !binding.minRating.getText().toString().isBlank())
+                minRating = binding.minRating.getText().toString();
             else minRating = null;
-            if (maxRatingInput.getText() != null && !maxRatingInput.getText().toString().isBlank())
-                maxRating = maxRatingInput.getText().toString();
+            if (binding.maxRating.getText() != null && !binding.maxRating.getText().toString().isBlank())
+                maxRating = binding.maxRating.getText().toString();
             else maxRating = null;
 
             parent.onFilterPressed(type, category, minPrice, maxPrice, minRating, maxRating);
             dismiss();
         });
 
-        return view;
+        return binding.getRoot();
     }
 
     @NonNull
@@ -178,12 +164,12 @@ public class ListingFilterDialogFragment extends DialogFragment {
 
         listingCategoriesViewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), categories -> {
             this.categories = categories;
-            String selectedType = typeAutoCompleteTextView.getText().toString();
+            String selectedType = binding.typeDropdown.getText().toString();
             ListingType type = selectedType.equals("Products") ? ListingType.PRODUCT : (selectedType.equals("Services") ? ListingType.SERVICE : null);
             categoryNames = categories != null ? categories.stream().filter(dto -> dto.getListingType() == type || type == null)
                     .map(ListingCategoryDTO::getName).toArray(String[]::new) : new String[]{};
             ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, categoryNames);
-            categoryAutoCompleteTextView.setAdapter(categoryAdapter);
+            binding.categoryDropdown.setAdapter(categoryAdapter);
 
         });
 
@@ -196,7 +182,7 @@ public class ListingFilterDialogFragment extends DialogFragment {
 
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
-        categoryAutoCompleteTextView.clearFocus();
+        binding.categoryDropdown.clearFocus();
         super.onDismiss(dialog);
     }
 }

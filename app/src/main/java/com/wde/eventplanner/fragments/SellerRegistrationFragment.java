@@ -1,6 +1,5 @@
 package com.wde.eventplanner.fragments;
 
-
 import static com.wde.eventplanner.constants.RegexConstants.ADDRESS_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.CITY_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
@@ -15,7 +14,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -23,8 +21,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.wde.eventplanner.databinding.FragmentSellerRegistrationBinding;
 import com.wde.eventplanner.models.DemoUser;
 import com.wde.eventplanner.R;
 
@@ -32,47 +29,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SellerRegistrationFragment extends Fragment {
-
+    private FragmentSellerRegistrationBinding binding;
     private static final int PICK_IMAGE_REQUEST = 1;  // Request code for image selection
-    private TextInputEditText inputName, inputSurname, inputEmail, inputPassword, inputRepeatPassword;
-    private TextInputEditText inputCompanyName, inputPhone, inputDescription, inputCity, inputAddress;
-    private MaterialButton selectImageButton, registerButton;
-    private ImageView selectedImageView;
     private Uri selectedImageUri;
     private List<DemoUser> userList;
 
-    public SellerRegistrationFragment() {}
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_seller_registration_screen, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentSellerRegistrationBinding.inflate(inflater, container, false);
 
         userList = new ArrayList<>();
         userList.add(new DemoUser("email@email.com", "Faks1312!"));
         userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
         userList.add(new DemoUser("a@a.com", "Faks1312!"));
 
-        inputName = rootView.findViewById(R.id.inputName);
-        inputSurname = rootView.findViewById(R.id.inputSurname);
-        inputEmail = rootView.findViewById(R.id.inputEmail);
-        inputPassword = rootView.findViewById(R.id.inputPassword);
-        inputRepeatPassword = rootView.findViewById(R.id.inputRepeatPassword);
-        inputCompanyName = rootView.findViewById(R.id.inputCompanyName);
-        inputPhone = rootView.findViewById(R.id.inputPhone);
-        inputDescription = rootView.findViewById(R.id.inputDescription);
-        inputCity = rootView.findViewById(R.id.inputCity);
-        inputAddress = rootView.findViewById(R.id.inputAddress);
+        binding.selectImageButton.setOnClickListener(v -> openImagePicker());
+        binding.registerButton.setOnClickListener(v -> registerSeller());
 
-        selectImageButton = rootView.findViewById(R.id.selectImageButton);
-        registerButton = rootView.findViewById(R.id.registerButton);
-        selectedImageView = rootView.findViewById(R.id.selectedImageView);
-
-        selectImageButton.setOnClickListener(v -> openImagePicker());
-
-        registerButton.setOnClickListener(v -> registerSeller());
-
-        return rootView;
+        return binding.getRoot();
     }
 
     private void openImagePicker() {
@@ -86,21 +60,21 @@ public class SellerRegistrationFragment extends Fragment {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
-            selectedImageView.setImageURI(selectedImageUri);
+            binding.selectedImageView.setImageURI(selectedImageUri);
         }
     }
 
     private void registerSeller() {
-        String name = inputName.getText().toString().trim();
-        String surname = inputSurname.getText().toString().trim();
-        String email = inputEmail.getText().toString().trim();
-        String password = inputPassword.getText().toString().trim();
-        String repeatPassword = inputRepeatPassword.getText().toString().trim();
-        String companyName = inputCompanyName.getText().toString().trim();
-        String phone = inputPhone.getText().toString().trim();
-        String description = inputDescription.getText().toString().trim();
-        String city = inputCity.getText().toString().trim();
-        String address = inputAddress.getText().toString().trim();
+        String name = binding.inputName.getText().toString().trim();
+        String surname = binding.inputSurname.getText().toString().trim();
+        String email = binding.inputEmail.getText().toString().trim();
+        String password = binding.inputPassword.getText().toString().trim();
+        String repeatPassword = binding.inputRepeatPassword.getText().toString().trim();
+        String companyName = binding.inputCompanyName.getText().toString().trim();
+        String phone = binding.inputPhone.getText().toString().trim();
+        String description = binding.inputDescription.getText().toString().trim();
+        String city = binding.inputCity.getText().toString().trim();
+        String address = binding.inputAddress.getText().toString().trim();
 
         // Input Validation
         if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || companyName.isEmpty() || city.isEmpty()) {
@@ -122,7 +96,7 @@ public class SellerRegistrationFragment extends Fragment {
             return;
         }
 
-        if (!isValidUser(email)){
+        if (!isValidUser(email)) {
             showToast("There is an existing account with the same email.");
             return;
         }

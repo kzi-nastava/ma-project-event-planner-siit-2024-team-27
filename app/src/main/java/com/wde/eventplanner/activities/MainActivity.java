@@ -4,13 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -20,17 +17,16 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.core.splashscreen.SplashScreen;
 
-import com.google.android.material.navigation.NavigationView;
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.databinding.ActivityMainBinding;
 import com.wde.eventplanner.fragments.homepage.EventsViewModel;
 import com.wde.eventplanner.fragments.homepage.ListingsViewModel;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class HomeScreen extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
-    private DrawerLayout drawerLayout;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,31 +34,25 @@ public class HomeScreen extends AppCompatActivity {
 
         SplashScreen.installSplashScreen(this);
 
-        setContentView(R.layout.activity_home_screen);
-
-        // Set up toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Set up navigation drawer
-        drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        Button loginButton = findViewById(R.id.login_button);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setSupportActionBar(binding.toolbar);
+        setContentView(binding.getRoot());
 
         // Set up NavController
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
-            appBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.HomepageFragment, R.id.LoginFragment, R.id.SellerMyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment, R.id.NotificationsFragment)
-                    .setOpenableLayout(drawerLayout)
+            appBarConfiguration = new AppBarConfiguration.Builder(R.id.HomepageFragment, R.id.LoginFragment,
+                    R.id.SellerMyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment, R.id.NotificationsFragment,
+                    R.id.AdminListingCategoriesFragment)
+                    .setOpenableLayout(binding.drawerLayout)
                     .build();
 
             // Link toolbar and NavigationView with NavController
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-            NavigationUI.setupWithNavController(navigationView, navController);
+            NavigationUI.setupWithNavController(binding.navigationView, navController);
 
-            navigationView.setNavigationItemSelectedListener(item -> {
+            binding.navigationView.setNavigationItemSelectedListener(item -> {
                 int id = item.getItemId();
 
                 if (id == R.id.homepageTab && notCurrent(navController, R.id.HomepageFragment)) {
@@ -79,16 +69,16 @@ public class HomeScreen extends AppCompatActivity {
                     navController.navigate(R.id.AdminListingCategoriesFragment);
                 }
 
-                drawerLayout.closeDrawer(GravityCompat.START);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             });
 
-            loginButton.setOnClickListener(view -> {
+            binding.loginButton.setOnClickListener(view -> {
                 // Check if the current destination is not LoginFragment
                 if (notCurrent(navController, R.id.LoginFragment)) {
                     navController.navigate(R.id.LoginFragment);
                 }
-                drawerLayout.closeDrawer(GravityCompat.START);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
             });
 
             // wait for homepage data to fetch
@@ -120,14 +110,13 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }

@@ -10,39 +10,31 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
-import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.AdminListingCategoryActiveListAdapter;
 import com.wde.eventplanner.adapters.AdminListingCategoryPendingListAdapter;
+import com.wde.eventplanner.databinding.FragmentListingCategoriesBinding;
 import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
 import com.wde.eventplanner.models.listingCategory.ReplacingListingCategoryDTO;
 
 public class AdminListingCategoriesFragment extends Fragment {
-    private AdminListingCategoryPendingListAdapter pendingListAdapter;
-    private AdminListingCategoryActiveListAdapter activeListAdapter;
-    private RecyclerView pendingListingCategoriesRecyclerView;
-    private RecyclerView activeListingCategoriesRecyclerView;
+    private FragmentListingCategoriesBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_listing_categories_screen, container, false);
-
-        MaterialButton createListingButton = view.findViewById(R.id.createListingButton);
+        binding = FragmentListingCategoriesBinding.inflate(inflater, container, false);
 
         CreateListingCategoryDialogFragment createDialog = new CreateListingCategoryDialogFragment(this);
-        createListingButton.setOnClickListener(v -> createDialog.show(getParentFragmentManager(), "createDialog"));
 
-        pendingListingCategoriesRecyclerView = view.findViewById(R.id.pendingListingCategoriesRecyclerView);
-        pendingListingCategoriesRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        pendingListingCategoriesRecyclerView.setNestedScrollingEnabled(false);
+        binding.createListingButton.setOnClickListener(v -> createDialog.show(getParentFragmentManager(), "createDialog"));
 
-        activeListingCategoriesRecyclerView = view.findViewById(R.id.activeListingCategoriesRecyclerView);
-        activeListingCategoriesRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        activeListingCategoriesRecyclerView.setNestedScrollingEnabled(false);
+        binding.pendingListingCategoriesRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.pendingListingCategoriesRecyclerView.setNestedScrollingEnabled(false);
 
-        return view;
+        binding.activeListingCategoriesRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.activeListingCategoriesRecyclerView.setNestedScrollingEnabled(false);
+
+        return binding.getRoot();
     }
 
     @Override
@@ -57,10 +49,10 @@ public class AdminListingCategoriesFragment extends Fragment {
         });
 
         viewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), activeCategories -> {
-            this.activeListingCategoriesRecyclerView.setAdapter(new AdminListingCategoryActiveListAdapter(activeCategories, this));
+            binding.activeListingCategoriesRecyclerView.setAdapter(new AdminListingCategoryActiveListAdapter(activeCategories, this));
             viewModel.fetchPendingListingCategories();
             viewModel.getPendingListingCategories().observe(getViewLifecycleOwner(), pendingCategories ->
-                    this.pendingListingCategoriesRecyclerView.setAdapter(new AdminListingCategoryPendingListAdapter(pendingCategories, activeCategories, this)));
+                    binding.pendingListingCategoriesRecyclerView.setAdapter(new AdminListingCategoryPendingListAdapter(pendingCategories, activeCategories, this)));
         });
 
         viewModel.fetchActiveListingCategories();
