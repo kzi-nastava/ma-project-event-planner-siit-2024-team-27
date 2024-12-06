@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             // Link toolbar and NavigationView with NavController
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(binding.navigationView, navController);
+            binding.navigationView.getMenu().getItem(1).setChecked(true);
 
             binding.navigationView.setNavigationItemSelectedListener(item -> {
                 int id = item.getItemId();
@@ -69,15 +70,19 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.AdminListingCategoriesFragment);
                 }
 
+                if (!item.getTitle().toString().equals("Close")) {
+                    binding.loginButton.setSelected(false);
+                    item.setChecked(true);
+                }
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             });
 
             binding.loginButton.setOnClickListener(view -> {
-                // Check if the current destination is not LoginFragment
                 if (notCurrent(navController, R.id.LoginFragment)) {
                     navController.navigate(R.id.LoginFragment);
                 }
+                binding.loginButton.setSelected(true);
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             });
 
