@@ -18,6 +18,11 @@ public class EventsViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Event>> eventsLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
+    public boolean isReady() {
+        if (eventsLiveData.getValue() == null) return false;
+        return !eventsLiveData.getValue().isEmpty();
+    }
+
     public LiveData<ArrayList<Event>> getEvents() {
         return eventsLiveData;
     }

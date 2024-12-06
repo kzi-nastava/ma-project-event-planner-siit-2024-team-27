@@ -19,7 +19,7 @@
             android:layout_height="32dp"
             android:layout_marginStart="14dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/banner"
+            android:src="@drawable/wde_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title=" " />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
@@ -61,10 +61,10 @@
         <Button
             android:id="@+id/login_button"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="56dp"
             android:layout_gravity="start|bottom"
             android:layout_marginStart="4dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="24dp"
             android:backgroundTint="@color/secondary_background"
             android:drawableRight="@drawable/ic_login"
             android:drawableTint="@color/pale_text"

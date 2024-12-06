@@ -18,6 +18,11 @@ public class ListingsViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Listing>> listingsLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
+    public boolean isReady() {
+        if (listingsLiveData.getValue() == null) return false;
+        return !listingsLiveData.getValue().isEmpty();
+    }
+
     public LiveData<ArrayList<Listing>> getListings() {
         return listingsLiveData;
     }
