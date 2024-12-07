@@ -19,8 +19,8 @@ import androidx.core.splashscreen.SplashScreen;
 
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.ActivityMainBinding;
-import com.wde.eventplanner.fragments.homepage.EventsViewModel;
-import com.wde.eventplanner.fragments.homepage.ListingsViewModel;
+import com.wde.eventplanner.viewmodels.EventsViewModel;
+import com.wde.eventplanner.viewmodels.ListingsViewModel;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     alreadyShowed.set(true);
                 if (timeout.get() && !alreadyShowed.get()) {
                     alreadyShowed.set(true);
-                    Toast.makeText(this, "Error: data fetch timed out.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error: data fetch timed out", Toast.LENGTH_SHORT).show();
                 }
                 return timeout.get() || eventsViewModel.isReady() && listingsViewModel.isReady();
             });

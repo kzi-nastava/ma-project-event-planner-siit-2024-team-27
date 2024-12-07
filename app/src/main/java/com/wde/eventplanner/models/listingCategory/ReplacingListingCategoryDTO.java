@@ -1,5 +1,7 @@
 package com.wde.eventplanner.models.listingCategory;
 
+import com.wde.eventplanner.models.listing.ListingType;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

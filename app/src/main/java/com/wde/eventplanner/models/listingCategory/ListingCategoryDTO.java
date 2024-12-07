@@ -2,6 +2,8 @@ package com.wde.eventplanner.models.listingCategory;
 
 import androidx.annotation.NonNull;
 
+import com.wde.eventplanner.models.listing.ListingType;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
