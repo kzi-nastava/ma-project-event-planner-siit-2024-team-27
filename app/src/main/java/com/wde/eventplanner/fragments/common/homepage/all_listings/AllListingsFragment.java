@@ -111,11 +111,10 @@ public class AllListingsFragment extends Fragment {
     private void listingsObserver(ArrayList<Listing> listings) {
         if (binding.listingsRecyclerView.getAdapter() != null) {
             ListingAdapter adapter = (ListingAdapter) binding.listingsRecyclerView.getAdapter();
-            if (!adapter.listings.equals(listings)) {
-                adapter.listings.clear();
-                adapter.listings.addAll(listings);
-                adapter.notifyDataSetChanged();
-            }
+            ArrayList<Listing> listingsTmp = new ArrayList<>(listings);
+            adapter.listings.clear();
+            adapter.listings.addAll(listingsTmp);
+            adapter.notifyDataSetChanged();
         }
     }
 }

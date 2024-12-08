@@ -63,22 +63,20 @@ public class HomepageFragment extends Fragment {
     private void listingsChanged(ArrayList<Listing> listings) {
         if (binding.listingsRecyclerView.getAdapter() != null) {
             ListingAdapter adapter = (ListingAdapter) binding.listingsRecyclerView.getAdapter();
-            if (!adapter.listings.equals(listings)) {
-                adapter.listings.clear();
-                adapter.listings.addAll(listings);
-                adapter.notifyItemRangeChanged(0, 5);
-            }
+            ArrayList<Listing> listingsTmp = new ArrayList<>(listings);
+            adapter.listings.clear();
+            adapter.listings.addAll(listingsTmp);
+            adapter.notifyItemRangeChanged(0, 5);
         }
     }
 
     private void eventsChanged(ArrayList<Event> events) {
         if (binding.eventsRecyclerView.getAdapter() != null) {
             EventAdapter adapter = (EventAdapter) binding.eventsRecyclerView.getAdapter();
-            if (!adapter.events.equals(events)) {
-                adapter.events.clear();
-                adapter.events.addAll(events);
-                adapter.notifyItemRangeChanged(0, 5);
-            }
+            ArrayList<Event> eventsTmp = new ArrayList<>(events);
+            adapter.events.clear();
+            adapter.events.addAll(eventsTmp);
+            adapter.notifyItemRangeChanged(0, 5);
         }
     }
 }

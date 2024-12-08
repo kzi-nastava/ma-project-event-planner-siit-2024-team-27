@@ -31,16 +31,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/typeDropdownLayout"
-            android:layout_height="50dp"
             android:layout_width="240dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="36dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="64dp"
             app:endIconDrawable="@drawable/ic_down_arrow"
-            android:dropDownHeight="100dp"
             app:endIconMode="custom"
             app:endIconTint="@color/pale_text"
             app:expandedHintEnabled="false"
-            android:completionThreshold="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,9 +46,13 @@
             app:placeholderTextColor="@color/pale_text">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/typeDropdown"
+                android:id="@+id/categoryDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:completionThreshold="0"
+                android:dropDownVerticalOffset="1dp"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:paddingHorizontal="12dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,8 +60,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/replaceButton"
             style="@style/CustomButtonStyle"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="36dp"
             android:backgroundTint="@color/accent2"

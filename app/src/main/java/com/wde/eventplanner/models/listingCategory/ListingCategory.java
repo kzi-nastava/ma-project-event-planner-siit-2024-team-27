@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class ListingCategoryDTO {
+public class ListingCategory {
     private String id;
 
     private String name;
@@ -31,7 +31,7 @@ public class ListingCategoryDTO {
     }
 
     // admin creating a new category constructor
-    public ListingCategoryDTO(String name, String description, ListingType listingType) {
+    public ListingCategory(String name, String description, ListingType listingType) {
         this.name = name;
         this.description = description;
         this.isPending = false;
@@ -40,7 +40,7 @@ public class ListingCategoryDTO {
     }
 
     // admin editing a category constructor
-    public ListingCategoryDTO(String id, String name, String description) {
+    public ListingCategory(String id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;

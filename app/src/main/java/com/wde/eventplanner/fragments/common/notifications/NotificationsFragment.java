@@ -46,11 +46,10 @@ public class NotificationsFragment extends Fragment {
     private void notificationsChanged(ArrayList<Notification> notifications) {
         if (binding.notificationsRecyclerView.getAdapter() != null) {
             NotificationsAdapter adapter = (NotificationsAdapter) binding.notificationsRecyclerView.getAdapter();
-            if (!adapter.notifications.equals(notifications)) {
-                adapter.notifications.clear();
-                adapter.notifications.addAll(notifications);
-                adapter.notifyDataSetChanged();
-            }
+            ArrayList<Notification> notificationsTmp = new ArrayList<>(notifications);
+            adapter.notifications.clear();
+            adapter.notifications.addAll(notificationsTmp);
+            adapter.notifyDataSetChanged();
         }
         for (Notification notification : notifications) {
             if (!notification.isSeen())

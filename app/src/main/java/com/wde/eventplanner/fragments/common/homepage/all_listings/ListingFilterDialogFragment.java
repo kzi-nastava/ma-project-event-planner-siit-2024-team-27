@@ -1,6 +1,5 @@
 package com.wde.eventplanner.fragments.common.homepage.all_listings;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,17 +21,16 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.wde.eventplanner.adapters.DropdownArrayAdapter;
 import com.wde.eventplanner.databinding.DialogListingFilterBinding;
 import com.wde.eventplanner.models.listing.ListingType;
-import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
+import com.wde.eventplanner.models.listingCategory.ListingCategory;
 import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ListingFilterDialogFragment extends DialogFragment {
     private ArrayList<String> categoryNames = new ArrayList<>();
-    private ArrayList<ListingCategoryDTO> categories;
+    private ArrayList<ListingCategory> categories;
     private DialogListingFilterBinding binding;
     private final AllListingsFragment parent;
 
@@ -40,7 +39,6 @@ public class ListingFilterDialogFragment extends DialogFragment {
     }
 
     @Nullable
-    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogListingFilterBinding.inflate(inflater, container, false);
         ListingCategoriesViewModel viewModel = new ViewModelProvider(requireActivity()).get(ListingCategoriesViewModel.class);
@@ -53,11 +51,13 @@ public class ListingFilterDialogFragment extends DialogFragment {
         binding.categoryDropdown.setOnClickListener(v -> binding.categoryDropdown.showDropDown());
         binding.categoryDropdown.setOnFocusChangeListener((v, hasFocus) -> onDropdownFocusChanged(hasFocus, binding.categoryDropdown, categoryNames));
 
-        binding.typeDropdown.setAdapter(new DropdownArrayAdapter(requireActivity(), List.of("All listings", "Products", "Services")));
+        binding.typeDropdown.setAdapter(new DropdownArrayAdapter<>(requireActivity(), new String[]{"All listings", "Products", "Services"}));
         binding.typeDropdown.setOnClickListener(v -> binding.typeDropdown.showDropDown());
         binding.typeDropdown.setOnItemClickListener(this::onTypeDropdownItemClick);
         binding.typeDropdown.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) binding.typeDropdown.showDropDown();
+            InputMethodManager imm = (InputMethodManager) binding.getRoot().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(binding.typeDropdown.getWindowToken(), 0);
         });
 
         binding.closeButton.setOnClickListener(v -> dismiss());
@@ -91,8 +91,10 @@ public class ListingFilterDialogFragment extends DialogFragment {
 
     private void onDropdownFocusChanged(boolean hasFocus, MaterialAutoCompleteTextView dropdown, ArrayList<String> values) {
         String input = dropdown.getText().toString().trim();
-        if (hasFocus) dropdown.showDropDown();
-        else {
+        if (hasFocus) {
+            dropdown.setText("");
+            dropdown.showDropDown();
+        } else {
             Optional<String> found = values.stream().filter(value -> value.equalsIgnoreCase(input)).findFirst();
             dropdown.setText(found.orElse(""));
         }
@@ -102,13 +104,13 @@ public class ListingFilterDialogFragment extends DialogFragment {
         String selected = parent.getItemAtPosition(position).toString();
         ListingType type = selected.equals("Products") ? ListingType.PRODUCT : (selected.equals("Services") ? ListingType.SERVICE : null);
         ArrayList<String> categories = this.categories != null ? this.categories.stream().filter(dto -> dto.getListingType() == type || type == null)
-                .map(ListingCategoryDTO::getName).collect(Collectors.toCollection(ArrayList::new)) : new ArrayList<>();
-        binding.categoryDropdown.setAdapter(new DropdownArrayAdapter(requireActivity(), categories));
+                .map(ListingCategory::getName).collect(Collectors.toCollection(ArrayList::new)) : new ArrayList<>();
+        binding.categoryDropdown.setAdapter(new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, categories));
     }
 
     private void onFilterButtonClicked(View v) {
         String categoryInput = binding.categoryDropdown.getText().toString().trim();
-        String category = categories.stream().filter(dto -> dto.getName().equalsIgnoreCase(categoryInput)).findFirst().map(ListingCategoryDTO::getId).orElse(null);
+        String category = categories.stream().filter(dto -> dto.getName().equalsIgnoreCase(categoryInput)).findFirst().map(ListingCategory::getId).orElse(null);
         String typeInput = binding.typeDropdown.getText().toString().trim();
         String type = (typeInput.equals("Products") ? "PRODUCT" : (typeInput.equals("Services") ? "SERVICE" : null));
 
@@ -130,12 +132,12 @@ public class ListingFilterDialogFragment extends DialogFragment {
         dismiss();
     }
 
-    private void onCategoriesChanged(ArrayList<ListingCategoryDTO> categories) {
+    private void onCategoriesChanged(ArrayList<ListingCategory> categories) {
         this.categories = categories;
         String selectedType = binding.typeDropdown.getText().toString();
         ListingType type = selectedType.equals("Products") ? ListingType.PRODUCT : (selectedType.equals("Services") ? ListingType.SERVICE : null);
         categoryNames = categories != null ? categories.stream().filter(dto -> dto.getListingType() == type || type == null)
-                .map(ListingCategoryDTO::getName).collect(Collectors.toCollection(ArrayList::new)) : new ArrayList<>();
-        binding.categoryDropdown.setAdapter(new DropdownArrayAdapter(requireActivity(), categoryNames));
+                .map(ListingCategory::getName).collect(Collectors.toCollection(ArrayList::new)) : new ArrayList<>();
+        binding.categoryDropdown.setAdapter(new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, categoryNames));
     }
 }

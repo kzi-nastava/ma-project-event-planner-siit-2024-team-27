@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ReplacingListingCategoryDTO {
+public class ReplacingListingCategory {
     private String toBeReplacedId;
     private String replacingId;
     private ListingType listingType;

@@ -1,63 +1,73 @@
 package com.wde.eventplanner.fragments.admin.listing_categories;
 
-import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.wde.eventplanner.adapters.DropdownArrayAdapter;
 import com.wde.eventplanner.databinding.DialogCreateListingCategoryBinding;
 import com.wde.eventplanner.models.listing.ListingType;
-import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
+import com.wde.eventplanner.models.listingCategory.ListingCategory;
+import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 
 public class CreateListingCategoryDialogFragment extends DialogFragment {
-    private ListingCategoriesFragment parentFragment;
     private DialogCreateListingCategoryBinding binding;
+    private ListingCategoriesViewModel viewModel;
     private ListingType selectedListingType;
 
-    public CreateListingCategoryDialogFragment(ListingCategoriesFragment parentFragment) {
-        this.parentFragment = parentFragment;
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DialogCreateListingCategoryBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(requireActivity()).get(ListingCategoriesViewModel.class);
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-
-        binding = DialogCreateListingCategoryBinding.inflate(getLayoutInflater());
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(binding.getRoot());
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.gravity = android.view.Gravity.CENTER;
-        dialog.getWindow().setAttributes(params);
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            getDialog().getWindow().getDecorView().setOnTouchListener(this::onTouchOutsideDialog);
+        }
 
         binding.closeButton.setOnClickListener(v -> dismiss());
+        binding.createButton.setOnClickListener(v -> createListing());
 
-        ArrayAdapter<ListingType> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, new ListingType[]{ListingType.SERVICE, ListingType.PRODUCT});
-
-        binding.typeDropdown.setAdapter(adapter);
-        binding.typeDropdown.setOnFocusChangeListener((_un1, _un2) -> binding.typeDropdown.showDropDown());
-
-        binding.typeDropdown.setOnItemClickListener((parent, _un1, position, _un2) ->
-                selectedListingType = (ListingType) parent.getItemAtPosition(position));
-
-        binding.createButton.setOnClickListener(v -> {
-            createListing();
-            dismiss();
+        binding.typeDropdown.setAdapter(new DropdownArrayAdapter<>(requireActivity(), ListingType.values()));
+        binding.typeDropdown.setOnClickListener(v -> binding.typeDropdown.showDropDown());
+        binding.typeDropdown.setOnItemClickListener((parent, v, position, id) -> {
+            selectedListingType = (ListingType) parent.getItemAtPosition(position);
+        });
+        binding.typeDropdown.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) binding.typeDropdown.showDropDown();
+            InputMethodManager imm = (InputMethodManager) binding.getRoot().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(binding.typeDropdown.getWindowToken(), 0);
         });
 
-        return dialog;
+        return binding.getRoot();
+    }
+
+    private boolean onTouchOutsideDialog(View v, MotionEvent event) {
+        Rect rect = new Rect();
+        binding.typeDropdown.getGlobalVisibleRect(rect);
+        if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
+            binding.typeDropdown.clearFocus();
+            InputMethodManager imm = (InputMethodManager) binding.getRoot().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(binding.typeDropdown.getWindowToken(), 0);
+        }
+        return false;
     }
 
     private void createListing() {
-        String name = binding.name.getText().toString();
-        String description = binding.description.getText().toString();
-
-        parentFragment.createActiveListing(new ListingCategoryDTO(name, description, selectedListingType));
+        if (binding.name.getText() != null && binding.description.getText() != null) {
+            String name = binding.name.getText().toString();
+            String description = binding.description.getText().toString();
+            viewModel.createActiveListingCategory(new ListingCategory(name, description, selectedListingType));
+        }
+        dismiss();
     }
 }

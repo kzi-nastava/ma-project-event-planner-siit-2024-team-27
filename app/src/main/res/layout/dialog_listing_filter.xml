@@ -66,12 +66,13 @@
                 android:cursorVisible="false"
                 android:dropDownVerticalOffset="1dp"
                 android:inputType="none"
-                android:paddingStart="11dp" />
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/categoryDropdownLayout"
+            android:id="@+id/type_dropdown_layout"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginHorizontal="36dp"
@@ -94,7 +95,8 @@
                 android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:paddingStart="11dp" />
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,7 +110,7 @@
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toStartOf="@id/maxPriceLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/categoryDropdownLayout"
+            app:layout_constraintTop_toBottomOf="@id/type_dropdown_layout"
             app:placeholderText="Min. price"
             app:placeholderTextColor="@color/pale_text">
 
@@ -119,7 +121,8 @@
                 android:imeOptions="actionNext"
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
-                android:paddingStart="11dp" />
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +136,7 @@
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/minPriceLayout"
-            app:layout_constraintTop_toBottomOf="@id/categoryDropdownLayout"
+            app:layout_constraintTop_toBottomOf="@id/type_dropdown_layout"
             app:placeholderText="Max. price"
             app:placeholderTextColor="@color/pale_text">
 
@@ -143,7 +146,8 @@
                 android:layout_height="match_parent"
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
-                android:paddingStart="11dp" />
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,7 +172,8 @@
                 android:imeOptions="actionNext"
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
-                android:paddingStart="11dp" />
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -193,7 +198,8 @@
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
-                android:paddingStart="11dp" />
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,7 +207,7 @@
             android:id="@+id/filterButton"
             style="@style/CustomButtonStyle"
             android:layout_width="132dp"
-            android:layout_height="58dp"
+            android:layout_height="56dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="36dp"
             android:backgroundTint="@color/accent2"

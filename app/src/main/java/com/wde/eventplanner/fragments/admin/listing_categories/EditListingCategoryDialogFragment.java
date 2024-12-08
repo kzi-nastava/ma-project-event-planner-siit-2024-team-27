@@ -1,65 +1,57 @@
 package com.wde.eventplanner.fragments.admin.listing_categories;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.databinding.DialogEditListingCategoryBinding;
-import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
+import com.wde.eventplanner.models.listingCategory.ListingCategory;
+import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 
 public class EditListingCategoryDialogFragment extends DialogFragment {
-    private ListingCategoriesFragment parentFragment;
     private DialogEditListingCategoryBinding binding;
-    private ListingCategoryDTO listingCategoryDTO;
-    private boolean isEditingActive;
+    private final ListingCategory listingCategory;
+    private ListingCategoriesViewModel viewModel;
+    private final boolean isCategoryActive;
 
-    public EditListingCategoryDialogFragment(ListingCategoryDTO listingCategoryDTO,
-                                             ListingCategoriesFragment parentFragment,
-                                             boolean isEditingActive) {
-        this.listingCategoryDTO = listingCategoryDTO;
-        this.parentFragment = parentFragment;
-        this.isEditingActive = isEditingActive;
+    public EditListingCategoryDialogFragment(ListingCategory listingCategory, boolean isCategoryActive) {
+        this.isCategoryActive = isCategoryActive;
+        this.listingCategory = listingCategory;
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        binding = DialogEditListingCategoryBinding.inflate(getLayoutInflater());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DialogEditListingCategoryBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(requireActivity()).get(ListingCategoriesViewModel.class);
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(binding.getRoot());
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        if (getDialog() != null && getDialog().getWindow() != null)
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.gravity = android.view.Gravity.CENTER;
-        dialog.getWindow().setAttributes(params);
-
-        binding.name.setText(listingCategoryDTO.getName());
-        binding.description.setText(listingCategoryDTO.getDescription());
+        binding.name.setText(listingCategory.getName());
+        binding.description.setText(listingCategory.getDescription());
         binding.closeButton.setOnClickListener(v -> dismiss());
-        binding.editListingCategoryButton.setOnClickListener(v -> {
-            editListing();
-            dismiss();
-        });
+        binding.editListingCategoryButton.setOnClickListener(v -> editListing());
 
-        return dialog;
+        return binding.getRoot();
     }
 
     private void editListing() {
-        String name = binding.name.getText().toString();
-        String description = binding.description.getText().toString();
-        ListingCategoryDTO dto = new ListingCategoryDTO(listingCategoryDTO.getId(), name, listingCategoryDTO.getIsPending(),
-                description, listingCategoryDTO.getIsDeleted(), listingCategoryDTO.getListingType());
+        if (binding.name.getText() != null && binding.description.getText() != null) {
+            String name = binding.name.getText().toString();
+            String description = binding.description.getText().toString();
+            ListingCategory dto = new ListingCategory(listingCategory.getId(), name, listingCategory.getIsPending(),
+                    description, listingCategory.getIsDeleted(), listingCategory.getListingType());
 
-        if (isEditingActive)
-            this.parentFragment.editActiveListing(dto);
-        else
-            this.parentFragment.editPendingListing(dto);
+            if (isCategoryActive)
+                viewModel.editActiveListingCategory(dto.getId(), dto);
+            else
+                viewModel.editPendingListingCategory(dto.getId(), dto);
+        }
+        dismiss();
     }
 }

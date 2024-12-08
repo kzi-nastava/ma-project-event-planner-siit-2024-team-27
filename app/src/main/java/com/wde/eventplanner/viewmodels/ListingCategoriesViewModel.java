@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
-import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
-import com.wde.eventplanner.models.listingCategory.ReplacingListingCategoryDTO;
+import com.wde.eventplanner.models.listingCategory.ListingCategory;
+import com.wde.eventplanner.models.listingCategory.ReplacingListingCategory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,15 +18,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListingCategoriesViewModel extends ViewModel {
-    private final MutableLiveData<ArrayList<ListingCategoryDTO>> pendingListingCategories = new MutableLiveData<>();
-    private final MutableLiveData<ArrayList<ListingCategoryDTO>> activeListingCategories = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<ListingCategory>> pendingListingCategories = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<ListingCategory>> activeListingCategories = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
-    public LiveData<ArrayList<ListingCategoryDTO>> getPendingListingCategories() {
+    public LiveData<ArrayList<ListingCategory>> getPendingListingCategories() {
         return pendingListingCategories;
     }
 
-    public LiveData<ArrayList<ListingCategoryDTO>> getActiveListingCategories() {
+    public LiveData<ArrayList<ListingCategory>> getActiveListingCategories() {
         return activeListingCategories;
     }
 
@@ -37,7 +37,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     public void fetchActiveListingCategories() {
         ClientUtils.listingCategoriesService.getCategories().enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<ListingCategoryDTO>> call, @NonNull Response<ArrayList<ListingCategoryDTO>> response) {
+            public void onResponse(@NonNull Call<ArrayList<ListingCategory>> call, @NonNull Response<ArrayList<ListingCategory>> response) {
                 if (response.isSuccessful()) {
                     activeListingCategories.postValue(response.body());
                 } else {
@@ -46,22 +46,22 @@ public class ListingCategoriesViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<ListingCategoryDTO>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<ListingCategory>> call, @NonNull Throwable t) {
                 errorMessage.postValue(t.getMessage());
             }
         });
     }
 
-    public void deleteActiveListingCategory(ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoriesService.deleteListingCategory(listingCategoryDTO.getId()).enqueue(new Callback<>() {
+    public void deleteActiveListingCategory(ListingCategory listingCategory) {
+        ClientUtils.listingCategoriesService.deleteListingCategory(listingCategory.getId()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<ListingCategoryDTO> activeListWithDTODeleted = activeListingCategories.getValue();
+                    ArrayList<ListingCategory> activeListWithDTODeleted = activeListingCategories.getValue();
                     if (activeListWithDTODeleted != null) {
-                        activeListWithDTODeleted.removeIf(c -> Objects.equals(c.getId(), listingCategoryDTO.getId()));
-                        listingCategoryDTO.setIsDeleted(true);
-                        activeListWithDTODeleted.add(listingCategoryDTO);
+                        activeListWithDTODeleted.removeIf(c -> Objects.equals(c.getId(), listingCategory.getId()));
+                        listingCategory.setIsDeleted(true);
+                        activeListWithDTODeleted.add(listingCategory);
                         activeListingCategories.setValue(new ArrayList<>(activeListWithDTODeleted));
                     }
                 } else {
@@ -80,12 +80,12 @@ public class ListingCategoriesViewModel extends ViewModel {
         });
     }
 
-    public void editActiveListingCategory(String id, ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoriesService.updateListingCategory(id, listingCategoryDTO).enqueue(new Callback<>() {
+    public void editActiveListingCategory(String id, ListingCategory listingCategory) {
+        ClientUtils.listingCategoriesService.updateListingCategory(id, listingCategory).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
+            public void onResponse(@NonNull Call<ListingCategory> call, @NonNull Response<ListingCategory> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<ListingCategoryDTO> activeListWithDTOEdited = activeListingCategories.getValue();
+                    ArrayList<ListingCategory> activeListWithDTOEdited = activeListingCategories.getValue();
                     if (activeListWithDTOEdited != null) {
                         activeListWithDTOEdited.removeIf(c -> Objects.equals(c.getId(), id));
                         activeListWithDTOEdited.add(response.body());
@@ -97,18 +97,18 @@ public class ListingCategoriesViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ListingCategoryDTO> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ListingCategory> call, @NonNull Throwable t) {
                 errorMessage.postValue(t.getMessage());
             }
         });
     }
 
-    public void createActiveListingCategory(ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoriesService.createActiveListingCategory(listingCategoryDTO).enqueue(new Callback<>() {
+    public void createActiveListingCategory(ListingCategory listingCategory) {
+        ClientUtils.listingCategoriesService.createActiveListingCategory(listingCategory).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
+            public void onResponse(@NonNull Call<ListingCategory> call, @NonNull Response<ListingCategory> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<ListingCategoryDTO> activeListWithDTOAdded = activeListingCategories.getValue();
+                    ArrayList<ListingCategory> activeListWithDTOAdded = activeListingCategories.getValue();
                     if (activeListWithDTOAdded != null) {
                         activeListWithDTOAdded.add(response.body());
                         activeListingCategories.setValue(new ArrayList<>(activeListWithDTOAdded));
@@ -119,7 +119,7 @@ public class ListingCategoriesViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ListingCategoryDTO> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ListingCategory> call, @NonNull Throwable t) {
                 errorMessage.postValue(t.getMessage());
             }
         });
@@ -128,7 +128,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     public void fetchPendingListingCategories() {
         ClientUtils.listingCategoriesService.getPendingCategories().enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<ListingCategoryDTO>> call, @NonNull Response<ArrayList<ListingCategoryDTO>> response) {
+            public void onResponse(@NonNull Call<ArrayList<ListingCategory>> call, @NonNull Response<ArrayList<ListingCategory>> response) {
                 if (response.isSuccessful()) {
                     pendingListingCategories.postValue(response.body());
                 } else {
@@ -137,18 +137,18 @@ public class ListingCategoriesViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<ListingCategoryDTO>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<ListingCategory>> call, @NonNull Throwable t) {
                 errorMessage.postValue(t.getMessage());
             }
         });
     }
 
-    public void editPendingListingCategory(String id, ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoriesService.updateListingCategory(id, listingCategoryDTO).enqueue(new Callback<>() {
+    public void editPendingListingCategory(String id, ListingCategory listingCategory) {
+        ClientUtils.listingCategoriesService.updateListingCategory(id, listingCategory).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
+            public void onResponse(@NonNull Call<ListingCategory> call, @NonNull Response<ListingCategory> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<ListingCategoryDTO> pendingListWithDTOEdited = pendingListingCategories.getValue();
+                    ArrayList<ListingCategory> pendingListWithDTOEdited = pendingListingCategories.getValue();
                     if (pendingListWithDTOEdited != null) {
                         pendingListWithDTOEdited.removeIf(c -> Objects.equals(c.getId(), id));
                         pendingListWithDTOEdited.add(response.body());
@@ -160,24 +160,24 @@ public class ListingCategoriesViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ListingCategoryDTO> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ListingCategory> call, @NonNull Throwable t) {
                 errorMessage.postValue(t.getMessage());
             }
         });
     }
 
-    public void approvePendingListingCategory(ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoriesService.approvePendingListingCategory(listingCategoryDTO.getId()).enqueue(new Callback<>() {
+    public void approvePendingListingCategory(ListingCategory listingCategory) {
+        ClientUtils.listingCategoriesService.approvePendingListingCategory(listingCategory.getId()).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
+            public void onResponse(@NonNull Call<ListingCategory> call, @NonNull Response<ListingCategory> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<ListingCategoryDTO> pendingListWithDTORemoved = pendingListingCategories.getValue();
+                    ArrayList<ListingCategory> pendingListWithDTORemoved = pendingListingCategories.getValue();
                     if (pendingListWithDTORemoved != null) {
-                        pendingListWithDTORemoved.removeIf(c -> Objects.equals(c.getId(), listingCategoryDTO.getId()));
+                        pendingListWithDTORemoved.removeIf(c -> Objects.equals(c.getId(), listingCategory.getId()));
                         pendingListingCategories.setValue(new ArrayList<>(pendingListWithDTORemoved));
                     }
 
-                    ArrayList<ListingCategoryDTO> activeListWithDTOAdded = activeListingCategories.getValue();
+                    ArrayList<ListingCategory> activeListWithDTOAdded = activeListingCategories.getValue();
                     if (activeListWithDTOAdded != null) {
                         activeListWithDTOAdded.add(response.body());
                         activeListingCategories.setValue(new ArrayList<>(activeListWithDTOAdded));
@@ -188,20 +188,20 @@ public class ListingCategoriesViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ListingCategoryDTO> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ListingCategory> call, @NonNull Throwable t) {
                 errorMessage.postValue(t.getMessage());
             }
         });
     }
 
-    public void replacePendingListingCategory(ReplacingListingCategoryDTO replacingListingCategoryDTO) {
-        ClientUtils.listingCategoriesService.replacePendingListingCategory(replacingListingCategoryDTO).enqueue(new Callback<>() {
+    public void replacePendingListingCategory(ReplacingListingCategory replacingListingCategory) {
+        ClientUtils.listingCategoriesService.replacePendingListingCategory(replacingListingCategory).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {
-                    ArrayList<ListingCategoryDTO> pendingListWithDTODeleted = pendingListingCategories.getValue();
+                    ArrayList<ListingCategory> pendingListWithDTODeleted = pendingListingCategories.getValue();
                     if (pendingListWithDTODeleted != null) {
-                        pendingListWithDTODeleted.removeIf(c -> Objects.equals(c.getId(), replacingListingCategoryDTO.getToBeReplacedId()));
+                        pendingListWithDTODeleted.removeIf(c -> Objects.equals(c.getId(), replacingListingCategory.getToBeReplacedId()));
                         pendingListingCategories.setValue(new ArrayList<>(pendingListWithDTODeleted));
                     }
                 } else {

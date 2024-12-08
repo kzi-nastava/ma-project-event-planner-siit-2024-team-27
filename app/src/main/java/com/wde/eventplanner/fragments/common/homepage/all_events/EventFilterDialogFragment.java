@@ -1,6 +1,5 @@
 package com.wde.eventplanner.fragments.common.homepage.all_events;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.adapters.DropdownArrayAdapter;
 import com.wde.eventplanner.databinding.DialogEventFilterBinding;
 import com.wde.eventplanner.models.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
@@ -42,6 +40,7 @@ public class EventFilterDialogFragment extends DialogFragment {
     private final Date after = new Date(0);
     private final AllEventsFragment parent;
     private boolean calendarIsOpen = false;
+    private ArrayList<String> typeNames;
     private ArrayList<EventType> types;
     private ArrayList<String> cities;
 
@@ -49,8 +48,6 @@ public class EventFilterDialogFragment extends DialogFragment {
         this.parent = fragment;
     }
 
-    @Nullable
-    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogEventFilterBinding.inflate(inflater, container, false);
         EventTypesViewModel viewModel = new ViewModelProvider(requireActivity()).get(EventTypesViewModel.class);
@@ -61,9 +58,12 @@ public class EventFilterDialogFragment extends DialogFragment {
         }
 
         cities = new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities)));
-        binding.cityDropdown.setAdapter(new DropdownArrayAdapter(requireActivity(), cities));
-        binding.cityDropdown.setOnClickListener(v -> binding.cityDropdown.showDropDown());
+        binding.cityDropdown.setAdapter(new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, cities));
         binding.cityDropdown.setOnFocusChangeListener((v, hasFocus) -> onDropdownFocusChanged(hasFocus, binding.cityDropdown, cities));
+        binding.cityDropdown.setOnClickListener(v -> binding.cityDropdown.showDropDown());
+
+        binding.typeDropdown.setOnFocusChangeListener((v, hasFocus) -> onDropdownFocusChanged(hasFocus, binding.typeDropdown, typeNames));
+        binding.typeDropdown.setOnClickListener(v -> binding.typeDropdown.showDropDown());
 
         binding.afterDate.setOnClickListener(v -> {
             if (!calendarIsOpen) openDatePicker(binding.afterDate, after);
@@ -103,8 +103,10 @@ public class EventFilterDialogFragment extends DialogFragment {
 
     private void onDropdownFocusChanged(boolean hasFocus, MaterialAutoCompleteTextView dropdown, ArrayList<String> values) {
         String input = dropdown.getText().toString().trim();
-        if (hasFocus) dropdown.showDropDown();
-        else {
+        if (hasFocus) {
+            dropdown.setText("");
+            dropdown.showDropDown();
+        } else {
             Optional<String> found = values.stream().filter(value -> value.equalsIgnoreCase(input)).findFirst();
             dropdown.setText(found.orElse(""));
         }
@@ -132,6 +134,7 @@ public class EventFilterDialogFragment extends DialogFragment {
         });
 
         datePicker.addOnNegativeButtonClickListener(v -> calendarIsOpen = false);
+        datePicker.addOnDismissListener(v -> calendarIsOpen = false);
     }
 
     private void onFilterButtonClicked(View v) {
@@ -158,16 +161,7 @@ public class EventFilterDialogFragment extends DialogFragment {
 
     private void OnTypesChanged(ArrayList<EventType> types) {
         this.types = types;
-        ArrayList<String> typeNames = (ArrayList<String>) types.stream().map(EventType::getName).collect(Collectors.toList());
-        binding.typeDropdown.setAdapter(new DropdownArrayAdapter(requireActivity(), typeNames));
-        binding.typeDropdown.setOnClickListener(v -> binding.typeDropdown.showDropDown());
-        binding.typeDropdown.setOnFocusChangeListener((v, hasFocus) -> {
-            String input = binding.typeDropdown.getText().toString().trim();
-            if (hasFocus) binding.typeDropdown.showDropDown();
-            else {
-                Optional<String> found = typeNames.stream().filter(type -> type.equalsIgnoreCase(input)).findFirst();
-                binding.typeDropdown.setText(found.orElse(""));
-            }
-        });
+        typeNames = (ArrayList<String>) types.stream().map(EventType::getName).collect(Collectors.toList());
+        binding.typeDropdown.setAdapter(new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, typeNames));
     }
 }

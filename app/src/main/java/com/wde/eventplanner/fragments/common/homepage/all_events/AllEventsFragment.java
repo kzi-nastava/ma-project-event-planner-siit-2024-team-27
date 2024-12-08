@@ -114,11 +114,10 @@ public class AllEventsFragment extends Fragment {
     private void eventsChanged(ArrayList<Event> events) {
         if (binding.eventsRecyclerView.getAdapter() != null) {
             EventAdapter adapter = (EventAdapter) binding.eventsRecyclerView.getAdapter();
-            if (!adapter.events.equals(events)) {
-                adapter.events.clear();
-                adapter.events.addAll(events);
-                adapter.notifyDataSetChanged();
-            }
+            ArrayList<Event> eventsTmp = new ArrayList<>(events);
+            adapter.events.clear();
+            adapter.events.addAll(eventsTmp);
+            adapter.notifyDataSetChanged();
         }
     }
 }
