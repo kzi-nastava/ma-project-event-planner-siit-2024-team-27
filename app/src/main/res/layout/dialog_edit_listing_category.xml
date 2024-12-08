@@ -48,7 +48,8 @@
                 android:layout_height="match_parent"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:paddingVertical="10dp" />
+                android:paddingVertical="10dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +73,8 @@
                 android:gravity="top"
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"
-                android:paddingVertical="12dp" />
+                android:paddingVertical="12dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

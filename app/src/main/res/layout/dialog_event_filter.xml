@@ -57,14 +57,11 @@
             app:placeholderText="Category"
             app:placeholderTextColor="@color/pale_text">
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            <com.wde.eventplanner.fragments.common.CustomDropDown
                 android:id="@+id/type_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:completionThreshold="0"
-                android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
-                android:inputType="text"
                 android:paddingStart="11dp"
                 android:paddingEnd="16dp" />
 
@@ -86,14 +83,11 @@
             app:placeholderText="City"
             app:placeholderTextColor="@color/pale_text">
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            <com.wde.eventplanner.fragments.common.CustomDropDown
                 android:id="@+id/cityDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:completionThreshold="0"
-                android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
-                android:inputType="text"
                 android:paddingStart="11dp"
                 android:paddingEnd="16dp" />
 
@@ -124,6 +118,7 @@
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
                 android:paddingEnd="16dp"
+                android:saveEnabled="false"
                 android:textCursorDrawable="@null" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,6 +147,7 @@
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
                 android:paddingEnd="16dp"
+                android:saveEnabled="false"
                 android:textCursorDrawable="@null" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -177,7 +173,8 @@
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
-                android:paddingEnd="0dp" />
+                android:paddingEnd="0dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -203,7 +200,8 @@
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
-                android:paddingEnd="0dp" />
+                android:paddingEnd="0dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -13,6 +13,7 @@ import com.wde.eventplanner.models.Notification;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.NotificationViewHolder> {
     public final List<Notification> notifications;
@@ -37,9 +38,9 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         Notification notification = notifications.get(position);
         holder.binding.titleTextView.setText(notification.getTitle());
         holder.binding.messageTextView.setText(notification.getMessage());
-        holder.binding.dateTextView.setText(new SimpleDateFormat("d.MM.yyyy.").format(notification.getDate()));
-        if (!notification.isSeen())
-            holder.binding.notificationCard.setCardBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.edge, null));
+        holder.binding.dateTextView.setText(new SimpleDateFormat("d.M.yyyy.", Locale.ENGLISH).format(notification.getDate()));
+        int color = notification.isSeen() ? R.color.card : R.color.edge;
+        holder.binding.notificationCard.setCardBackgroundColor(holder.itemView.getContext().getResources().getColor(color, null));
     }
 
     @Override

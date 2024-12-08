@@ -57,15 +57,10 @@
             app:placeholderText="Type"
             app:placeholderTextColor="@color/pale_text">
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            <com.wde.eventplanner.fragments.common.CustomDropDown
                 android:id="@+id/typeDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="@android:color/transparent"
-                android:completionThreshold="0"
-                android:cursorVisible="false"
-                android:dropDownVerticalOffset="1dp"
-                android:inputType="none"
                 android:paddingStart="11dp"
                 android:paddingEnd="0dp" />
 
@@ -87,14 +82,11 @@
             app:placeholderText="Category"
             app:placeholderTextColor="@color/pale_text">
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            <com.wde.eventplanner.fragments.common.CustomDropDown
                 android:id="@+id/categoryDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:completionThreshold="0"
-                android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
-                android:inputType="text"
                 android:paddingStart="11dp"
                 android:paddingEnd="0dp" />
 
@@ -122,7 +114,8 @@
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
-                android:paddingEnd="0dp" />
+                android:paddingEnd="0dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,7 +140,8 @@
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
-                android:paddingEnd="0dp" />
+                android:paddingEnd="0dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -173,7 +167,8 @@
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
-                android:paddingEnd="0dp" />
+                android:paddingEnd="0dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,7 +194,8 @@
                 android:inputType="numberDecimal"
                 android:paddingVertical="10dp"
                 android:paddingStart="11dp"
-                android:paddingEnd="0dp" />
+                android:paddingEnd="0dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
