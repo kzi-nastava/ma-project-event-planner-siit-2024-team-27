@@ -14,22 +14,27 @@ import com.wde.eventplanner.databinding.CardListingBinding;
 import com.wde.eventplanner.models.listing.Listing;
 import com.wde.eventplanner.models.listing.ListingType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingViewHolder> {
+    private final NavController navController;
+    public final List<Listing> listings;
 
-    private List<Listing> listingList;
-    private NavController navController;
-
-    public ListingAdapter(List<Listing> listingList) {
-        this.listingList = listingList;
+    public ListingAdapter() {
+        this.listings = new ArrayList<>();
         navController = null;
     }
 
-    public ListingAdapter(List<Listing> listingList, NavController navController) {
+    public ListingAdapter(List<Listing> listings) {
+        this.listings = listings;
+        navController = null;
+    }
+
+    public ListingAdapter(List<Listing> listings, NavController navController) {
         this.navController = navController;
-        this.listingList = listingList;
+        this.listings = listings;
     }
 
     @NonNull
@@ -41,7 +46,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
 
     @Override
     public void onBindViewHolder(@NonNull ListingViewHolder holder, int position) {
-        Listing listing = listingList.get(position);
+        Listing listing = listings.get(position);
         Picasso.get().load(listing.getImages().get(0)).into(holder.binding.listingCardPicture);
         holder.binding.listingCardTitle.setText(listing.getName());
         String priceEnding = listing.getType() == ListingType.SERVICE ? "€/hr" : "€";
@@ -57,7 +62,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
 
     @Override
     public int getItemCount() {
-        return listingList.size();
+        return listings.size();
     }
 
     public static class ListingViewHolder extends RecyclerView.ViewHolder {

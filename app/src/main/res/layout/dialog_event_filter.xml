@@ -58,9 +58,10 @@
             app:placeholderTextColor="@color/pale_text">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/categoryDropdown"
+                android:id="@+id/type_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:completionThreshold="0"
                 android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
                 android:inputType="text"
@@ -88,6 +89,7 @@
                 android:id="@+id/cityDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:completionThreshold="0"
                 android:dropDownVerticalOffset="1dp"
                 android:imeOptions="actionNext"
                 android:inputType="text"

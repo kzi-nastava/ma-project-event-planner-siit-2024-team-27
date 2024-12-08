@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface ListingCategoryService {
+public interface ListingCategoriesService {
     @GET("listing-categories/pending")
     Call<ArrayList<ListingCategoryDTO>> getPendingCategories();
 

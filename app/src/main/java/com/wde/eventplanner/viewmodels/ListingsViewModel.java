@@ -15,12 +15,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ListingsViewModel extends ViewModel {
+    private final MutableLiveData<ArrayList<Listing>> topListingsLiveData = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<Listing>> listingsLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
-    public boolean isReady() {
-        if (listingsLiveData.getValue() == null) return false;
-        return !listingsLiveData.getValue().isEmpty();
+    public LiveData<ArrayList<Listing>> getTopListings() {
+        return topListingsLiveData;
     }
 
     public LiveData<ArrayList<Listing>> getListings() {
@@ -36,7 +36,7 @@ public class ListingsViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Listing>> call, @NonNull Response<ArrayList<Listing>> response) {
                 if (response.isSuccessful()) {
-                    listingsLiveData.postValue(response.body());
+                    topListingsLiveData.postValue(response.body());
                 } else {
                     errorMessage.postValue("Failed to fetch listings. Code: " + response.code());
                 }
@@ -47,6 +47,10 @@ public class ListingsViewModel extends ViewModel {
                 errorMessage.postValue("Error: " + t.getMessage());
             }
         });
+    }
+
+    public void fetchListings() {
+        fetchListings(null, null, null, null, null, null, null, null, null, null, null);
     }
 
     public void fetchListings(String searchTerms, String type, String category, String minPrice, String maxPrice,

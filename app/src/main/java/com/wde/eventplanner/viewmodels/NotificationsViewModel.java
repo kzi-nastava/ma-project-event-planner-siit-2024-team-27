@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.wde.eventplanner.models.Notification;
 import com.wde.eventplanner.clients.ClientUtils;
+import com.wde.eventplanner.models.Notification;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class NotificationsViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<Notification>> call, @NonNull Throwable t) {
-                errorMessage.postValue(t.getMessage());
+                errorMessage.postValue("Error: " + t.getMessage());
             }
         });
     }

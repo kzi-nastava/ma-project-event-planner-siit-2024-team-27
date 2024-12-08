@@ -7,17 +7,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wde.eventplanner.databinding.CardListingCategoryPendingBinding;
-import com.wde.eventplanner.fragments.admin.listing_categories.ListingCategoriesFragment;
 import com.wde.eventplanner.fragments.admin.listing_categories.EditListingCategoryDialogFragment;
+import com.wde.eventplanner.fragments.admin.listing_categories.ListingCategoriesFragment;
 import com.wde.eventplanner.fragments.admin.listing_categories.ReplaceListingCategoryDialogFragment;
 import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
 
 import java.util.List;
 
 public class ListingCategoryPendingListAdapter extends RecyclerView.Adapter<ListingCategoryPendingListAdapter.ListingCategoryPendingListAdapterHolder> {
-    private List<ListingCategoryDTO> pendingListingCategories;
-    private List<ListingCategoryDTO> activeListingCategories;
-    private ListingCategoriesFragment parentFragment;
+    private final List<ListingCategoryDTO> pendingListingCategories;
+    private final List<ListingCategoryDTO> activeListingCategories;
+    private final ListingCategoriesFragment parentFragment;
 
     public ListingCategoryPendingListAdapter(List<ListingCategoryDTO> pendingListingCategories,
                                              List<ListingCategoryDTO> activeListingCategories,

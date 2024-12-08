@@ -7,64 +7,78 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.ListingAdapter;
 import com.wde.eventplanner.databinding.FragmentHomepageBinding;
+import com.wde.eventplanner.models.Event;
+import com.wde.eventplanner.models.listing.Listing;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 import com.wde.eventplanner.viewmodels.ListingsViewModel;
 
+import java.util.ArrayList;
+
 public class HomepageFragment extends Fragment {
-    private ListingsViewModel listingsViewModel;
-    private EventsViewModel eventsViewModel;
     private FragmentHomepageBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomepageBinding.inflate(inflater, container, false);
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-        ViewModelProvider viewModelProvider = new ViewModelProvider(navController.getBackStackEntry(R.id.HomepageFragment));
-
-        listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
-        eventsViewModel = viewModelProvider.get(EventsViewModel.class);
-
-        binding.eventsRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
-        binding.eventsRecyclerView.setNestedScrollingEnabled(false);
+        ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
 
         binding.listingsRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.listingsRecyclerView.setNestedScrollingEnabled(false);
+        binding.eventsRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+        binding.eventsRecyclerView.setNestedScrollingEnabled(false);
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        eventsViewModel.getEvents().observe(getViewLifecycleOwner(), events -> {
-            binding.eventsRecyclerView.setAdapter(new EventAdapter(events));
-        });
-
-        listingsViewModel.getListings().observe(getViewLifecycleOwner(), listings -> {
-            binding.listingsRecyclerView.setAdapter(new ListingAdapter(listings));
-        });
-
-        eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
-        });
-
+        ListingsViewModel listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
+        listingsViewModel.getTopListings().observe(getViewLifecycleOwner(), this::listingsChanged);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
         });
 
-        eventsViewModel.fetchTopEvents();
+        EventsViewModel eventsViewModel = viewModelProvider.get(EventsViewModel.class);
+        eventsViewModel.getTopEvents().observe(getViewLifecycleOwner(), this::eventsChanged);
+        eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+        });
+
+        binding.listingsRecyclerView.setAdapter(listingsViewModel.getTopListings().isInitialized() ?
+                new ListingAdapter(listingsViewModel.getTopListings().getValue()) : new ListingAdapter());
+
+        binding.eventsRecyclerView.setAdapter(eventsViewModel.getTopEvents().isInitialized() ?
+                new EventAdapter(eventsViewModel.getTopEvents().getValue()) : new EventAdapter());
+
         listingsViewModel.fetchTopListings();
+        listingsViewModel.fetchListings();
+        eventsViewModel.fetchTopEvents();
+        eventsViewModel.fetchEvents();
+
+        return binding.getRoot();
+    }
+
+    private void listingsChanged(ArrayList<Listing> listings) {
+        if (binding.listingsRecyclerView.getAdapter() != null) {
+            ListingAdapter adapter = (ListingAdapter) binding.listingsRecyclerView.getAdapter();
+            if (!adapter.listings.equals(listings)) {
+                adapter.listings.clear();
+                adapter.listings.addAll(listings);
+                adapter.notifyItemRangeChanged(0, 5);
+            }
+        }
+    }
+
+    private void eventsChanged(ArrayList<Event> events) {
+        if (binding.eventsRecyclerView.getAdapter() != null) {
+            EventAdapter adapter = (EventAdapter) binding.eventsRecyclerView.getAdapter();
+            if (!adapter.events.equals(events)) {
+                adapter.events.clear();
+                adapter.events.addAll(events);
+                adapter.notifyItemRangeChanged(0, 5);
+            }
+        }
     }
 }

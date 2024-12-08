@@ -35,7 +35,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void fetchActiveListingCategories() {
-        ClientUtils.listingCategoryService.getCategories().enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.getCategories().enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<ListingCategoryDTO>> call, @NonNull Response<ArrayList<ListingCategoryDTO>> response) {
                 if (response.isSuccessful()) {
@@ -53,7 +53,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void deleteActiveListingCategory(ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoryService.deleteListingCategory(listingCategoryDTO.getId()).enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.deleteListingCategory(listingCategoryDTO.getId()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 if (response.isSuccessful()) {
@@ -81,7 +81,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void editActiveListingCategory(String id, ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoryService.updateListingCategory(id, listingCategoryDTO).enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.updateListingCategory(id, listingCategoryDTO).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
                 if (response.isSuccessful()) {
@@ -104,7 +104,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void createActiveListingCategory(ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoryService.createActiveListingCategory(listingCategoryDTO).enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.createActiveListingCategory(listingCategoryDTO).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
                 if (response.isSuccessful()) {
@@ -126,7 +126,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void fetchPendingListingCategories() {
-        ClientUtils.listingCategoryService.getPendingCategories().enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.getPendingCategories().enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<ListingCategoryDTO>> call, @NonNull Response<ArrayList<ListingCategoryDTO>> response) {
                 if (response.isSuccessful()) {
@@ -144,7 +144,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void editPendingListingCategory(String id, ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoryService.updateListingCategory(id, listingCategoryDTO).enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.updateListingCategory(id, listingCategoryDTO).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
                 if (response.isSuccessful()) {
@@ -167,7 +167,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void approvePendingListingCategory(ListingCategoryDTO listingCategoryDTO) {
-        ClientUtils.listingCategoryService.approvePendingListingCategory(listingCategoryDTO.getId()).enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.approvePendingListingCategory(listingCategoryDTO.getId()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ListingCategoryDTO> call, @NonNull Response<ListingCategoryDTO> response) {
                 if (response.isSuccessful()) {
@@ -195,7 +195,7 @@ public class ListingCategoriesViewModel extends ViewModel {
     }
 
     public void replacePendingListingCategory(ReplacingListingCategoryDTO replacingListingCategoryDTO) {
-        ClientUtils.listingCategoryService.replacePendingListingCategory(replacingListingCategoryDTO).enqueue(new Callback<>() {
+        ClientUtils.listingCategoriesService.replacePendingListingCategory(replacingListingCategoryDTO).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful()) {

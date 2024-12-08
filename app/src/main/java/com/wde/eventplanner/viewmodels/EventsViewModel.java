@@ -15,12 +15,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EventsViewModel extends ViewModel {
+    private final MutableLiveData<ArrayList<Event>> topEventsLiveData = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<Event>> eventsLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
-    public boolean isReady() {
-        if (eventsLiveData.getValue() == null) return false;
-        return !eventsLiveData.getValue().isEmpty();
+    public LiveData<ArrayList<Event>> getTopEvents() {
+        return topEventsLiveData;
     }
 
     public LiveData<ArrayList<Event>> getEvents() {
@@ -36,7 +36,7 @@ public class EventsViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Event>> call, @NonNull Response<ArrayList<Event>> response) {
                 if (response.isSuccessful()) {
-                    eventsLiveData.postValue(response.body());
+                    topEventsLiveData.postValue(response.body());
                 } else {
                     errorMessage.postValue("Failed to fetch events. Code: " + response.code());
                 }
@@ -47,6 +47,10 @@ public class EventsViewModel extends ViewModel {
                 errorMessage.postValue("Error: " + t.getMessage());
             }
         });
+    }
+
+    public void fetchEvents() {
+        fetchEvents(null, null, null, null, null, null, null, null, null, null, null);
     }
 
     public void fetchEvents(String searchTerms, String city, String category, String dateRangeStart, String dateRangeEnd,

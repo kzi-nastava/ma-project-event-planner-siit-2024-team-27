@@ -22,9 +22,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
+import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.FragmentOrganizerRegistrationBinding;
 import com.wde.eventplanner.models.DemoUser;
-import com.wde.eventplanner.R;
 
 import java.util.ArrayList;
 import java.util.List;

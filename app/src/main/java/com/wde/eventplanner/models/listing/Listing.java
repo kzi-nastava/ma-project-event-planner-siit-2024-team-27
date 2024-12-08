@@ -1,7 +1,5 @@
 package com.wde.eventplanner.models.listing;
 
-import com.wde.eventplanner.models.listing.ListingType;
-
 import java.util.List;
 
 import lombok.AllArgsConstructor;

@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import androidx.fragment.app.DialogFragment;
 
 import com.wde.eventplanner.databinding.DialogCreateListingCategoryBinding;
-import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
 import com.wde.eventplanner.models.listing.ListingType;
+import com.wde.eventplanner.models.listingCategory.ListingCategoryDTO;
 
 public class CreateListingCategoryDialogFragment extends DialogFragment {
     private ListingCategoriesFragment parentFragment;

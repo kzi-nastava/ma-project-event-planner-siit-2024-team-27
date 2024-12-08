@@ -11,15 +11,19 @@ import com.wde.eventplanner.databinding.CardEventBinding;
 import com.wde.eventplanner.models.Event;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
+    public final List<Event> events;
 
-    private List<Event> eventList;
+    public EventAdapter() {
+        this.events = new ArrayList<>();
+    }
 
     public EventAdapter(List<Event> eventList) {
-        this.eventList = eventList;
+        this.events = eventList;
     }
 
     @NonNull
@@ -31,7 +35,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        Event event = eventList.get(position);
+        Event event = events.get(position);
         Picasso.get().load(event.getImages().get(0)).into(holder.binding.eventCardPicture);
         holder.binding.eventCardTitle.setText(event.getName());
         holder.binding.eventCardTime.setText(event.getDate().format(DateTimeFormatter.ofPattern("HH:mm")));
@@ -42,7 +46,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @Override
     public int getItemCount() {
-        return eventList.size();
+        return events.size();
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {

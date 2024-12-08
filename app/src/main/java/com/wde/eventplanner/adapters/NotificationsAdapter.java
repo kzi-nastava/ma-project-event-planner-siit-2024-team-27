@@ -1,24 +1,25 @@
 package com.wde.eventplanner.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.CardNotificationBinding;
-import com.wde.eventplanner.databinding.ItemCarouselImageBinding;
 import com.wde.eventplanner.models.Notification;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.NotificationViewHolder> {
-    private List<Notification> notifications;
+    public final List<Notification> notifications;
+
+    public NotificationsAdapter() {
+        this.notifications = new ArrayList<>();
+    }
 
     public NotificationsAdapter(List<Notification> notifications) {
         this.notifications = notifications;

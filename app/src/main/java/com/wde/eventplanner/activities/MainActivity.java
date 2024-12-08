@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -15,7 +16,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.core.splashscreen.SplashScreen;
 
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.ActivityMainBinding;
@@ -89,20 +89,20 @@ public class MainActivity extends AppCompatActivity {
             // wait for homepage data to fetch
             final View content = findViewById(android.R.id.content);
             Handler handler = new Handler(Looper.getMainLooper());
-            ViewModelProvider viewModelProvider = new ViewModelProvider(navController.getBackStackEntry(R.id.HomepageFragment));
+            ViewModelProvider viewModelProvider = new ViewModelProvider(this);
             EventsViewModel eventsViewModel = viewModelProvider.get(EventsViewModel.class);
             ListingsViewModel listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
             AtomicBoolean alreadyShowed = new AtomicBoolean(false);
             AtomicBoolean timeout = new AtomicBoolean(false);
             handler.postDelayed(() -> timeout.set(true), 3000);
             content.getViewTreeObserver().addOnPreDrawListener(() -> {
-                if (eventsViewModel.isReady() && listingsViewModel.isReady())
+                if (eventsViewModel.getTopEvents().isInitialized() && listingsViewModel.getTopListings().isInitialized())
                     alreadyShowed.set(true);
                 if (timeout.get() && !alreadyShowed.get()) {
                     alreadyShowed.set(true);
                     Toast.makeText(this, "Error: data fetch timed out", Toast.LENGTH_SHORT).show();
                 }
-                return timeout.get() || eventsViewModel.isReady() && listingsViewModel.isReady();
+                return timeout.get() || eventsViewModel.getTopEvents().isInitialized() && listingsViewModel.getTopListings().isInitialized();
             });
         }
     }
