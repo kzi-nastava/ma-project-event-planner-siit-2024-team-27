@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AllListingsFragment extends Fragment {
+public class AllListingsFragment extends Fragment implements ListingFilterDialogFragment.ListingsFilterListener {
     private String searchTerms, type, category, minPrice, maxPrice, minRating, maxRating;
     private final AtomicInteger selectedPosition = new AtomicInteger(0);
     private final AtomicBoolean orderDesc = new AtomicBoolean(true);

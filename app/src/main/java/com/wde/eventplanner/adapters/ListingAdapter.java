@@ -27,6 +27,11 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         navController = null;
     }
 
+    public ListingAdapter(NavController navController) {
+        this.navController = navController;
+        this.listings = new ArrayList<>();
+    }
+
     public ListingAdapter(List<Listing> listings) {
         this.listings = listings;
         navController = null;

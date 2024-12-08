@@ -29,12 +29,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ListingFilterDialogFragment extends DialogFragment {
+    public interface ListingsFilterListener {
+        void onFilterPressed(String type, String category, String minPrice, String maxPrice, String minRating, String maxRating);
+    }
+
     private ArrayList<String> categoryNames = new ArrayList<>();
     private ArrayList<ListingCategory> categories;
     private DialogListingFilterBinding binding;
-    private final AllListingsFragment parent;
+    private final ListingsFilterListener parent;
 
-    public ListingFilterDialogFragment(AllListingsFragment fragment) {
+    public ListingFilterDialogFragment(ListingsFilterListener fragment) {
         this.parent = fragment;
     }
 
