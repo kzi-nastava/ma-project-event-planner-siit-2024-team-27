@@ -49,16 +49,16 @@
 
     <fragment
         android:id="@+id/OrganizerRegistrationFragment"
-        android:name="com.wde.eventplanner.fragments.anonymous.OrganizerRegistrationFragment"
-        tools:layout="@layout/fragment_organizer_registration">
+        android:name="com.wde.eventplanner.fragments.anonymous.RegistrationOrganizerFragment"
+        tools:layout="@layout/fragment_registration_organizer">
         <action
             android:id="@+id/action_organizer_registration_to_homepage"
             app:destination="@id/HomepageFragment" />
     </fragment>
     <fragment
         android:id="@+id/SellerRegistrationFragment"
-        android:name="com.wde.eventplanner.fragments.anonymous.SellerRegistrationFragment"
-        tools:layout="@layout/fragment_seller_registration" >
+        android:name="com.wde.eventplanner.fragments.anonymous.RegistrationSellerFragment"
+        tools:layout="@layout/fragment_registration_seller" >
         <action
             android:id="@+id/action_seller_registration_to_homepage"
             app:destination="@id/HomepageFragment" />

@@ -4,9 +4,12 @@ import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.isStrongPassword;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,29 +39,13 @@ public class LoginFragment extends Fragment {
         userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
         userList.add(new DemoUser("a@a.com", "Faks1312!"));
 
-        binding.loginButton.setOnClickListener(v -> {
-            // check if user exists
-            String email = binding.emailInput.getText().toString().trim();
-            String password = binding.passwordInput.getText().toString();
-
-            if (email.isEmpty() || password.isEmpty()) {
-                showToast("Please fill in the fields");
-            } else if (!isValidEmail(email)) {
-                showToast("Invalid email format");
-            } else if (!isStrongPassword(password)) {
-                showToast("Password is too weak. Use 8+ chars, upper & lowercase, number and special char.");
-            } else if (!isValidUser(email, password)) {
-                showToast("Wrong email or password");
-            } else {
-                Toast.makeText(getContext(), "Successful login", Toast.LENGTH_SHORT).show();
-
-                // login User
-                NavController navController = Navigation.findNavController(v);
-                NavOptions navOptions = new NavOptions.Builder()
-                        .setPopUpTo(navController.getGraph().getStartDestinationId(), true)
-                        .build();
-                navController.navigate(R.id.action_login_to_homepage, null, navOptions); //pops full backstack
+        binding.loginButton.setOnClickListener(this::onLoginClicked);
+        binding.passwordInput.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == android.view.KeyEvent.KEYCODE_ENTER)) {
+                onLoginClicked(v);
+                return true;
             }
+            return false;
         });
 
         binding.registerOrganizerButton.setOnClickListener(v -> {
@@ -89,5 +76,30 @@ public class LoginFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    private void onLoginClicked(View v) {
+        // check if user exists
+        String email = binding.emailInput.getText().toString().trim();
+        String password = binding.passwordInput.getText().toString();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            showToast("Please fill in the fields");
+        } else if (!isValidEmail(email)) {
+            showToast("Invalid email format");
+        } else if (!isStrongPassword(password)) {
+            showToast("Password is too weak. Use 8+ chars, upper & lowercase, number and special char.");
+        } else if (!isValidUser(email, password)) {
+            showToast("Wrong email or password");
+        } else {
+            Toast.makeText(getContext(), "Successful login", Toast.LENGTH_SHORT).show();
+
+            // login User
+            NavController navController = Navigation.findNavController(v);
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setPopUpTo(navController.getGraph().getStartDestinationId(), true)
+                    .build();
+            navController.navigate(R.id.action_login_to_homepage, null, navOptions); //pops full backstack
+        }
     }
 }

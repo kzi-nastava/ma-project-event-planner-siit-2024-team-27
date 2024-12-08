@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Title -->
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -39,7 +38,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <!-- Name -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameLayout"
             style="@style/CustomTextInputLayout"
@@ -47,6 +45,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:hint="@string/name"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/productInfoLabel">
@@ -54,10 +57,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Surname -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/priceLayout"
             style="@style/CustomTextInputLayout"
@@ -65,6 +68,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/price"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/nameLayout">
@@ -72,10 +80,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputPrice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Email -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/discountLayout"
             style="@style/CustomTextInputLayout"
@@ -83,6 +91,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/discount"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/priceLayout">
@@ -91,10 +104,9 @@
                 android:id="@+id/inputDiscount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/eventCategoriesLayout"
             style="@style/CustomTextInputLayout"
@@ -102,6 +114,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/event_categories"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/productCategoryLayout">
@@ -110,10 +127,9 @@
                 android:id="@+id/inputEventCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Repeat Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reservationPeriodLayout"
             style="@style/CustomTextInputLayout"
@@ -121,6 +137,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/reservation_period"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eventCategoriesLayout">
@@ -129,10 +150,9 @@
                 android:id="@+id/inputReservationPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Company Name -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/cancellationPeriodLayout"
             style="@style/CustomTextInputLayout"
@@ -140,6 +160,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/cancellation_period"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reservationPeriodLayout">
@@ -147,10 +172,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputCancellationPeriod"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Phone -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmationTypeLayout"
             style="@style/CustomTextInputLayout"
@@ -158,6 +183,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/confirmation_type"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cancellationPeriodLayout">
@@ -166,11 +196,10 @@
                 android:id="@+id/inputConfirmationType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Phone -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/visibilityLayout"
             style="@style/CustomTextInputLayout"
@@ -178,6 +207,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/visibility"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:hintAnimationEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -187,11 +221,10 @@
                 android:id="@+id/inputVisibility"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Description -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/descriptionLayout"
             style="@style/CustomTextInputLayout"
@@ -199,6 +232,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/description"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/availabilityLayout">
@@ -210,74 +248,9 @@
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:lines="4"
-                android:minHeight="120dp"
-                tools:layout_editor_absoluteX="67dp"
-                tools:layout_editor_absoluteY="770dp" />
+                android:minHeight="120dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- City -->
-
-        <!-- Address -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/maxDurationLayout"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/max_duration"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addressLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputMaxDuration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="67dp"
-                tools:layout_editor_absoluteY="976dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Address -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/availabilityLayout"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/availability"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/maxDurationLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputAvailability"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="67dp"
-                tools:layout_editor_absoluteY="976dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Address -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/productCategoryLayout"
-            style="@style/CustomTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/product_category"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/discountLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputProductCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="67dp"
-                tools:layout_editor_absoluteY="976dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Address -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/addressLayout"
             style="@style/CustomTextInputLayout"
@@ -285,6 +258,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/min_duration"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/visibilityLayout">
@@ -293,18 +271,86 @@
                 android:id="@+id/inputMinDuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="67dp"
-                tools:layout_editor_absoluteY="976dp" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Image Selection Button -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/maxDurationLayout"
+            style="@style/CustomTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/max_duration"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addressLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputMaxDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/availabilityLayout"
+            style="@style/CustomTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/availability"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/maxDurationLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputAvailability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/productCategoryLayout"
+            style="@style/CustomTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/product_category"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/discountLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputProductCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/selectImageButton"
             style="@style/CustomButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="16dp"
             android:text="@string/select_image"
+            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/descriptionLayout" />
@@ -320,14 +366,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/selectImageButton" />
 
-        <!-- Register Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/createButton"
             style="@style/CustomButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="52dp"
             android:text="@string/create_service"
+            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/selectedImageView" />

@@ -16,27 +16,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.databinding.FragmentSellerRegistrationBinding;
+import com.wde.eventplanner.databinding.FragmentRegistrationOrganizerBinding;
 import com.wde.eventplanner.models.DemoUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SellerRegistrationFragment extends Fragment {
-    private FragmentSellerRegistrationBinding binding;
+public class RegistrationOrganizerFragment extends Fragment {
+    private FragmentRegistrationOrganizerBinding binding;
     private static final int PICK_IMAGE_REQUEST = 1;  // Request code for image selection
-    private Uri selectedImageUri;
     private List<DemoUser> userList;
+    private Uri selectedImageUri;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentSellerRegistrationBinding.inflate(inflater, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentRegistrationOrganizerBinding.inflate(inflater, container, false);
 
         userList = new ArrayList<>();
         userList.add(new DemoUser("email@email.com", "Faks1312!"));
@@ -57,7 +58,6 @@ public class SellerRegistrationFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             binding.selectedImageView.setImageURI(selectedImageUri);
@@ -70,14 +70,12 @@ public class SellerRegistrationFragment extends Fragment {
         String email = binding.inputEmail.getText().toString().trim();
         String password = binding.inputPassword.getText().toString().trim();
         String repeatPassword = binding.inputRepeatPassword.getText().toString().trim();
-        String companyName = binding.inputCompanyName.getText().toString().trim();
         String phone = binding.inputPhone.getText().toString().trim();
-        String description = binding.inputDescription.getText().toString().trim();
         String city = binding.inputCity.getText().toString().trim();
         String address = binding.inputAddress.getText().toString().trim();
 
         // Input Validation
-        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || companyName.isEmpty() || city.isEmpty()) {
+        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || city.isEmpty()) {
             showToast("Please fill in all the required fields");
             return;
         }
@@ -86,6 +84,7 @@ public class SellerRegistrationFragment extends Fragment {
             showToast("Invalid name format");
             return;
         }
+
         if (!surname.matches(NAME_REGEX)) {
             showToast("Invalid surname format");
             return;
@@ -126,19 +125,13 @@ public class SellerRegistrationFragment extends Fragment {
             return;
         }
 
-        if (!description.isEmpty() && description.length() < 10) {
-            showToast("Description is too short. Please provide at least 10 characters.");
-            return;
-        }
-
         showToast("Successful registration. Confirmation email sent.");
 
         NavController navController = Navigation.findNavController(requireView());
         NavOptions navOptions = new NavOptions.Builder()
                 .setPopUpTo(navController.getGraph().getStartDestinationId(), true)
                 .build(); // Clear Backstack
-        navController.navigate(R.id.action_seller_registration_to_homepage, null, navOptions);
-
+        navController.navigate(R.id.action_organizer_registration_to_homepage, null, navOptions);
     }
 
     private boolean isValidUser(String email) {
