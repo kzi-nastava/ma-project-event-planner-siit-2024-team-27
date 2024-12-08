@@ -3,13 +3,11 @@ package com.wde.eventplanner.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wde.eventplanner.R;
+import com.wde.eventplanner.databinding.ItemCarouselImageBinding;
 
 import java.util.List;
 
@@ -24,14 +22,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_carousel_item, parent, false);
-        return new ImageViewHolder(view);
+        ItemCarouselImageBinding binding = ItemCarouselImageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ImageViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Color color = colors.get(position);
-        holder.imageView.setBackgroundColor(color.toArgb());
+        holder.binding.carouselImage.setBackgroundColor(color.toArgb());
     }
 
     @Override
@@ -40,11 +38,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        ItemCarouselImageBinding binding;
 
-        public ImageViewHolder(View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.carouselImage);
+        public ImageViewHolder(ItemCarouselImageBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

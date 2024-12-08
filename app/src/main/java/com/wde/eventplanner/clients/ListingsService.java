@@ -1,7 +1,6 @@
 package com.wde.eventplanner.clients;
 
-import com.wde.eventplanner.models.Event;
-import com.wde.eventplanner.models.Listing;
+import com.wde.eventplanner.models.listing.Listing;
 
 import java.util.ArrayList;
 

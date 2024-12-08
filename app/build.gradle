@@ -12,6 +12,10 @@ android {
     namespace 'com.wde.eventplanner'
     compileSdk 34
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.wde.eventplanner"
         minSdk 30
@@ -50,10 +54,11 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation libs.navigation.fragment.ktx
     implementation libs.navigation.ui.ktx
+    implementation libs.core.splashscreen
 
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
     implementation libs.picasso
-    compileOnly libs.lombok.v11836
-    annotationProcessor libs.lombok.v11836
     implementation libs.retrofit
     implementation libs.converter.gson
     implementation libs.logging.interceptor

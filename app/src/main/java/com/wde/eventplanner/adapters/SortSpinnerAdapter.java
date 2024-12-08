@@ -22,7 +22,7 @@ public class SortSpinnerAdapter extends ArrayAdapter<String> {
     private final AtomicBoolean orderDesc;
 
     public SortSpinnerAdapter(Context context, String[] items, AtomicInteger selectedPosition, AtomicBoolean orderDesc) {
-        super(context, R.layout.sort_spinner_item, items);
+        super(context, R.layout.item_sort_spinner, items);
         this.selectedPosition = selectedPosition;
         this.orderDesc = orderDesc;
         this.context = context;
@@ -35,7 +35,7 @@ public class SortSpinnerAdapter extends ArrayAdapter<String> {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.sort_spinner_item, parent, false);
+            view = inflater.inflate(R.layout.item_sort_spinner, parent, false);
         }
 
         TextView textView = view.findViewById(R.id.spinnerItemText);

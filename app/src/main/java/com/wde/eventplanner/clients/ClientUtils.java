@@ -22,9 +22,9 @@ public class ClientUtils {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         return new OkHttpClient.Builder()
-                .connectTimeout(120, TimeUnit.SECONDS)
-                .readTimeout(120, TimeUnit.SECONDS)
-                .writeTimeout(120, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS)
                 .addInterceptor(interceptor).build();
     }
 
@@ -40,6 +40,7 @@ public class ClientUtils {
     public static NotificationsService notificationsService = retrofit.create(NotificationsService.class);
     public static EventsService eventsService = retrofit.create(EventsService.class);
     public static ListingsService listingsService = retrofit.create(ListingsService.class);
-    public static ListingCategoryService listingCategoryService = retrofit.create(ListingCategoryService.class);
+    public static ListingCategoriesService listingCategoriesService = retrofit.create(ListingCategoriesService.class);
+    public static EventTypesService eventTypesService = retrofit.create(EventTypesService.class);
 }
 

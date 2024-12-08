@@ -73,8 +73,8 @@
     <string name="listing_category_edit">Edit</string>
     <string name="listing_category_approve">Approve</string>
     <string name="listing_category_delete">Delete</string>
-    <string name="pending_listing_categories">Pending listing categories</string>
-    <string name="active_listing_categories">Active listing categories</string>
+    <string name="pending_categories">Pending categories</string>
+    <string name="active_categories">Active categories</string>
     <string name="listing_categories">Listing categories</string>
     <string name="create">Create</string>
     <string name="create_new_category">Create new category</string>
