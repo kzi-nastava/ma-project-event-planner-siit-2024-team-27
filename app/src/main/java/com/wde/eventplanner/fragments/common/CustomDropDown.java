@@ -1,6 +1,7 @@
 package com.wde.eventplanner.fragments.common;
 
-import static com.wde.eventplanner.constants.GraphicUtils.dp2px;
+import static com.wde.eventplanner.constants.CustomGraphicUtils.dp2px;
+import static com.wde.eventplanner.constants.CustomGraphicUtils.hideKeyboard;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -10,7 +11,6 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
@@ -109,10 +109,8 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
                 setText("");
             }
         }
-        if (isAutoCompleteDisabled) {
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getWindowToken(), 0);
-        }
+        if (isAutoCompleteDisabled)
+            hideKeyboard(getContext(), this);
     }
 
     public boolean onTouchOutsideDropDown(View v, MotionEvent event) {
@@ -120,8 +118,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         getGlobalVisibleRect(rect);
         if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
             clearFocus();
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getWindowToken(), 0);
+            hideKeyboard(getContext(), this);
         }
         return false;
     }

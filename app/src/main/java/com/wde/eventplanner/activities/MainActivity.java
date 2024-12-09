@@ -1,9 +1,14 @@
 package com.wde.eventplanner.activities;
 
+import static com.wde.eventplanner.constants.CustomGraphicUtils.hideKeyboard;
+
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,6 +117,22 @@ public class MainActivity extends AppCompatActivity {
     private boolean notCurrent(NavController navController, int id) {
         NavDestination currentDestination = navController.getCurrentDestination();
         return currentDestination == null || currentDestination.getId() != id;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    hideKeyboard(this, v);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     @Override

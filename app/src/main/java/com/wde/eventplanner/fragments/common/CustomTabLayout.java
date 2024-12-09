@@ -1,6 +1,6 @@
 package com.wde.eventplanner.fragments.common;
 
-import static com.wde.eventplanner.constants.GraphicUtils.dp2px;
+import static com.wde.eventplanner.constants.CustomGraphicUtils.dp2px;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

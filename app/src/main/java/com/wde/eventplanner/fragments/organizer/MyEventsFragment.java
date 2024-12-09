@@ -1,5 +1,7 @@
 package com.wde.eventplanner.fragments.organizer;
 
+import static com.wde.eventplanner.constants.CustomGraphicUtils.hideKeyboard;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -61,6 +63,7 @@ public class MyEventsFragment extends Fragment implements EventFilterDialogFragm
         binding.filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
         binding.searchInput.setOnEditorActionListener(this::onSearchInputEditorAction);
+        binding.searchLayout.setEndIconOnClickListener((v) -> onSearchInputEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null));
 
         eventsViewModel = viewModelProvider.get(EventsViewModel.class);
         eventsViewModel.getEvents().observe(getViewLifecycleOwner(), this::eventsChanged);
@@ -98,6 +101,7 @@ public class MyEventsFragment extends Fragment implements EventFilterDialogFragm
                 searchTerms = binding.searchInput.getText().toString();
                 searchTerms = !searchTerms.isBlank() ? searchTerms : null;
             }
+            hideKeyboard(requireContext(), binding.getRoot());
             refreshEvents();
             return true;
         }

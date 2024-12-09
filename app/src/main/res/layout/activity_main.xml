@@ -55,13 +55,14 @@
         app:itemTextColor="@color/foreground_navigation_item"
         app:menu="@menu/nav_menu">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="60dp"
             android:layout_gravity="start|bottom"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="32dp"
             android:backgroundTint="@color/secondary_background"
             android:drawableRight="@drawable/ic_login"
             android:drawableTint="@color/foreground_navigation_item"
@@ -69,7 +70,8 @@
             android:text="@string/login_register"
             android:textAppearance="@style/NavigationItemTextStyle"
             android:textColor="@color/foreground_navigation_item"
-            android:textFontWeight="500" />
+            android:textFontWeight="500"
+            app:cornerRadius="100dp" />
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
