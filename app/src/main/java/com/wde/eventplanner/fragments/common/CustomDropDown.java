@@ -129,6 +129,12 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()));
     }
 
+    @Override
+    public void onFilterComplete(int count) {
+        setDropDownHeight(Math.min(count * dp2px(44), dp2px(200)));
+        super.onFilterComplete(count);
+    }
+
     public void setItems(ArrayList<CustomDropDownItem<T>> items) {
         this.items = items;
         setDropDownHeight(Math.min(items.size() * dp2px(44), dp2px(200)));
