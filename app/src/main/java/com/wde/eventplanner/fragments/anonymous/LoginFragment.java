@@ -48,15 +48,8 @@ public class LoginFragment extends Fragment {
             return false;
         });
 
-        binding.registerOrganizerButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_login_to_organizer_registration);
-        });
-
-        binding.registerSellerButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_login_to_seller_registration);
-        });
+        binding.registerOrganizerButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_login_to_organizer_registration));
+        binding.registerSellerButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_login_to_seller_registration));
 
         return binding.getRoot();
     }

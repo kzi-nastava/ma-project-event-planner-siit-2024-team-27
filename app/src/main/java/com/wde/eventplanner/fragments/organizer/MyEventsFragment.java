@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -48,10 +47,7 @@ public class MyEventsFragment extends Fragment implements EventFilterDialogFragm
         binding = FragmentMyEventsBinding.inflate(inflater, container, false);
         ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
 
-        binding.createEventButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.CreateEventFragment);
-        });
+        binding.createEventButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.CreateEventFragment));
 
         binding.sortSpinner.setAdapter(new SortSpinnerAdapter(binding.getRoot().getContext(), new String[]{"Name", "Date", "Rating"}, selectedPosition, orderDesc));
         binding.sortSpinner.setOnItemSelectedEvenIfUnchangedListener(new SortSpinnerOnItemSelectedListener());

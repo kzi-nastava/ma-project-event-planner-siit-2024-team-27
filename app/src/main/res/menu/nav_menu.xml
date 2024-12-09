@@ -1,34 +1,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/closeBtn"
+        android:id="@+id/nav_close"
         android:icon="@drawable/ic_close"
         android:title="@string/close" />
     <item
-        android:id="@+id/homepageTab"
+        android:id="@+id/nav_homepage"
         android:icon="@drawable/ic_home"
         android:title="@string/home" />
     <item
-        android:id="@+id/eventsTab"
+        android:id="@+id/nav_events"
         android:icon="@drawable/ic_event"
         android:title="@string/events" />
     <item
-        android:id="@+id/marketTab"
+        android:id="@+id/nav_market"
         android:icon="@drawable/ic_storefront"
         android:title="@string/market" />
     <item
-        android:id="@+id/myEventsTab"
+        android:id="@+id/nav_my_events"
         android:icon="@drawable/ic_event"
         android:title="@string/my_events" />
     <item
-        android:id="@+id/myListingsTab"
+        android:id="@+id/nav_my_listings"
         android:icon="@drawable/ic_storefront"
         android:title="@string/my_listings" />
     <item
-        android:id="@+id/notificationsTab"
+        android:id="@+id/nav_notifications"
         android:icon="@drawable/ic_notifications"
         android:title="@string/notifications" />
     <item
-        android:id="@+id/listingCategoriesTab"
+        android:id="@+id/nav_listing_categories"
         android:icon="@drawable/ic_storefront"
         android:title="@string/listing_categories" />
 </menu>

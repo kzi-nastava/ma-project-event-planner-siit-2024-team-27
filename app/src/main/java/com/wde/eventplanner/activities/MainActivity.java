@@ -33,6 +33,18 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
+    // TOP LEVEL DESTINATIONS (ADD NEW PAGES HERE)
+    private static final int[] TOP_LEVEL_DESTINATIONS = {
+            R.id.nav_homepage,
+            R.id.nav_events,
+            R.id.nav_market,
+            R.id.nav_my_listings,
+            R.id.nav_my_events,
+            R.id.nav_notifications,
+            R.id.nav_listing_categories,
+            R.id.nav_login
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,48 +59,32 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
-            appBarConfiguration = new AppBarConfiguration.Builder(R.id.HomepageFragment, R.id.LoginFragment,
-                    R.id.MyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment, R.id.NotificationsFragment,
-                    R.id.ListingCategoriesFragment, R.id.MyEventsFragment)
-                    .setOpenableLayout(binding.drawerLayout)
-                    .build();
+            appBarConfiguration = new AppBarConfiguration.Builder(TOP_LEVEL_DESTINATIONS).setOpenableLayout(binding.drawerLayout).build();
 
             // Link toolbar and NavigationView with NavController
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(binding.navigationView, navController);
             binding.navigationView.getMenu().getItem(1).setChecked(true);
 
-            binding.navigationView.setNavigationItemSelectedListener(item -> {
-                int id = item.getItemId();
-
-                if (id == R.id.homepageTab && notCurrent(navController, R.id.HomepageFragment)) {
-                    navController.navigate(R.id.HomepageFragment);
-                } else if (id == R.id.eventsTab && notCurrent(navController, R.id.AllEventsFragment)) {
-                    navController.navigate(R.id.AllEventsFragment);
-                } else if (id == R.id.marketTab && notCurrent(navController, R.id.AllListingsFragment)) {
-                    navController.navigate(R.id.AllListingsFragment);
-                } else if (id == R.id.myListingsTab && notCurrent(navController, R.id.MyListingsFragment)) {
-                    navController.navigate(R.id.MyListingsFragment);
-                } else if (id == R.id.myEventsTab && notCurrent(navController, R.id.MyEventsFragment)) {
-                    navController.navigate(R.id.MyEventsFragment);
-                } else if (id == R.id.notificationsTab && notCurrent(navController, R.id.NotificationsFragment)) {
-                    navController.navigate(R.id.NotificationsFragment);
-                } else if (id == R.id.listingCategoriesTab && notCurrent(navController, R.id.ListingCategoriesFragment)) {
-                    navController.navigate(R.id.ListingCategoriesFragment);
-                }
-
-                if (!item.getTitle().toString().equals("Close")) {
+            navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                if (destination.getId() == R.id.nav_login)
+                    binding.loginButton.setSelected(true);
+                else if (destination.getId() != R.id.nav_close)
                     binding.loginButton.setSelected(false);
-                    item.setChecked(true);
-                }
+            });
+
+            binding.navigationView.setNavigationItemSelectedListener(item -> {
+                if (notCurrent(navController, item.getItemId()))
+                    navController.navigate(item.getItemId());
+                if (item.getItemId() != R.id.nav_close)
+                    binding.loginButton.setSelected(false);
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             });
 
             binding.loginButton.setOnClickListener(view -> {
-                if (notCurrent(navController, R.id.LoginFragment)) {
-                    navController.navigate(R.id.LoginFragment);
-                }
+                if (notCurrent(navController, R.id.nav_login))
+                    navController.navigate(R.id.nav_login);
                 binding.loginButton.setSelected(true);
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             });

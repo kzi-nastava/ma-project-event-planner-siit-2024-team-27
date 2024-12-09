@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/HomepageFragment">
+    app:startDestination="@id/nav_homepage">
 
     <fragment
-        android:id="@+id/HomepageFragment"
+        android:id="@+id/nav_homepage"
         android:name="com.wde.eventplanner.fragments.common.homepage.HomepageFragment"
         tools:layout="@layout/fragment_homepage" />
 
     <fragment
-        android:id="@+id/AllEventsFragment"
+        android:id="@+id/nav_events"
         android:name="com.wde.eventplanner.fragments.common.homepage.all_events.AllEventsFragment"
         tools:layout="@layout/fragment_all_events" />
 
     <fragment
-        android:id="@+id/AllListingsFragment"
+        android:id="@+id/nav_market"
         android:name="com.wde.eventplanner.fragments.common.homepage.all_listings.AllListingsFragment"
         tools:layout="@layout/fragment_all_listings" />
 
     <fragment
-        android:id="@+id/MyListingsFragment"
+        android:id="@+id/nav_my_listings"
         android:name="com.wde.eventplanner.fragments.seller.MyListingsFragment"
         tools:layout="@layout/fragment_my_listings">
         <action
@@ -33,7 +33,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/MyEventsFragment"
+        android:id="@+id/nav_my_events"
         android:name="com.wde.eventplanner.fragments.organizer.MyEventsFragment"
         tools:layout="@layout/fragment_my_events">
         <action
@@ -42,7 +42,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/LoginFragment"
+        android:id="@+id/nav_login"
         android:name="com.wde.eventplanner.fragments.anonymous.LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -53,7 +53,7 @@
             app:destination="@id/SellerRegistrationFragment" />
         <action
             android:id="@+id/action_login_to_homepage"
-            app:destination="@id/HomepageFragment" />
+            app:destination="@id/nav_homepage" />
     </fragment>
 
     <fragment
@@ -62,7 +62,7 @@
         tools:layout="@layout/fragment_registration_organizer">
         <action
             android:id="@+id/action_organizer_registration_to_homepage"
-            app:destination="@id/HomepageFragment" />
+            app:destination="@id/nav_homepage" />
     </fragment>
     <fragment
         android:id="@+id/SellerRegistrationFragment"
@@ -70,7 +70,7 @@
         tools:layout="@layout/fragment_registration_seller">
         <action
             android:id="@+id/action_seller_registration_to_homepage"
-            app:destination="@id/HomepageFragment" />
+            app:destination="@id/nav_homepage" />
     </fragment>
 
     <fragment
@@ -88,11 +88,11 @@
         tools:layout="@layout/fragment_seller_listing_detail" />
 
     <fragment
-        android:id="@+id/NotificationsFragment"
+        android:id="@+id/nav_notifications"
         android:name="com.wde.eventplanner.fragments.common.notifications.NotificationsFragment"
         tools:layout="@layout/fragment_notifications" />
     <fragment
-        android:id="@+id/ListingCategoriesFragment"
+        android:id="@+id/nav_listing_categories"
         android:name="com.wde.eventplanner.fragments.admin.listing_categories.ListingCategoriesFragment"
         tools:layout="@layout/fragment_listing_categories" />
 

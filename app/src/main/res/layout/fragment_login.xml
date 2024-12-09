@@ -64,7 +64,6 @@
             android:layout_height="56dp"
             android:layout_marginTop="48dp"
             android:text="@string/login"
-            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
@@ -75,7 +74,6 @@
             android:layout_height="56dp"
             android:layout_marginTop="2dp"
             android:text="@string/register_as_an_organizer"
-            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
@@ -86,7 +84,6 @@
             android:layout_height="56dp"
             android:layout_marginTop="2dp"
             android:text="@string/register_as_a_seller"
-            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registerOrganizerButton" />

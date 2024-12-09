@@ -82,4 +82,6 @@
     <string name="create_event">Create event</string>
     <string name="my_events">My events</string>
     <string name="create_listing">Create listing</string>
+    <string name="email_">Email…</string>
+    <string name="invite">Invite</string>
 </resources>
