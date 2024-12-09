@@ -45,15 +45,10 @@
             app:placeholderText="Type"
             app:placeholderTextColor="@color/pale_text">
 
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            <com.wde.eventplanner.fragments.common.CustomDropDown
                 android:id="@+id/typeDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="@android:color/transparent"
-                android:completionThreshold="0"
-                android:cursorVisible="false"
-                android:dropDownVerticalOffset="1dp"
-                android:inputType="none"
                 android:paddingHorizontal="12dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -77,7 +72,8 @@
                 android:layout_height="match_parent"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:paddingVertical="10dp" />
+                android:paddingVertical="10dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +97,8 @@
                 android:gravity="top"
                 android:imeOptions="actionDone"
                 android:inputType="textMultiLine"
-                android:paddingVertical="12dp" />
+                android:paddingVertical="12dp"
+                android:saveEnabled="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

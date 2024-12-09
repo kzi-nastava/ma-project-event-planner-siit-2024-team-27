@@ -6,11 +6,19 @@ import android.widget.Filter;
 
 import androidx.annotation.NonNull;
 
-public class DropdownArrayAdapter<T> extends ArrayAdapter<T> {
-    private final T[] values;
+import com.wde.eventplanner.R;
+import com.wde.eventplanner.fragments.common.CustomDropDown.CustomDropDownItem;
 
-    public DropdownArrayAdapter(Context context, T[] values) {
-        super(context, android.R.layout.simple_spinner_dropdown_item, values);
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+public class DropdownArrayAdapter<T extends CustomDropDownItem<?>> extends ArrayAdapter<T> {
+    private final ArrayList<T> values;
+    public boolean ignoreFiltering;
+
+    public DropdownArrayAdapter(Context context, ArrayList<T> values, boolean ignoreFiltering) {
+        super(context, R.layout.item_dropdown, new ArrayList<>(values));
+        this.ignoreFiltering = ignoreFiltering;
         this.values = values;
     }
 
@@ -19,15 +27,25 @@ public class DropdownArrayAdapter<T> extends ArrayAdapter<T> {
     public Filter getFilter() {
         return new Filter() {
             @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                results.count = values.length;
-                results.values = values;
+            protected Filter.FilterResults performFiltering(CharSequence constraint) {
+                Filter.FilterResults results = new Filter.FilterResults();
+                ArrayList<T> filtered;
+                if (ignoreFiltering || constraint == null || constraint.toString().trim().isEmpty())
+                    filtered = new ArrayList<>(values);
+                else
+                    filtered = values.stream().filter(value -> value.name.toLowerCase()
+                            .startsWith(constraint.toString().trim().toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+
+                results.count = filtered.size();
+                results.values = filtered;
                 return results;
             }
 
             @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
+            @SuppressWarnings("unchecked")
+            protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
+                clear();
+                addAll((ArrayList<T>) results.values);
                 notifyDataSetChanged();
             }
         };

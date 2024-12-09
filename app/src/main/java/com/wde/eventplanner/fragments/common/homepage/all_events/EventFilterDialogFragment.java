@@ -1,14 +1,9 @@
 package com.wde.eventplanner.fragments.common.homepage.all_events;
 
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.DialogEventFilterBinding;
+import com.wde.eventplanner.fragments.common.CustomDropDown;
 import com.wde.eventplanner.models.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 
@@ -31,8 +26,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class EventFilterDialogFragment extends DialogFragment {
     private DialogEventFilterBinding binding;
@@ -40,9 +33,6 @@ public class EventFilterDialogFragment extends DialogFragment {
     private final Date after = new Date(0);
     private final AllEventsFragment parent;
     private boolean calendarIsOpen = false;
-    private ArrayList<String> typeNames;
-    private ArrayList<EventType> types;
-    private ArrayList<String> cities;
 
     public EventFilterDialogFragment(AllEventsFragment fragment) {
         this.parent = fragment;
@@ -54,16 +44,18 @@ public class EventFilterDialogFragment extends DialogFragment {
 
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            getDialog().getWindow().getDecorView().setOnTouchListener(this::onTouchOutsideDialog);
+            getDialog().getWindow().getDecorView().setOnTouchListener((v, event) -> {
+                binding.typeDropdown.onTouchOutsideDropDown(v, event);
+                binding.cityDropdown.onTouchOutsideDropDown(v, event);
+                v.performClick();
+                return false;
+            });
         }
 
-        cities = new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities)));
-        binding.cityDropdown.setAdapter(new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, cities));
-        binding.cityDropdown.setOnFocusChangeListener((v, hasFocus) -> onDropdownFocusChanged(hasFocus, binding.cityDropdown, cities));
-        binding.cityDropdown.setOnClickListener(v -> binding.cityDropdown.showDropDown());
-
-        binding.typeDropdown.setOnFocusChangeListener((v, hasFocus) -> onDropdownFocusChanged(hasFocus, binding.typeDropdown, typeNames));
-        binding.typeDropdown.setOnClickListener(v -> binding.typeDropdown.showDropDown());
+        @SuppressWarnings("unchecked")
+        CustomDropDown<String> cityDropdown = binding.cityDropdown;
+        ArrayList<String> cities = new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities)));
+        cityDropdown.onValuesChanged(cities, String::toString);
 
         binding.afterDate.setOnClickListener(v -> {
             if (!calendarIsOpen) openDatePicker(binding.afterDate, after);
@@ -82,34 +74,6 @@ public class EventFilterDialogFragment extends DialogFragment {
         viewModel.fetchActiveEventTypes();
 
         return binding.getRoot();
-    }
-
-    private boolean onTouchOutsideDialog(View v, MotionEvent event) {
-        Rect rect = new Rect();
-        binding.cityDropdown.getGlobalVisibleRect(rect);
-        if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
-            binding.cityDropdown.clearFocus();
-            InputMethodManager imm = (InputMethodManager) binding.getRoot().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(binding.cityDropdown.getWindowToken(), 0);
-        }
-        binding.typeDropdown.getGlobalVisibleRect(rect);
-        if (!rect.contains((int) event.getRawX(), (int) event.getRawY())) {
-            binding.typeDropdown.clearFocus();
-            InputMethodManager imm = (InputMethodManager) binding.getRoot().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(binding.typeDropdown.getWindowToken(), 0);
-        }
-        return false;
-    }
-
-    private void onDropdownFocusChanged(boolean hasFocus, MaterialAutoCompleteTextView dropdown, ArrayList<String> values) {
-        String input = dropdown.getText().toString().trim();
-        if (hasFocus) {
-            dropdown.setText("");
-            dropdown.showDropDown();
-        } else {
-            Optional<String> found = values.stream().filter(value -> value.equalsIgnoreCase(input)).findFirst();
-            dropdown.setText(found.orElse(""));
-        }
     }
 
     private void openDatePicker(TextInputEditText editText, Date date) {
@@ -138,11 +102,8 @@ public class EventFilterDialogFragment extends DialogFragment {
     }
 
     private void onFilterButtonClicked(View v) {
-        String typeInput = binding.typeDropdown.getText().toString().trim();
-        String type = types.stream().filter(dto -> dto.getName().equalsIgnoreCase(typeInput)).findFirst().map(EventType::getId).orElse(null);
-
-        String cityInput = binding.cityDropdown.getText().toString().trim();
-        String city = cities.stream().filter(ct -> ct.equalsIgnoreCase(cityInput)).findFirst().orElse(null);
+        String type = ((EventType)binding.typeDropdown.getSelected()).getId();
+        String city = (String)binding.cityDropdown.getSelected();
 
         Date afterReturn = after.after(new Date(1)) ? after : null;
         Date beforeReturn = before.after(new Date(1)) ? before : null;
@@ -160,8 +121,8 @@ public class EventFilterDialogFragment extends DialogFragment {
     }
 
     private void OnTypesChanged(ArrayList<EventType> types) {
-        this.types = types;
-        typeNames = (ArrayList<String>) types.stream().map(EventType::getName).collect(Collectors.toList());
-        binding.typeDropdown.setAdapter(new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_dropdown_item, typeNames));
+        @SuppressWarnings("unchecked")
+        CustomDropDown<EventType> typeDropdown = binding.typeDropdown;
+        typeDropdown.onValuesChanged(types, EventType::getName);
     }
 }
