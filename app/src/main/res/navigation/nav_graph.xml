@@ -26,10 +26,10 @@
         tools:layout="@layout/fragment_my_listings">
         <action
             android:id="@+id/action_seller_listings_to_create_listing"
-            app:destination="@id/SellerCreateServiceFragment" />
+            app:destination="@id/CreateListingFragment" />
         <action
             android:id="@+id/action_SellerMyListingsFragment_to_SellerListingDetailFragment"
-            app:destination="@id/SellerListingDetailFragment" />
+            app:destination="@id/ListingDetailSellerFragment" />
     </fragment>
 
     <fragment
@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/SellerRegistrationFragment"
         android:name="com.wde.eventplanner.fragments.anonymous.RegistrationSellerFragment"
-        tools:layout="@layout/fragment_registration_seller" >
+        tools:layout="@layout/fragment_registration_seller">
         <action
             android:id="@+id/action_seller_registration_to_homepage"
             app:destination="@id/HomepageFragment" />
@@ -79,11 +79,11 @@
         tools:layout="@layout/fragment_create_event" />
 
     <fragment
-        android:id="@+id/SellerCreateServiceFragment"
-        android:name="com.wde.eventplanner.fragments.seller.CreateServiceFragment"
-        tools:layout="@layout/fragment_create_service" />
+        android:id="@+id/CreateListingFragment"
+        android:name="com.wde.eventplanner.fragments.seller.create_listing.CreateListingFragment"
+        tools:layout="@layout/fragment_create_listing" />
     <fragment
-        android:id="@+id/SellerListingDetailFragment"
+        android:id="@+id/ListingDetailSellerFragment"
         android:name="com.wde.eventplanner.fragments.seller.ListingDetailFragment"
         tools:layout="@layout/fragment_seller_listing_detail" />
 

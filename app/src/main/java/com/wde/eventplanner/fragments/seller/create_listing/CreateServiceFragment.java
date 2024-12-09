@@ -1,4 +1,4 @@
-package com.wde.eventplanner.fragments.seller;
+package com.wde.eventplanner.fragments.seller.create_listing;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,16 +11,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.databinding.FragmentCreateServiceBinding;
 
-public class CreateServiceFragment extends Fragment {
+public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.HasTitle {
     private FragmentCreateServiceBinding binding;
     private static final int PICK_IMAGE_REQUEST = 1;  // Request code for image selection
     private Uri selectedImageUri;
-
-    public CreateServiceFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +25,11 @@ public class CreateServiceFragment extends Fragment {
         binding.selectImageButton.setOnClickListener(v -> openImagePicker());
         binding.createButton.setOnClickListener(v -> createService());
         return binding.getRoot();
+    }
+
+    @Override
+    public String getTitle() {
+        return "Service";
     }
 
     private void openImagePicker() {

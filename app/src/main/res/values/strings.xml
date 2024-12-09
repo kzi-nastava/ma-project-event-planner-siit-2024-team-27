@@ -81,4 +81,5 @@
     <string name="replace">Replace</string>
     <string name="create_event">Create event</string>
     <string name="my_events">My events</string>
+    <string name="create_listing">Create listing</string>
 </resources>

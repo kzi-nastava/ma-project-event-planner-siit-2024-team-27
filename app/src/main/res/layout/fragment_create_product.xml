@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingVertical="150dp"
-        android:text="Agenda"
+        android:text="Create product"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

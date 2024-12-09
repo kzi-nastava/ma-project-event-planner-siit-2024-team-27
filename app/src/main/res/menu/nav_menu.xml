@@ -16,13 +16,13 @@
         android:icon="@drawable/ic_storefront"
         android:title="@string/market" />
     <item
-        android:id="@+id/myListingsTab"
-        android:icon="@drawable/ic_storefront"
-        android:title="@string/my_listings" />
-    <item
         android:id="@+id/myEventsTab"
         android:icon="@drawable/ic_event"
         android:title="@string/my_events" />
+    <item
+        android:id="@+id/myListingsTab"
+        android:icon="@drawable/ic_storefront"
+        android:title="@string/my_listings" />
     <item
         android:id="@+id/notificationsTab"
         android:icon="@drawable/ic_notifications"

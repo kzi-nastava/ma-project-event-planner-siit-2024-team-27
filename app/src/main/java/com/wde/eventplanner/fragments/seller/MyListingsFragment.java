@@ -44,9 +44,9 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
         binding = FragmentMyListingsBinding.inflate(inflater, container, false);
         ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
 
-        binding.createServiceButton.setOnClickListener(v -> {
+        binding.createListingButton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.SellerCreateServiceFragment);
+            navController.navigate(R.id.CreateListingFragment);
         });
 
         binding.sortSpinner.setAdapter(new SortSpinnerAdapter(binding.getRoot().getContext(), new String[]{"Name", "Price", "Rating"}, selectedPosition, orderDesc));
