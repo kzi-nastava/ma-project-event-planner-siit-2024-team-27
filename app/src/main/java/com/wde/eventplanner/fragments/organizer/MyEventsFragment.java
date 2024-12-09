@@ -1,4 +1,4 @@
-package com.wde.eventplanner.fragments.common.homepage.all_events;
+package com.wde.eventplanner.fragments.organizer;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,11 +14,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
-import com.wde.eventplanner.databinding.FragmentAllEventsBinding;
+import com.wde.eventplanner.databinding.FragmentMyEventsBinding;
+import com.wde.eventplanner.fragments.common.homepage.all_events.EventFilterDialogFragment;
 import com.wde.eventplanner.models.Event;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 
@@ -29,18 +33,23 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AllEventsFragment extends Fragment implements EventFilterDialogFragment.EventsFilterListener {
+public class MyEventsFragment extends Fragment implements EventFilterDialogFragment.EventsFilterListener {
     private String searchTerms, category, city, after, before, minRating, maxRating;
     private final AtomicInteger selectedPosition = new AtomicInteger(0);
     private final AtomicBoolean orderDesc = new AtomicBoolean(true);
-    private FragmentAllEventsBinding binding;
+    private FragmentMyEventsBinding binding;
     private EventsViewModel eventsViewModel;
     private String selectedValue = "name";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentAllEventsBinding.inflate(inflater, container, false);
+        binding = FragmentMyEventsBinding.inflate(inflater, container, false);
         ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
+
+        binding.createEventButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.CreateEventFragment);
+        });
 
         binding.sortSpinner.setAdapter(new SortSpinnerAdapter(binding.getRoot().getContext(), new String[]{"Name", "Date", "Rating"}, selectedPosition, orderDesc));
         binding.sortSpinner.setOnItemSelectedEvenIfUnchangedListener(new SortSpinnerOnItemSelectedListener());

@@ -28,13 +28,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class EventFilterDialogFragment extends DialogFragment {
+    public interface EventsFilterListener {
+        void onFilterPressed(String category, String city, Date after, Date before, String minRating, String maxRating);
+    }
+
+    private final EventsFilterListener parent;
     private DialogEventFilterBinding binding;
     private final Date before = new Date(0);
     private final Date after = new Date(0);
-    private final AllEventsFragment parent;
     private boolean calendarIsOpen = false;
 
-    public EventFilterDialogFragment(AllEventsFragment fragment) {
+    public EventFilterDialogFragment(EventsFilterListener fragment) {
         this.parent = fragment;
     }
 

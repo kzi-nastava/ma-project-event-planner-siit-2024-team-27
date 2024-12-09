@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_all_listings" />
 
     <fragment
-        android:id="@+id/SellerMyListingsFragment"
+        android:id="@+id/MyListingsFragment"
         android:name="com.wde.eventplanner.fragments.seller.MyListingsFragment"
         tools:layout="@layout/fragment_my_listings">
         <action
@@ -30,6 +30,15 @@
         <action
             android:id="@+id/action_SellerMyListingsFragment_to_SellerListingDetailFragment"
             app:destination="@id/SellerListingDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MyEventsFragment"
+        android:name="com.wde.eventplanner.fragments.organizer.MyEventsFragment"
+        tools:layout="@layout/fragment_my_events">
+        <action
+            android:id="@+id/action_my_events_to_create_event"
+            app:destination="@id/CreateEventFragment" />
     </fragment>
 
     <fragment
@@ -65,6 +74,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/CreateEventFragment"
+        android:name="com.wde.eventplanner.fragments.organizer.create_event.CreateEventFragment"
+        tools:layout="@layout/fragment_create_event" />
+
+    <fragment
         android:id="@+id/SellerCreateServiceFragment"
         android:name="com.wde.eventplanner.fragments.seller.CreateServiceFragment"
         tools:layout="@layout/fragment_create_service" />
@@ -78,7 +92,7 @@
         android:name="com.wde.eventplanner.fragments.common.notifications.NotificationsFragment"
         tools:layout="@layout/fragment_notifications" />
     <fragment
-        android:id="@+id/AdminListingCategoriesFragment"
+        android:id="@+id/ListingCategoriesFragment"
         android:name="com.wde.eventplanner.fragments.admin.listing_categories.ListingCategoriesFragment"
         tools:layout="@layout/fragment_listing_categories" />
 

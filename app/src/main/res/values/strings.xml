@@ -77,6 +77,8 @@
     <string name="active_categories">Active categories</string>
     <string name="listing_categories">Listing categories</string>
     <string name="create">Create</string>
-    <string name="create_new_category">Create new category</string>
+    <string name="create_category">Create category</string>
     <string name="replace">Replace</string>
+    <string name="create_event">Create event</string>
+    <string name="my_events">My events</string>
 </resources>

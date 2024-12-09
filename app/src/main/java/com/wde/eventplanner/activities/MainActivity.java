@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
             appBarConfiguration = new AppBarConfiguration.Builder(R.id.HomepageFragment, R.id.LoginFragment,
-                    R.id.SellerMyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment, R.id.NotificationsFragment,
-                    R.id.AdminListingCategoriesFragment)
+                    R.id.MyListingsFragment, R.id.AllEventsFragment, R.id.AllListingsFragment, R.id.NotificationsFragment,
+                    R.id.ListingCategoriesFragment, R.id.MyEventsFragment)
                     .setOpenableLayout(binding.drawerLayout)
                     .build();
 
@@ -62,12 +62,14 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.AllEventsFragment);
                 } else if (id == R.id.marketTab && notCurrent(navController, R.id.AllListingsFragment)) {
                     navController.navigate(R.id.AllListingsFragment);
-                } else if (id == R.id.myListingsTab && notCurrent(navController, R.id.SellerMyListingsFragment)) {
-                    navController.navigate(R.id.SellerMyListingsFragment);
+                } else if (id == R.id.myListingsTab && notCurrent(navController, R.id.MyListingsFragment)) {
+                    navController.navigate(R.id.MyListingsFragment);
+                } else if (id == R.id.myEventsTab && notCurrent(navController, R.id.MyEventsFragment)) {
+                    navController.navigate(R.id.MyEventsFragment);
                 } else if (id == R.id.notificationsTab && notCurrent(navController, R.id.NotificationsFragment)) {
                     navController.navigate(R.id.NotificationsFragment);
-                } else if (id == R.id.adminListingCategoriesTab && notCurrent(navController, R.id.AdminListingCategoriesFragment)) {
-                    navController.navigate(R.id.AdminListingCategoriesFragment);
+                } else if (id == R.id.listingCategoriesTab && notCurrent(navController, R.id.ListingCategoriesFragment)) {
+                    navController.navigate(R.id.ListingCategoriesFragment);
                 }
 
                 if (!item.getTitle().toString().equals("Close")) {

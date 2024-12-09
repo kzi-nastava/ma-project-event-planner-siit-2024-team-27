@@ -1,12 +1,13 @@
 package com.wde.eventplanner.fragments.common;
 
+import static com.wde.eventplanner.constants.GraphicUtils.dp2px;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.text.InputType;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -53,7 +54,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     private void setUp() {
         setThreshold(0);
         setSaveEnabled(false);
-        setDropDownVerticalOffset(dp2px(1));
+        setDropDownVerticalOffset(dp2px(getResources(), 1));
         setOnClickListener(v -> showDropDown());
         setOnItemClickListener(this::onDropdownItemClicked);
         setOnFocusChangeListener(this::onDropdownFocusChanged);
@@ -125,19 +126,15 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         return false;
     }
 
-    int dp2px(int dp) {
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()));
-    }
-
     @Override
     public void onFilterComplete(int count) {
-        setDropDownHeight(Math.min(count * dp2px(44), dp2px(200)));
+        setDropDownHeight(Math.min(count * dp2px(getResources(), 44), dp2px(getResources(), 200)));
         super.onFilterComplete(count);
     }
 
     public void setItems(ArrayList<CustomDropDownItem<T>> items) {
         this.items = items;
-        setDropDownHeight(Math.min(items.size() * dp2px(44), dp2px(200)));
+        setDropDownHeight(Math.min(items.size() * dp2px(getResources(), 44), dp2px(getResources(), 200)));
         setAdapter(new DropdownArrayAdapter<>(getContext(), items, isAutoCompleteDisabled));
     }
 
