@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginVertical="6dp"
-    android:elevation="2dp"
+    android:theme="@style/CardViewTextInputOverlay"
     app:cardBackgroundColor="@color/edge"
     app:cardCornerRadius="25dp">
 
@@ -42,8 +42,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderText="Listing type"
-            app:placeholderTextColor="@color/pale_text">
+            app:placeholderText="Listing type">
 
             <com.wde.eventplanner.fragments.common.CustomDropDown
                 android:id="@+id/categoryDropdown"
@@ -56,12 +55,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/replaceButton"
-            style="@style/CustomButtonStyle"
             android:layout_width="132dp"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="36dp"
-            android:backgroundTint="@color/accent2"
             android:text="@string/replace"
             app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"

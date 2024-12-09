@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,25 +10,18 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchLayout"
-            style="@style/CustomTextInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeWidthFocused="0dp"
             app:endIconDrawable="@drawable/ic_search"
             app:endIconMode="custom"
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholderText="@string/search_listings"
-            app:placeholderTextColor="@color/pale_text">
+            app:placeholderText="@string/search_listings">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_input"
@@ -42,7 +34,6 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filterButton"
-            style="@style/CustomButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginStart="10dp"
