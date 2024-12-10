@@ -59,7 +59,7 @@ public class EventFilterDialogFragment extends DialogFragment {
         @SuppressWarnings("unchecked")
         CustomDropDown<String> cityDropdown = binding.cityDropdown;
         ArrayList<String> cities = new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities)));
-        cityDropdown.onValuesChanged(cities, String::toString);
+        cityDropdown.changeValues(cities, String::toString);
 
         binding.afterDate.setOnClickListener(v -> {
             if (!calendarIsOpen) openDatePicker(binding.afterDate, after);
@@ -71,14 +71,14 @@ public class EventFilterDialogFragment extends DialogFragment {
         binding.closeButton.setOnClickListener(v -> dismiss());
         binding.filterButton.setOnClickListener(this::onFilterButtonClicked);
 
-        viewModel.getActiveEventTypes().observe(getViewLifecycleOwner(), this::OnTypesChanged);
+        viewModel.getEventTypes().observe(getViewLifecycleOwner(), this::OnTypesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
                 viewModel.clearErrorMessage();
             }
         });
-        viewModel.fetchActiveEventTypes();
+        viewModel.fetchEventTypes();
 
         return binding.getRoot();
     }
@@ -109,8 +109,8 @@ public class EventFilterDialogFragment extends DialogFragment {
     }
 
     private void onFilterButtonClicked(View v) {
-        String type = ((EventType)binding.typeDropdown.getSelected()).getId();
-        String city = (String)binding.cityDropdown.getSelected();
+        String type = ((EventType) binding.typeDropdown.getSelected()).getId();
+        String city = (String) binding.cityDropdown.getSelected();
 
         Date afterReturn = after.after(new Date(1)) ? after : null;
         Date beforeReturn = before.after(new Date(1)) ? before : null;
@@ -130,6 +130,6 @@ public class EventFilterDialogFragment extends DialogFragment {
     private void OnTypesChanged(ArrayList<EventType> types) {
         @SuppressWarnings("unchecked")
         CustomDropDown<EventType> typeDropdown = binding.typeDropdown;
-        typeDropdown.onValuesChanged(types, EventType::getName);
+        typeDropdown.changeValues(types, EventType::getName);
     }
 }

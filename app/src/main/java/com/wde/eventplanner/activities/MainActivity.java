@@ -74,10 +74,11 @@ public class MainActivity extends AppCompatActivity {
             });
 
             binding.navigationView.setNavigationItemSelectedListener(item -> {
-                if (notCurrent(navController, item.getItemId()))
-                    navController.navigate(item.getItemId());
-                if (item.getItemId() != R.id.nav_close)
+                if (item.getItemId() != R.id.nav_close) {
+                    if (notCurrent(navController, item.getItemId()))
+                        navController.navigate(item.getItemId());
                     binding.loginButton.setSelected(false);
+                }
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             });

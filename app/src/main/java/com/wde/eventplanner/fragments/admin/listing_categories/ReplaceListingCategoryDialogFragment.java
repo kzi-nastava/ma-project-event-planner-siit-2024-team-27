@@ -57,7 +57,7 @@ public class ReplaceListingCategoryDialogFragment extends DialogFragment {
         @SuppressWarnings("unchecked")
         CustomDropDown<ListingCategory> categoryDropdown = binding.categoryDropdown;
         ListingType type = toBeReplacedCategory.getListingType();
-        categoryDropdown.onValuesChanged(categories, ListingCategory::getName, category -> category.getListingType() == type || type == null);
+        categoryDropdown.changeValues(categories, ListingCategory::getName, category -> category.getListingType() == type || type == null);
     }
 
     private void replaceListing() {

@@ -4,12 +4,10 @@ import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.isStrongPassword;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;

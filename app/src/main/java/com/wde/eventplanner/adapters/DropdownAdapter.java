@@ -7,16 +7,16 @@ import android.widget.Filter;
 import androidx.annotation.NonNull;
 
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.components.CustomDropDown.CustomDropDownItem;
+import com.wde.eventplanner.components.CustomDropDown;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class DropdownArrayAdapter<T extends CustomDropDownItem<?>> extends ArrayAdapter<T> {
+public class DropdownAdapter<T extends CustomDropDown.CustomDropDownItem<?>> extends ArrayAdapter<T> {
     private final ArrayList<T> values;
     public boolean ignoreFiltering;
 
-    public DropdownArrayAdapter(Context context, ArrayList<T> values, boolean ignoreFiltering) {
+    public DropdownAdapter(Context context, ArrayList<T> values, boolean ignoreFiltering) {
         super(context, R.layout.item_dropdown, new ArrayList<>(values));
         this.ignoreFiltering = ignoreFiltering;
         this.values = values;

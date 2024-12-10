@@ -15,11 +15,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EventTypesViewModel extends ViewModel {
-    private final MutableLiveData<ArrayList<EventType>> activeEventTypes = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<EventType>> eventTypes = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
-    public LiveData<ArrayList<EventType>> getActiveEventTypes() {
-        return activeEventTypes;
+    public LiveData<ArrayList<EventType>> getEventTypes() {
+        return eventTypes;
     }
 
     public LiveData<String> getErrorMessage() {
@@ -30,12 +30,12 @@ public class EventTypesViewModel extends ViewModel {
         errorMessage.setValue(null);
     }
 
-    public void fetchActiveEventTypes() {
-        ClientUtils.eventTypesService.getTypes().enqueue(new Callback<>() {
+    public void fetchEventTypes() {
+        ClientUtils.eventTypesService.getEventTypes().enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<EventType>> call, @NonNull Response<ArrayList<EventType>> response) {
                 if (response.isSuccessful()) {
-                    activeEventTypes.postValue(response.body());
+                    eventTypes.postValue(response.body());
                 } else {
                     errorMessage.postValue("Failed to fetch event types. Code: " + response.code());
                 }

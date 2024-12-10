@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
-import com.wde.eventplanner.adapters.DropdownArrayAdapter;
+import com.wde.eventplanner.adapters.DropdownAdapter;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -54,11 +54,15 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     private void setUp() {
         setThreshold(0);
         setSaveEnabled(false);
-        setDropDownVerticalOffset(dp2px(getResources(), 1));
-        setOnClickListener(v -> showDropDown());
         setOnItemClickListener(this::onDropdownItemClicked);
         setOnFocusChangeListener(this::onDropdownFocusChanged);
+        setDropDownVerticalOffset(dp2px(getResources(), 1));
         setInputType(InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE | InputType.TYPE_CLASS_TEXT);
+        setOnClickListener(v -> {
+            if (getText().length() > 0)
+                setText(getText());
+            showDropDown();
+        });
     }
 
     public CustomDropDown(@NonNull Context context) {
@@ -77,7 +81,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     }
 
     public void disableAutoComplete() {
-        if (getAdapter() != null) ((DropdownArrayAdapter<?>) getAdapter()).ignoreFiltering = true;
+        if (getAdapter() != null) ((DropdownAdapter<?>) getAdapter()).ignoreFiltering = true;
         setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
         setInputType(InputType.TYPE_NULL);
         isAutoCompleteDisabled = true;
@@ -96,6 +100,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
 
     private void onDropdownFocusChanged(View v, boolean hasFocus) {
         if (hasFocus) {
+            setDropdownHeight(items.size());
             if (!isAutoCompleteDisabled) setText("");
             postDelayed(this::showDropDown, 50);
         } else {
@@ -123,23 +128,23 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         return false;
     }
 
+    private void setDropdownHeight(int count) {
+        setDropDownHeight(Math.min(count * dp2px(getResources(), 44), dp2px(getResources(), 200)));
+    }
+
     @Override
     public void onFilterComplete(int count) {
-        setDropDownHeight(Math.min(count * dp2px(getResources(), 44), dp2px(getResources(), 200)));
+        setDropdownHeight(count);
         super.onFilterComplete(count);
     }
 
     public void setItems(ArrayList<CustomDropDownItem<T>> items) {
         this.items = items;
-        setDropDownHeight(Math.min(items.size() * dp2px(getResources(), 44), dp2px(getResources(), 200)));
-        setAdapter(new DropdownArrayAdapter<>(getContext(), items, isAutoCompleteDisabled));
+        setDropdownHeight(items.size());
+        setAdapter(new DropdownAdapter<>(getContext(), items, isAutoCompleteDisabled));
     }
 
-    public void onValuesChanged(ArrayList<T> values, Function<T, String> getName) {
-        onValuesChanged(values, getName, null);
-    }
-
-    public void onValuesChanged(ArrayList<T> values, Function<T, String> getName, Predicate<T> filter) {
+    public void changeValues(ArrayList<T> values, Function<T, String> getName, Predicate<T> filter) {
         this.originalValues = new ArrayList<>(values);
         this.getName = getName;
         if (filter != null)
@@ -147,11 +152,12 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         setItems(values.stream().map(value -> new CustomDropDownItem<>(getName.apply(value), value)).collect(Collectors.toCollection(ArrayList::new)));
     }
 
+    public void changeValues(ArrayList<T> values, Function<T, String> getName) {
+        changeValues(values, getName, null);
+    }
+
     public void changeFilter(Predicate<T> filter) {
-        if (filter != null && getName != null) {
-            ArrayList<T> values = originalValues.stream().filter(filter).collect(Collectors.toCollection(ArrayList::new));
-            setItems(values.stream().map(value -> new CustomDropDownItem<>(getName.apply(value), value)).collect(Collectors.toCollection(ArrayList::new)));
-        }
+        changeValues(originalValues, getName, filter);
     }
 
     @Override

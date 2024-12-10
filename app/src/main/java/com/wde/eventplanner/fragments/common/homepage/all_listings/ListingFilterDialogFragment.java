@@ -82,7 +82,7 @@ public class ListingFilterDialogFragment extends DialogFragment {
         @SuppressWarnings("unchecked")
         CustomDropDown<ListingCategory> categoryDropdown = binding.categoryDropdown;
         ListingType type = (ListingType) binding.typeDropdown.getSelected();
-        categoryDropdown.onValuesChanged(categories, ListingCategory::getName, category -> category.getListingType() == type || type == null);
+        categoryDropdown.changeValues(categories, ListingCategory::getName, category -> category.getListingType() == type || type == null);
     }
 
     private void onFilterButtonClicked(View v) {

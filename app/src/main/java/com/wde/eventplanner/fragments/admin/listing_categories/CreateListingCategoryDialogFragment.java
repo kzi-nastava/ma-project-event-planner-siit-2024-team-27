@@ -38,7 +38,7 @@ public class CreateListingCategoryDialogFragment extends DialogFragment {
 
         @SuppressWarnings("unchecked")
         CustomDropDown<ListingType> typeDropdown = binding.typeDropdown;
-        typeDropdown.onValuesChanged(new ArrayList<>(Arrays.asList(ListingType.values())), ListingType::toString);
+        typeDropdown.changeValues(new ArrayList<>(Arrays.asList(ListingType.values())), ListingType::toString);
 
         return binding.getRoot();
     }
