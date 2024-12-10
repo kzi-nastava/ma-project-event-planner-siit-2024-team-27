@@ -86,4 +86,6 @@
     <string name="invite">Invite</string>
     <string name="anonymous">Anonymous</string>
     <string name="pdf">PDF</string>
+    <string name="edit_category">Edit category</string>
+    <string name="replace_with">Replace with</string>
 </resources>

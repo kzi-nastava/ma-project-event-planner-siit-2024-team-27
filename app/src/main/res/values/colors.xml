@@ -6,6 +6,7 @@
     <color name="on_surface_container_highest">#212121</color>
     <color name="button">#212121</color>
     <color name="text">#FFFFFF</color>
+    <color name="dialog_title">#D0D0D0</color>
     <color name="pale_text">#AAAAAA</color>
     <color name="primary">#A939F9</color>
     <color name="secondary">#B886F1</color>

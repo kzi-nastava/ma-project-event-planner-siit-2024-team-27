@@ -21,5 +21,10 @@
     <style name="CardViewTextInputOverlay" parent="">
         <item name="textInputStyle">@style/CustomOutlinedTextInputStyle</item>
         <item name="materialButtonStyle">@style/CustomAccentButtonStyle</item>
+        <item name="android:textViewStyle">@style/CustomTextViewStyle</item>
+    </style>
+
+    <style name="CustomTextViewStyle" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/dialog_title</item>
     </style>
 </resources>
