@@ -84,4 +84,6 @@
     <string name="create_listing">Create listing</string>
     <string name="email_">Email…</string>
     <string name="invite">Invite</string>
+    <string name="anonymous">Anonymous</string>
+    <string name="pdf">PDF</string>
 </resources>
