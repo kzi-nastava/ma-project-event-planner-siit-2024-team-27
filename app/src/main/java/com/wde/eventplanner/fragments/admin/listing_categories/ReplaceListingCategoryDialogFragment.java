@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.databinding.DialogReplaceListingCategoryBinding;
-import com.wde.eventplanner.fragments.common.CustomDropDown;
+import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
 import com.wde.eventplanner.models.listingCategory.ReplacingListingCategory;
@@ -43,7 +43,10 @@ public class ReplaceListingCategoryDialogFragment extends DialogFragment {
 
         viewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), this::onCategoriesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                viewModel.clearErrorMessage();
+            }
         });
         viewModel.fetchActiveListingCategories();
 
@@ -54,7 +57,7 @@ public class ReplaceListingCategoryDialogFragment extends DialogFragment {
         @SuppressWarnings("unchecked")
         CustomDropDown<ListingCategory> categoryDropdown = binding.categoryDropdown;
         ListingType type = toBeReplacedCategory.getListingType();
-        categoryDropdown.onValuesChanged(categories, ListingCategory::getName, category -> category.getListingType() == type || type == null);
+        categoryDropdown.changeValues(categories, ListingCategory::getName, category -> category.getListingType() == type || type == null);
     }
 
     private void replaceListing() {

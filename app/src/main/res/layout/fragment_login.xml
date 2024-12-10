@@ -24,16 +24,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputLayout"
-            style="@style/CustomTextInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:hint="@string/email"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title">
@@ -47,16 +41,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
-            style="@style/CustomTextInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/password"
-            app:boxCornerRadiusBottomEnd="8dp"
-            app:boxCornerRadiusBottomStart="8dp"
-            app:boxCornerRadiusTopEnd="8dp"
-            app:boxCornerRadiusTopStart="8dp"
-            app:boxStrokeWidthFocused="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/emailInputLayout">
@@ -71,36 +59,31 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/loginButton"
-            style="@style/CustomButtonStyle"
+            style="@style/CustomAccentButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="48dp"
             android:text="@string/login"
-            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registerOrganizerButton"
-            style="@style/CustomSecondaryButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="2dp"
             android:text="@string/register_as_an_organizer"
-            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registerSellerButton"
-            style="@style/CustomSecondaryButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="2dp"
             android:text="@string/register_as_a_seller"
-            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registerOrganizerButton" />

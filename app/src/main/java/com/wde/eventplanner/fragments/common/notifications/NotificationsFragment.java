@@ -32,7 +32,10 @@ public class NotificationsFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(NotificationsViewModel.class);
         viewModel.getNotifications().observe(getViewLifecycleOwner(), this::notificationsChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                viewModel.clearErrorMessage();
+            }
         });
 
         binding.notificationsRecyclerView.setAdapter(viewModel.getNotifications().isInitialized() ?

@@ -16,7 +16,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.DialogEventFilterBinding;
-import com.wde.eventplanner.fragments.common.CustomDropDown;
+import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.models.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 
@@ -28,13 +28,17 @@ import java.util.Date;
 import java.util.Locale;
 
 public class EventFilterDialogFragment extends DialogFragment {
+    public interface EventsFilterListener {
+        void onFilterPressed(String category, String city, Date after, Date before, String minRating, String maxRating);
+    }
+
+    private final EventsFilterListener parent;
     private DialogEventFilterBinding binding;
     private final Date before = new Date(0);
     private final Date after = new Date(0);
-    private final AllEventsFragment parent;
     private boolean calendarIsOpen = false;
 
-    public EventFilterDialogFragment(AllEventsFragment fragment) {
+    public EventFilterDialogFragment(EventsFilterListener fragment) {
         this.parent = fragment;
     }
 
@@ -55,7 +59,7 @@ public class EventFilterDialogFragment extends DialogFragment {
         @SuppressWarnings("unchecked")
         CustomDropDown<String> cityDropdown = binding.cityDropdown;
         ArrayList<String> cities = new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities)));
-        cityDropdown.onValuesChanged(cities, String::toString);
+        cityDropdown.changeValues(cities, String::toString);
 
         binding.afterDate.setOnClickListener(v -> {
             if (!calendarIsOpen) openDatePicker(binding.afterDate, after);
@@ -67,11 +71,14 @@ public class EventFilterDialogFragment extends DialogFragment {
         binding.closeButton.setOnClickListener(v -> dismiss());
         binding.filterButton.setOnClickListener(this::onFilterButtonClicked);
 
-        viewModel.getActiveEventTypes().observe(getViewLifecycleOwner(), this::OnTypesChanged);
+        viewModel.getEventTypes().observe(getViewLifecycleOwner(), this::OnTypesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                viewModel.clearErrorMessage();
+            }
         });
-        viewModel.fetchActiveEventTypes();
+        viewModel.fetchEventTypes();
 
         return binding.getRoot();
     }
@@ -102,8 +109,8 @@ public class EventFilterDialogFragment extends DialogFragment {
     }
 
     private void onFilterButtonClicked(View v) {
-        String type = ((EventType)binding.typeDropdown.getSelected()).getId();
-        String city = (String)binding.cityDropdown.getSelected();
+        String type = ((EventType) binding.typeDropdown.getSelected()).getId();
+        String city = (String) binding.cityDropdown.getSelected();
 
         Date afterReturn = after.after(new Date(1)) ? after : null;
         Date beforeReturn = before.after(new Date(1)) ? before : null;
@@ -123,6 +130,6 @@ public class EventFilterDialogFragment extends DialogFragment {
     private void OnTypesChanged(ArrayList<EventType> types) {
         @SuppressWarnings("unchecked")
         CustomDropDown<EventType> typeDropdown = binding.typeDropdown;
-        typeDropdown.onValuesChanged(types, EventType::getName);
+        typeDropdown.changeValues(types, EventType::getName);
     }
 }

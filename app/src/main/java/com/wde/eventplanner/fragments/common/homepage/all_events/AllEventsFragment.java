@@ -1,5 +1,7 @@
 package com.wde.eventplanner.fragments.common.homepage.all_events;
 
+import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -29,7 +31,7 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class AllEventsFragment extends Fragment {
+public class AllEventsFragment extends Fragment implements EventFilterDialogFragment.EventsFilterListener {
     private String searchTerms, category, city, after, before, minRating, maxRating;
     private final AtomicInteger selectedPosition = new AtomicInteger(0);
     private final AtomicBoolean orderDesc = new AtomicBoolean(true);
@@ -52,11 +54,15 @@ public class AllEventsFragment extends Fragment {
         binding.filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
         binding.searchInput.setOnEditorActionListener(this::onSearchInputEditorAction);
+        binding.searchLayout.setEndIconOnClickListener((v) -> onSearchInputEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null));
 
         eventsViewModel = viewModelProvider.get(EventsViewModel.class);
         eventsViewModel.getEvents().observe(getViewLifecycleOwner(), this::eventsChanged);
         eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                eventsViewModel.clearErrorMessage();
+            }
         });
 
         binding.eventsRecyclerView.setAdapter(eventsViewModel.getEvents().isInitialized() ?
@@ -89,6 +95,7 @@ public class AllEventsFragment extends Fragment {
                 searchTerms = binding.searchInput.getText().toString();
                 searchTerms = !searchTerms.isBlank() ? searchTerms : null;
             }
+            hideKeyboard(requireContext(), binding.getRoot());
             refreshEvents();
             return true;
         }

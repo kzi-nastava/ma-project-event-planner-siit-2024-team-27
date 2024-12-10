@@ -4,12 +4,10 @@ import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.isStrongPassword;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,15 +46,8 @@ public class LoginFragment extends Fragment {
             return false;
         });
 
-        binding.registerOrganizerButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_login_to_organizer_registration);
-        });
-
-        binding.registerSellerButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_login_to_seller_registration);
-        });
+        binding.registerOrganizerButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_login_to_organizer_registration));
+        binding.registerSellerButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_login_to_seller_registration));
 
         return binding.getRoot();
     }

@@ -9,5 +9,5 @@ import retrofit2.http.GET;
 
 public interface EventTypesService {
     @GET("event-types")
-    Call<ArrayList<EventType>> getTypes();
+    Call<ArrayList<EventType>> getEventTypes();
 }

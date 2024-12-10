@@ -1,5 +1,7 @@
 package com.wde.eventplanner.fragments.common.homepage.all_listings;
 
+import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -49,11 +51,15 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
         binding.filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
         binding.searchInput.setOnEditorActionListener(this::onSearchInputEditorAction);
+        binding.searchLayout.setEndIconOnClickListener((v) -> onSearchInputEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null));
 
         listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), this::listingsObserver);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                listingsViewModel.clearErrorMessage();
+            }
         });
 
         binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() ?
@@ -86,6 +92,7 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
                 searchTerms = binding.searchInput.getText().toString();
                 searchTerms = !searchTerms.isBlank() ? searchTerms : null;
             }
+            hideKeyboard(requireContext(), binding.getRoot());
             refreshEvents();
             return true;
         }

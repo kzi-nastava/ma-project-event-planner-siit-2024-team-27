@@ -1,5 +1,7 @@
 package com.wde.eventplanner.fragments.seller;
 
+import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,10 +45,7 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
         binding = FragmentMyListingsBinding.inflate(inflater, container, false);
         ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
 
-        binding.createServiceButton.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.SellerCreateServiceFragment);
-        });
+        binding.createListingButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.CreateListingFragment));
 
         binding.sortSpinner.setAdapter(new SortSpinnerAdapter(binding.getRoot().getContext(), new String[]{"Name", "Price", "Rating"}, selectedPosition, orderDesc));
         binding.sortSpinner.setOnItemSelectedEvenIfUnchangedListener(new SortSpinnerOnItemSelectedListener());
@@ -59,11 +57,15 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
         binding.filterButton.setOnClickListener(v -> filterDialog.show(getParentFragmentManager(), "filterDialog"));
 
         binding.searchInput.setOnEditorActionListener(this::onSearchInputEditorAction);
+        binding.searchLayout.setEndIconOnClickListener((v) -> onSearchInputEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null));
 
         listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), this::listingsObserver);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                listingsViewModel.clearErrorMessage();
+            }
         });
 
         binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() ?
@@ -97,6 +99,7 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
                 searchTerms = binding.searchInput.getText().toString();
                 searchTerms = !searchTerms.isBlank() ? searchTerms : null;
             }
+            hideKeyboard(requireContext(), binding.getRoot());
             refreshEvents();
             return true;
         }

@@ -46,7 +46,7 @@ public class ListingDetailFragment extends Fragment {
 
         binding.editButton.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.SellerCreateServiceFragment);
+            navController.navigate(R.id.CreateListingFragment);
         });
 
         return binding.getRoot();

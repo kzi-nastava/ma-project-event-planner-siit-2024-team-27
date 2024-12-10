@@ -62,7 +62,7 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         holder.binding.listingCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
 
         if (navController != null)
-            holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.SellerListingDetailFragment));
+            holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ListingDetailSellerFragment));
     }
 
     @Override

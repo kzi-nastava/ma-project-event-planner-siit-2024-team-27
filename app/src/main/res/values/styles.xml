@@ -5,7 +5,7 @@
         <item name="windowSplashScreenBackground">@color/background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/wde_splash_logo</item>
         <item name="windowSplashScreenAnimationDuration">1500</item>
-        <item name="postSplashScreenTheme">@style/Base.Theme.EventPlanner</item>
+        <item name="postSplashScreenTheme">@style/Theme.EventPlanner</item>
     </style>
 
     <style name="DatePickerWithoutHeader" parent="ThemeOverlay.Material3.MaterialCalendar">
@@ -16,5 +16,15 @@
 
     <style name="App.Material3.MaterialCalendar.HeaderLayout" parent="@style/Widget.Material3.MaterialCalendar.HeaderLayout">
         <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="CardViewTextInputOverlay" parent="">
+        <item name="textInputStyle">@style/CustomOutlinedTextInputStyle</item>
+        <item name="materialButtonStyle">@style/CustomAccentButtonStyle</item>
+        <item name="android:textViewStyle">@style/CustomTextViewStyle</item>
+    </style>
+
+    <style name="CustomTextViewStyle" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/dialog_title</item>
     </style>
 </resources>

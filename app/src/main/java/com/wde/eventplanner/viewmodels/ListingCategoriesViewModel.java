@@ -11,7 +11,6 @@ import com.wde.eventplanner.models.listingCategory.ReplacingListingCategory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +31,10 @@ public class ListingCategoriesViewModel extends ViewModel {
 
     public LiveData<String> getErrorMessage() {
         return errorMessage;
+    }
+
+    public void clearErrorMessage() {
+        errorMessage.setValue(null);
     }
 
     public void fetchActiveListingCategories() {
@@ -59,9 +62,8 @@ public class ListingCategoriesViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     ArrayList<ListingCategory> activeListWithDTODeleted = activeListingCategories.getValue();
                     if (activeListWithDTODeleted != null) {
-                        activeListWithDTODeleted.removeIf(c -> Objects.equals(c.getId(), listingCategory.getId()));
                         listingCategory.setIsDeleted(true);
-                        activeListWithDTODeleted.add(listingCategory);
+                        activeListWithDTODeleted.replaceAll(c -> c.getId().equals(listingCategory.getId()) ? listingCategory : c);
                         activeListingCategories.setValue(new ArrayList<>(activeListWithDTODeleted));
                     }
                 } else {
@@ -87,8 +89,7 @@ public class ListingCategoriesViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     ArrayList<ListingCategory> activeListWithDTOEdited = activeListingCategories.getValue();
                     if (activeListWithDTOEdited != null) {
-                        activeListWithDTOEdited.removeIf(c -> Objects.equals(c.getId(), id));
-                        activeListWithDTOEdited.add(response.body());
+                        activeListWithDTOEdited.replaceAll(c -> c.getId().equals(id) ? response.body() : c);
                         activeListingCategories.setValue(new ArrayList<>(activeListWithDTOEdited));
                     }
                 } else {
@@ -150,8 +151,7 @@ public class ListingCategoriesViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     ArrayList<ListingCategory> pendingListWithDTOEdited = pendingListingCategories.getValue();
                     if (pendingListWithDTOEdited != null) {
-                        pendingListWithDTOEdited.removeIf(c -> Objects.equals(c.getId(), id));
-                        pendingListWithDTOEdited.add(response.body());
+                        pendingListWithDTOEdited.replaceAll(c -> c.getId().equals(id) ? response.body() : c);
                         pendingListingCategories.setValue(new ArrayList<>(pendingListWithDTOEdited));
                     }
                 } else {
@@ -173,7 +173,7 @@ public class ListingCategoriesViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     ArrayList<ListingCategory> pendingListWithDTORemoved = pendingListingCategories.getValue();
                     if (pendingListWithDTORemoved != null) {
-                        pendingListWithDTORemoved.removeIf(c -> Objects.equals(c.getId(), listingCategory.getId()));
+                        pendingListWithDTORemoved.removeIf(c -> c.getId().equals(listingCategory.getId()));
                         pendingListingCategories.setValue(new ArrayList<>(pendingListWithDTORemoved));
                     }
 
@@ -201,7 +201,7 @@ public class ListingCategoriesViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     ArrayList<ListingCategory> pendingListWithDTODeleted = pendingListingCategories.getValue();
                     if (pendingListWithDTODeleted != null) {
-                        pendingListWithDTODeleted.removeIf(c -> Objects.equals(c.getId(), replacingListingCategory.getToBeReplacedId()));
+                        pendingListWithDTODeleted.removeIf(c -> c.getId().equals(replacingListingCategory.getToBeReplacedId()));
                         pendingListingCategories.setValue(new ArrayList<>(pendingListWithDTODeleted));
                     }
                 } else {

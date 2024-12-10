@@ -37,13 +37,19 @@ public class HomepageFragment extends Fragment {
         ListingsViewModel listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         listingsViewModel.getTopListings().observe(getViewLifecycleOwner(), this::listingsChanged);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                listingsViewModel.clearErrorMessage();
+            }
         });
 
         EventsViewModel eventsViewModel = viewModelProvider.get(EventsViewModel.class);
         eventsViewModel.getTopEvents().observe(getViewLifecycleOwner(), this::eventsChanged);
         eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                eventsViewModel.clearErrorMessage();
+            }
         });
 
         binding.listingsRecyclerView.setAdapter(listingsViewModel.getTopListings().isInitialized() ?
