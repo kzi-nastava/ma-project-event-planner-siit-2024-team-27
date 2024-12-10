@@ -44,7 +44,10 @@ public class ListingCategoriesFragment extends Fragment {
         viewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), this::OnActiveCategoriesChanged);
         viewModel.getPendingListingCategories().observe(getViewLifecycleOwner(), this::OnPendingCategoriesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                viewModel.clearErrorMessage();
+            }
         });
 
         viewModel.fetchPendingListingCategories();

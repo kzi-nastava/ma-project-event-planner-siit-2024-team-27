@@ -73,7 +73,10 @@ public class EventFilterDialogFragment extends DialogFragment {
 
         viewModel.getActiveEventTypes().observe(getViewLifecycleOwner(), this::OnTypesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                viewModel.clearErrorMessage();
+            }
         });
         viewModel.fetchActiveEventTypes();
 

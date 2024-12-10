@@ -31,6 +31,10 @@ public class EventsViewModel extends ViewModel {
         return errorMessage;
     }
 
+    public void clearErrorMessage() {
+        errorMessage.setValue(null);
+    }
+
     public void fetchTopEvents() {
         ClientUtils.eventsService.getTopEvents().enqueue(new Callback<>() {
             @Override

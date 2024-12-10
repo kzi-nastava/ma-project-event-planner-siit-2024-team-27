@@ -31,6 +31,10 @@ public class ListingsViewModel extends ViewModel {
         return errorMessage;
     }
 
+    public void clearErrorMessage() {
+        errorMessage.setValue(null);
+    }
+
     public void fetchTopListings() {
         ClientUtils.listingsService.getTopListings().enqueue(new Callback<>() {
             @Override

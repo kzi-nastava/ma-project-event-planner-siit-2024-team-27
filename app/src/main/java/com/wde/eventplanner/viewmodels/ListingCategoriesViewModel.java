@@ -34,6 +34,10 @@ public class ListingCategoriesViewModel extends ViewModel {
         return errorMessage;
     }
 
+    public void clearErrorMessage() {
+        errorMessage.setValue(null);
+    }
+
     public void fetchActiveListingCategories() {
         ClientUtils.listingCategoriesService.getCategories().enqueue(new Callback<>() {
             @Override

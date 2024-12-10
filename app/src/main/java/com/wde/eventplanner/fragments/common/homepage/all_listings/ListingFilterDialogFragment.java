@@ -61,7 +61,10 @@ public class ListingFilterDialogFragment extends DialogFragment {
 
         viewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), this::onCategoriesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                viewModel.clearErrorMessage();
+            }
         });
         viewModel.fetchActiveListingCategories();
 

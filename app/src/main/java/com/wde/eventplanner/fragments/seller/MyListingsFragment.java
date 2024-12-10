@@ -62,7 +62,10 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
         listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), this::listingsObserver);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                listingsViewModel.clearErrorMessage();
+            }
         });
 
         binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() ?

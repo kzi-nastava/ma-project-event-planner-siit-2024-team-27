@@ -26,6 +26,10 @@ public class EventTypesViewModel extends ViewModel {
         return errorMessage;
     }
 
+    public void clearErrorMessage() {
+        errorMessage.setValue(null);
+    }
+
     public void fetchActiveEventTypes() {
         ClientUtils.eventTypesService.getTypes().enqueue(new Callback<>() {
             @Override

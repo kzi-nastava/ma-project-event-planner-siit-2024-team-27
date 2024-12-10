@@ -59,7 +59,10 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
         eventsViewModel = viewModelProvider.get(EventsViewModel.class);
         eventsViewModel.getEvents().observe(getViewLifecycleOwner(), this::eventsChanged);
         eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                eventsViewModel.clearErrorMessage();
+            }
         });
 
         binding.eventsRecyclerView.setAdapter(eventsViewModel.getEvents().isInitialized() ?

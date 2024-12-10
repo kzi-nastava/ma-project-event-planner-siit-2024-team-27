@@ -26,6 +26,10 @@ public class NotificationsViewModel extends ViewModel {
         return errorMessage;
     }
 
+    public void clearErrorMessage() {
+        errorMessage.setValue(null);
+    }
+
     public void fetchNotifications() {
         ClientUtils.notificationsService.getNotifications().enqueue(new Callback<>() {
             @Override
