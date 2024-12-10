@@ -58,7 +58,7 @@
             app:layout_constraintStart_toEndOf="@id/filterButton"
             app:layout_constraintTop_toBottomOf="@id/searchLayout">
 
-            <com.wde.eventplanner.fragments.common.homepage.SortSpinner
+            <com.wde.eventplanner.components.SortSpinner
                 android:id="@+id/sortSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

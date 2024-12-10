@@ -1,6 +1,6 @@
 package com.wde.eventplanner.activities;
 
-import static com.wde.eventplanner.constants.CustomGraphicUtils.hideKeyboard;
+import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
 
 import android.graphics.Rect;
 import android.os.Bundle;

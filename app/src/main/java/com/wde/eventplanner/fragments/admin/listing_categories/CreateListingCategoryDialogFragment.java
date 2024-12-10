@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.databinding.DialogCreateListingCategoryBinding;
-import com.wde.eventplanner.fragments.common.CustomDropDown;
+import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
 import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;

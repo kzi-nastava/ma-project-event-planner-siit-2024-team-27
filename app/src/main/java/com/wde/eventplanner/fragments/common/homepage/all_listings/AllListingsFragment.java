@@ -1,6 +1,6 @@
 package com.wde.eventplanner.fragments.common.homepage.all_listings;
 
-import static com.wde.eventplanner.constants.CustomGraphicUtils.hideKeyboard;
+import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

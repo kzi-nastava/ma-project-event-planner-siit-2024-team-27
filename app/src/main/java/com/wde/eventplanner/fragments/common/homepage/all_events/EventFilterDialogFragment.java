@@ -16,7 +16,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.DialogEventFilterBinding;
-import com.wde.eventplanner.fragments.common.CustomDropDown;
+import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.models.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 

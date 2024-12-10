@@ -1,6 +1,6 @@
 package com.wde.eventplanner.fragments.seller;
 
-import static com.wde.eventplanner.constants.CustomGraphicUtils.hideKeyboard;
+import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;

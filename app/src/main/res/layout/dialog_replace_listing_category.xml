@@ -44,7 +44,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:placeholderText="Listing type">
 
-            <com.wde.eventplanner.fragments.common.CustomDropDown
+            <com.wde.eventplanner.components.CustomDropDown
                 android:id="@+id/categoryDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

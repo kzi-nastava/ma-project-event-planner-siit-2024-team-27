@@ -7,7 +7,7 @@ import android.widget.Filter;
 import androidx.annotation.NonNull;
 
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.fragments.common.CustomDropDown.CustomDropDownItem;
+import com.wde.eventplanner.components.CustomDropDown.CustomDropDownItem;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

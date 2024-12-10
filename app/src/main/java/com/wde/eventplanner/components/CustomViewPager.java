@@ -1,4 +1,4 @@
-package com.wde.eventplanner.fragments.common;
+package com.wde.eventplanner.components;
 
 import android.content.Context;
 import android.util.AttributeSet;

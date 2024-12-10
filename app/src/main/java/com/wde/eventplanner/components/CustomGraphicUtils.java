@@ -1,4 +1,4 @@
-package com.wde.eventplanner.constants;
+package com.wde.eventplanner.components;
 
 import android.content.Context;
 import android.content.res.Resources;

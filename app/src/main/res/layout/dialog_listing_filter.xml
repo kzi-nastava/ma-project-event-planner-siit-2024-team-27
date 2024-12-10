@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/titleView"
             app:placeholderText="Type">
 
-            <com.wde.eventplanner.fragments.common.CustomDropDown
+            <com.wde.eventplanner.components.CustomDropDown
                 android:id="@+id/typeDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@id/typeDropdownLayout"
             app:placeholderText="Category">
 
-            <com.wde.eventplanner.fragments.common.CustomDropDown
+            <com.wde.eventplanner.components.CustomDropDown
                 android:id="@+id/categoryDropdown"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

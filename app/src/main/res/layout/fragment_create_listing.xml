@@ -23,14 +23,14 @@
             app:strokeColor="@color/edge2"
             app:strokeWidth="1dp">
 
-            <com.wde.eventplanner.fragments.common.CustomTabLayout
+            <com.wde.eventplanner.components.CustomTabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabBackground="@drawable/background_tab" />
         </com.google.android.material.card.MaterialCardView>
 
-        <com.wde.eventplanner.fragments.common.CustomViewPager
+        <com.wde.eventplanner.components.CustomViewPager
             android:id="@+id/viewPager"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
