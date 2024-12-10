@@ -88,4 +88,7 @@
     <string name="pdf">PDF</string>
     <string name="edit_category">Edit category</string>
     <string name="replace_with">Replace with</string>
+    <string name="create_type">Create type</string>
+    <string name="event_types">Event types</string>
+    <string name="edit_type">Edit type</string>
 </resources>
