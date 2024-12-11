@@ -1,4 +1,4 @@
-package com.wde.eventplanner.models;
+package com.wde.eventplanner.models.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

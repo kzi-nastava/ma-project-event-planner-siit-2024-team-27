@@ -2,11 +2,16 @@ package com.wde.eventplanner.clients;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.wde.eventplanner.BuildConfig;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -28,8 +33,25 @@ public class ClientUtils {
                 .addInterceptor(interceptor).build();
     }
 
-    private static final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) ->
-            ZonedDateTime.parse(json.getAsJsonPrimitive().getAsString() + "Z").toLocalDateTime()).create();
+    private static class LocalDateDeserializer implements JsonDeserializer<LocalDate> {
+        @Override
+        public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return LocalDate.parse(json.getAsString());
+        }
+    }
+
+    private static class LocalTimeDeserializer implements JsonDeserializer<LocalTime> {
+        @Override
+        public LocalTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            String timeString = json.getAsString();
+            return LocalTime.parse(timeString, DateTimeFormatter.ISO_LOCAL_TIME);
+        }
+    }
+
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
+            .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
+            .create();
 
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVICE_API_PATH)

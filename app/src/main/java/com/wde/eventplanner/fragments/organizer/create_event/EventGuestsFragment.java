@@ -20,7 +20,7 @@ import com.wde.eventplanner.adapters.GuestListAdapter;
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.components.ItemDividerDecoration;
 import com.wde.eventplanner.databinding.FragmentEventGuestsBinding;
-import com.wde.eventplanner.models.GuestInfo;
+import com.wde.eventplanner.models.event.GuestInfo;
 
 import java.util.ArrayList;
 
