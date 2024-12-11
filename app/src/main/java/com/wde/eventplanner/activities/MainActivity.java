@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             if (v instanceof EditText) {
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY()) && v.getId() != R.id.guestListEmailInput) {
                     v.clearFocus();
                     hideKeyboard(this, v);
                 }

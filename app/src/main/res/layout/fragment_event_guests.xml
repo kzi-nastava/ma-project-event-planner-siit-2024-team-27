@@ -12,13 +12,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="12dp"
         app:expandedHintEnabled="false"
-        app:layout_constraintEnd_toStartOf="@id/inviteButton"
+        app:layout_constraintEnd_toStartOf="@id/guestListInviteButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:placeholderText="@string/email_">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailInput"
+            android:id="@+id/guestListEmailInput"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:imeOptions="actionSend"
@@ -27,7 +27,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/inviteButton"
+        android:id="@+id/guestListInviteButton"
         style="@style/CustomAccentButtonStyle"
         android:layout_width="100dp"
         android:layout_height="56dp"
