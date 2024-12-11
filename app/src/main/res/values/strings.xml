@@ -88,4 +88,8 @@
     <string name="pdf">PDF</string>
     <string name="edit_category">Edit category</string>
     <string name="replace_with">Replace with</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="add_category">Add category</string>
+    <string name="recommended_category">Recommended categories</string>
 </resources>
