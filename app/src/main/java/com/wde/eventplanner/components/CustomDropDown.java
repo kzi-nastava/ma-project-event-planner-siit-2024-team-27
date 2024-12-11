@@ -138,7 +138,17 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         super.onFilterComplete(count);
     }
 
+    public void clearItems() {
+        selected = null;
+        items = new ArrayList<>();
+        setAdapter(new DropdownAdapter<>(getContext(), items, isAutoCompleteDisabled));
+    }
+
     public void setItems(ArrayList<CustomDropDownItem<T>> items) {
+        if (selected != null && items.stream().noneMatch(item -> item.name.equals(selected.name))) {
+            selected = null;
+            setText("");
+        }
         this.items = items;
         setDropdownHeight(items.size());
         setAdapter(new DropdownAdapter<>(getContext(), items, isAutoCompleteDisabled));
