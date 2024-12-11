@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
 import com.wde.eventplanner.databinding.FragmentAllEventsBinding;
-import com.wde.eventplanner.models.Event;
+import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 
 import java.time.ZoneId;
