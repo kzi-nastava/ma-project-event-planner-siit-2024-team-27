@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class Listing {
+    private String id;
     private String name;
     private ListingType type;
     private String description;

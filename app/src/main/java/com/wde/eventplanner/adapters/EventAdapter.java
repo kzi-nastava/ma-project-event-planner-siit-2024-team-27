@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.wde.eventplanner.databinding.CardEventBinding;
-import com.wde.eventplanner.models.Event;
+import com.wde.eventplanner.models.event.Event;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         Event event = events.get(position);
         Picasso.get().load(event.getImages().get(0)).into(holder.binding.eventCardPicture);
         holder.binding.eventCardTitle.setText(event.getName());
-        holder.binding.eventCardTime.setText(event.getDate().format(DateTimeFormatter.ofPattern("HH:mm")));
+        holder.binding.eventCardTime.setText(event.getTime().format(DateTimeFormatter.ofPattern("HH:mm")));
         holder.binding.eventCardDate.setText(event.getDate().format(DateTimeFormatter.ofPattern("d.M.yyyy.")));
         holder.binding.eventCardLocation.setText(event.getCity());
         holder.binding.eventCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", event.getRating()));

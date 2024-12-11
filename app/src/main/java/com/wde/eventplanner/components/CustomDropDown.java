@@ -61,6 +61,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         setOnClickListener(v -> {
             if (getText().length() > 0)
                 setText(getText());
+            setDropdownHeight(items.size());
             showDropDown();
         });
     }
@@ -139,6 +140,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     }
 
     public void clearItems() {
+        setText("");
         selected = null;
         items = new ArrayList<>();
         setAdapter(new DropdownAdapter<>(getContext(), items, isAutoCompleteDisabled));
@@ -178,5 +180,13 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
             return;
         }
         super.onSelectionChanged(start, end);
+    }
+
+    @Override
+    public void dismissDropDown() {
+        if (getText().length() > 0 || items == null || items.isEmpty())
+            super.dismissDropDown();
+        else
+            setDropdownHeight(items.size());
     }
 }

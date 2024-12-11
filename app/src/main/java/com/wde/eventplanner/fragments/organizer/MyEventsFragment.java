@@ -24,7 +24,7 @@ import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
 import com.wde.eventplanner.databinding.FragmentMyEventsBinding;
 import com.wde.eventplanner.fragments.common.homepage.all_events.EventFilterDialogFragment;
-import com.wde.eventplanner.models.Event;
+import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 
 import java.time.ZoneId;

@@ -8,11 +8,11 @@
         android:id="@+id/addCategoryButton"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="5dp"
         android:backgroundTint="@color/button"
-        android:text="@string/add_category"
+        android:text="@string/add_item"
         app:layout_constraintEnd_toStartOf="@id/recommendedCategoriesButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,9 +23,9 @@
         android:layout_height="56dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="@color/button"
-        android:text="@string/recommended_category"
+        android:text="@string/see_suggested"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/addCategoryButton"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
         android:id="@+id/listingBudgetItemsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,14 +42,21 @@
 
     <TextView
         android:id="@+id/totalAmountTextBox"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginStart="10dp"
-        android:text="Total amount: 0€"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Total amount: 0€"
+        android:textColor="@color/text"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listingBudgetItemsRecyclerView" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/totalAmountTextBox" />
 </androidx.constraintlayout.widget.ConstraintLayout>

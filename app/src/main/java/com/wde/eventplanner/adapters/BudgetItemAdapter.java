@@ -21,6 +21,7 @@ import java.util.List;
 public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.BudgetItemViewHolder> {
     public interface BudgetItemAdapterCallback {
         void changeFilter();
+
         void totalAmount();
     }
 
@@ -59,9 +60,11 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
         holder.binding.deleteButton.setOnClickListener(v -> {
             int dynamicPosition = holder.getAdapterPosition();
             budgetItems.remove(dynamicPosition);
-            holder.binding.deleteButton.setOnClickListener(_v -> {});
+            holder.binding.deleteButton.setOnClickListener(_v -> {
+            });
             notifyItemRemoved(dynamicPosition);
             budgetItemAdapterCallback.totalAmount();
+            budgetItemAdapterCallback.changeFilter();
         });
 
         categoryDropdown.changeValues(new ArrayList<>(this.listingCategories), ListingCategory::getName);
@@ -79,26 +82,29 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
             categoryDropdown.setEnabled(true);
         });
 
-        TextWatcher textWatcher = new TextWatcher() {
+        if (holder.textWatcher != null)
+            holder.binding.budgetTextbox.removeTextChangedListener(holder.textWatcher);
+
+        holder.textWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().isEmpty()) {
+                if (!s.toString().isEmpty())
                     budgetItem.setMaxPrice(Double.parseDouble(s.toString()));
-                } else {
+                else
                     budgetItem.setMaxPrice(0.0);
-                }
                 budgetItemAdapterCallback.totalAmount();
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         };
 
-        holder.binding.budgetTextbox.removeTextChangedListener(textWatcher);
-        holder.binding.budgetTextbox.addTextChangedListener(textWatcher);
+        holder.binding.budgetTextbox.addTextChangedListener(holder.textWatcher);
     }
 
     @Override
@@ -108,6 +114,7 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
 
     public static class BudgetItemViewHolder extends RecyclerView.ViewHolder {
         public CardEventBudgetItemBinding binding;
+        public TextWatcher textWatcher;
 
         public BudgetItemViewHolder(CardEventBudgetItemBinding binding) {
             super(binding.getRoot());

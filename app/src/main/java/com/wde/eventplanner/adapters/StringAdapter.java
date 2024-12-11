@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wde.eventplanner.databinding.ItemDropdownBinding;
+import com.wde.eventplanner.databinding.ItemSimpleListBinding;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringHold
     @NonNull
     @Override
     public StringAdapter.StringHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemDropdownBinding binding = ItemDropdownBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemSimpleListBinding binding = ItemSimpleListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new StringAdapter.StringHolder(binding);
     }
 
@@ -37,9 +37,9 @@ public class StringAdapter extends RecyclerView.Adapter<StringAdapter.StringHold
     }
 
     public static class StringHolder extends RecyclerView.ViewHolder {
-        ItemDropdownBinding binding;
+        ItemSimpleListBinding binding;
 
-        public StringHolder(ItemDropdownBinding binding) {
+        public StringHolder(ItemSimpleListBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.ItemGuestListBinding;
-import com.wde.eventplanner.models.GuestInfo;
+import com.wde.eventplanner.models.event.GuestInfo;
 
 import java.util.ArrayList;
 import java.util.List;

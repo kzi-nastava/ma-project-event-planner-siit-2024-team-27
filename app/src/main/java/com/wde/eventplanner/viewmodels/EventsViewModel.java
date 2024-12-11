@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
-import com.wde.eventplanner.models.Event;
+import com.wde.eventplanner.models.event.Event;
 
 import java.util.ArrayList;
 

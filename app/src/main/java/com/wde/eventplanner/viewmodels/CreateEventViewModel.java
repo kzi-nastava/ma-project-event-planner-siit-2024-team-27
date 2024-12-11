@@ -1,17 +1,26 @@
 package com.wde.eventplanner.viewmodels;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.wde.eventplanner.models.event.GuestInfo;
+
+import java.util.ArrayList;
+
 public class CreateEventViewModel extends ViewModel {
-    private MutableLiveData<String> sharedData = new MutableLiveData<>();
+    public final ArrayList<GuestInfo> guestList = new ArrayList<>();
 
-    public void setData(String data) {
-        sharedData.setValue(data);
+    public void clearAllData() {
+        guestList.clear();
     }
 
-    public LiveData<String> getData() {
-        return sharedData;
-    }
+//    EXAMPLE
+//    private MutableLiveData<String> sharedData = new MutableLiveData<>();
+//
+//    public void setData(String data) {
+//        sharedData.setValue(data);
+//    }
+//
+//    public LiveData<String> getData() {
+//        return sharedData;
+//    }
 }
