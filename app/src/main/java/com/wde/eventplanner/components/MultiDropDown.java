@@ -133,7 +133,8 @@ public class MultiDropDown<T> extends MaterialAutoCompleteTextView {
     }
 
     public void changeValues(ArrayList<T> values, Function<T, String> getName) {
-        setItems(values.stream().map(value -> new MultiDropDownItem<>(getName.apply(value), value, false)).collect(Collectors.toCollection(ArrayList::new)));
+        if (values != null)
+            setItems(values.stream().map(value -> new MultiDropDownItem<>(getName.apply(value), value, false)).collect(Collectors.toCollection(ArrayList::new)));
         this.getName = getName;
     }
 

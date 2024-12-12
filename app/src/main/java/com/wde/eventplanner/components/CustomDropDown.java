@@ -101,18 +101,21 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
 
     private void onDropdownFocusChanged(View v, boolean hasFocus) {
         if (hasFocus) {
-            setDropdownHeight(items.size());
+            if (items != null) setDropdownHeight(items.size());
             if (!isAutoCompleteDisabled) setText("");
             postDelayed(this::showDropDown, 50);
         } else {
+            super.dismissDropDown();
             String input = getText().toString().trim();
-            Optional<CustomDropDownItem<T>> found = items.stream().filter(item -> item.name.equalsIgnoreCase(input)).findFirst();
-            if (found.isPresent()) {
-                selected = found.get();
-                setText(found.get().name);
-            } else {
-                selected = null;
-                setText("");
+            if (items != null) {
+                Optional<CustomDropDownItem<T>> found = items.stream().filter(item -> item.name.equalsIgnoreCase(input)).findFirst();
+                if (found.isPresent()) {
+                    selected = found.get();
+                    setText(found.get().name);
+                } else {
+                    selected = null;
+                    setText("");
+                }
             }
         }
         if (isAutoCompleteDisabled)
@@ -157,11 +160,14 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     }
 
     public void changeValues(ArrayList<T> values, Function<T, String> getName, Predicate<T> filter) {
-        this.originalValues = new ArrayList<>(values);
-        this.getName = getName;
-        if (filter != null)
-            values = values.stream().filter(filter).collect(Collectors.toCollection(ArrayList::new));
-        setItems(values.stream().map(value -> new CustomDropDownItem<>(getName.apply(value), value)).collect(Collectors.toCollection(ArrayList::new)));
+        if (values != null) {
+            this.originalValues = new ArrayList<>(values);
+            this.getName = getName;
+            if (filter != null)
+                values = values.stream().filter(filter).collect(Collectors.toCollection(ArrayList::new));
+            setItems(values.stream().map(value -> new CustomDropDownItem<>(getName.apply(value), value)).collect(Collectors.toCollection(ArrayList::new)));
+        } else
+            clearItems();
     }
 
     public void changeValues(ArrayList<T> values, Function<T, String> getName) {
