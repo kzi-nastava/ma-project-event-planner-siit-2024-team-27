@@ -109,7 +109,8 @@ public class EventFilterDialogFragment extends DialogFragment {
     }
 
     private void onFilterButtonClicked(View v) {
-        String type = ((EventType) binding.typeDropdown.getSelected()).getId();
+        EventType eventType = (EventType) binding.typeDropdown.getSelected();
+        String type = eventType != null ? eventType.getId() : null;
         String city = (String) binding.cityDropdown.getSelected();
 
         Date afterReturn = after.after(new Date(1)) ? after : null;
