@@ -21,10 +21,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.ListingAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
 import com.wde.eventplanner.databinding.FragmentAllListingsBinding;
+import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;
 import com.wde.eventplanner.viewmodels.ListingsViewModel;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -35,6 +37,8 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
     private ListingsViewModel listingsViewModel;
     private FragmentAllListingsBinding binding;
     private String selectedValue = "name";
+    private Integer currentPage = 0;
+    private Integer totalPages;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +57,9 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
         binding.searchInput.setOnEditorActionListener(this::onSearchInputEditorAction);
         binding.searchLayout.setEndIconOnClickListener((v) -> onSearchInputEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null));
 
+        binding.paginationPrevious.setOnClickListener(this::onClickPrevious);
+        binding.paginationNext.setOnClickListener(this::onClickNext);
+
         listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), this::listingsObserver);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
@@ -62,12 +69,22 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
             }
         });
 
-        binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() ?
-                new ListingAdapter(listingsViewModel.getListings().getValue()) : new ListingAdapter());
+        binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() && listingsViewModel.getListings().getValue() != null ?
+                new ListingAdapter(listingsViewModel.getListings().getValue().getContent()) : new ListingAdapter());
 
         refreshEvents();
 
         return binding.getRoot();
+    }
+
+    private void onClickPrevious(View v) {
+        currentPage = Math.max(0, currentPage - 1);
+        refreshEvents();
+    }
+
+    private void onClickNext(View v) {
+        currentPage = Math.min(totalPages - 1, currentPage + 1);
+        refreshEvents();
     }
 
     private class SortSpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
@@ -77,6 +94,7 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
             orderDesc.set(!value.equals(selectedValue) || !orderDesc.get());
             selectedPosition.set(position);
             selectedValue = value;
+            currentPage = 0;
             refreshEvents();
         }
 
@@ -93,6 +111,7 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
                 searchTerms = !searchTerms.isBlank() ? searchTerms : null;
             }
             hideKeyboard(requireContext(), binding.getRoot());
+            currentPage = 0;
             refreshEvents();
             return true;
         }
@@ -106,19 +125,22 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
         this.maxPrice = maxPrice;
         this.minRating = minRating;
         this.maxRating = maxRating;
+        currentPage = 0;
         refreshEvents();
     }
 
     private void refreshEvents() {
         String order = orderDesc.get() ? "desc" : "asc";
-        listingsViewModel.fetchListings(searchTerms, type, category, minPrice, maxPrice, minRating, maxRating, selectedValue, order, "0", "10");
+        listingsViewModel.fetchListings(searchTerms, type, category, minPrice, maxPrice, minRating, maxRating, selectedValue, order, currentPage.toString(), "10");
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void listingsObserver(ArrayList<Listing> listings) {
+    private void listingsObserver(Page<Listing> listings) {
         if (binding.listingsRecyclerView.getAdapter() != null) {
+            totalPages = listings.getTotalPages();
+            binding.pageTextView.setText(String.format(Locale.ENGLISH, "%d / %d", currentPage + 1, totalPages));
             ListingAdapter adapter = (ListingAdapter) binding.listingsRecyclerView.getAdapter();
-            ArrayList<Listing> listingsTmp = new ArrayList<>(listings);
+            ArrayList<Listing> listingsTmp = new ArrayList<>(listings.getContent());
             adapter.listings.clear();
             adapter.listings.addAll(listingsTmp);
             adapter.notifyDataSetChanged();

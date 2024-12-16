@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
+import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;
 
 import java.util.ArrayList;
@@ -16,14 +17,14 @@ import retrofit2.Response;
 
 public class ListingsViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Listing>> topListingsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<ArrayList<Listing>> listingsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Page<Listing>> listingsLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     public LiveData<ArrayList<Listing>> getTopListings() {
         return topListingsLiveData;
     }
 
-    public LiveData<ArrayList<Listing>> getListings() {
+    public LiveData<Page<Listing>> getListings() {
         return listingsLiveData;
     }
 
@@ -62,7 +63,7 @@ public class ListingsViewModel extends ViewModel {
         ClientUtils.listingsService.getListings(searchTerms, type, category, minPrice, maxPrice,
                 minRating, maxRating, sortBy, order, page, size).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<Listing>> call, @NonNull Response<ArrayList<Listing>> response) {
+            public void onResponse(@NonNull Call<Page<Listing>> call, @NonNull Response<Page<Listing>> response) {
                 if (response.isSuccessful()) {
                     listingsLiveData.postValue(response.body());
                 } else {
@@ -71,7 +72,7 @@ public class ListingsViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<Listing>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Page<Listing>> call, @NonNull Throwable t) {
                 errorMessage.postValue("Error: " + t.getMessage());
             }
         });
