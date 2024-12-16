@@ -45,6 +45,8 @@ public class SortSpinnerAdapter extends ArrayAdapter<String> {
 
         if (position == selectedPosition.get())
             imageView.setImageResource(orderDesc.get() ? R.drawable.ic_sort_desc : R.drawable.ic_sort_asc);
+        else
+            imageView.setImageDrawable(null);
 
         return view;
     }

@@ -3,6 +3,9 @@ package com.wde.eventplanner.fragments.common.homepage.all_listings;
 import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.ListingAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
+import com.wde.eventplanner.components.ShakeDetector;
 import com.wde.eventplanner.databinding.FragmentAllListingsBinding;
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;
@@ -37,6 +41,8 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
     private ListingsViewModel listingsViewModel;
     private FragmentAllListingsBinding binding;
     private String selectedValue = "name";
+    private SensorManager sensorManager;
+    private ShakeDetector shakeDetector;
     private Integer currentPage = 0;
     private Integer totalPages;
 
@@ -59,6 +65,9 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
 
         binding.paginationPrevious.setOnClickListener(this::onClickPrevious);
         binding.paginationNext.setOnClickListener(this::onClickNext);
+
+        sensorManager = (SensorManager) requireContext().getSystemService(Context.SENSOR_SERVICE);
+        shakeDetector = new ShakeDetector(this::onShake);
 
         listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), this::listingsObserver);
@@ -145,5 +154,28 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
             adapter.listings.addAll(listingsTmp);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if (accelerometer != null)
+            sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(shakeDetector);
+    }
+
+    private void onShake() {
+        orderDesc.set(!selectedValue.equals("price") || !orderDesc.get());
+        selectedPosition.set(1);
+        selectedValue = "price";
+        currentPage = 0;
+        ((SortSpinnerAdapter) binding.sortSpinner.getAdapter()).notifyDataSetChanged();
+        refreshEvents();
     }
 }
