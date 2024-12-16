@@ -28,8 +28,11 @@
             android:id="@+id/action_seller_listings_to_create_listing"
             app:destination="@id/CreateListingFragment" />
         <action
-            android:id="@+id/action_SellerMyListingsFragment_to_SellerListingDetailFragment"
-            app:destination="@id/ListingDetailSellerFragment" />
+            android:id="@+id/action_SellerMyListingsFragment_to_SellerServiceDetailFragment"
+            app:destination="@id/ServiceDetailSellerFragment" />
+        <action
+            android:id="@+id/action_SellerMyListingsFragment_to_SellerProductDetailFragment"
+            app:destination="@id/ProductDetailSellerFragment" />
     </fragment>
 
     <fragment
@@ -83,9 +86,22 @@
         android:name="com.wde.eventplanner.fragments.seller.create_listing.CreateListingFragment"
         tools:layout="@layout/fragment_create_listing" />
     <fragment
-        android:id="@+id/ListingDetailSellerFragment"
-        android:name="com.wde.eventplanner.fragments.seller.ListingDetailFragment"
-        tools:layout="@layout/fragment_seller_listing_detail" />
+        android:id="@+id/ServiceDetailSellerFragment"
+        android:name="com.wde.eventplanner.fragments.seller.ServiceDetailFragment"
+        tools:layout="@layout/fragment_seller_service_detail" />
+    <fragment
+        android:id="@+id/ProductDetailSellerFragment"
+        android:name="com.wde.eventplanner.fragments.seller.ProductDetailFragment"
+        tools:layout="@layout/fragment_seller_product_detail" />
+
+    <fragment
+        android:id="@+id/ServiceDetailOrganizerFragment"
+        android:name="com.wde.eventplanner.fragments.organizer.ServiceDetailFragment"
+        tools:layout="@layout/fragment_organizer_service_detail" />
+    <fragment
+        android:id="@+id/ProductDetailOrganizerFragment"
+        android:name="com.wde.eventplanner.fragments.organizer.ProductDetailFragment"
+        tools:layout="@layout/fragment_organizer_service_detail" />
 
     <fragment
         android:id="@+id/nav_notifications"
