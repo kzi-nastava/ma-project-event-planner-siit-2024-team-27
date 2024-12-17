@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
+import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.event.EventComplexView;
 
@@ -18,17 +19,19 @@ import retrofit2.Response;
 
 public class EventsViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Event>> topEventsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<ArrayList<Event>> eventsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Page<Event>> eventsLiveData = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<EventComplexView>> eventsComplexViewData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     public LiveData<ArrayList<Event>> getTopEvents() {
         return topEventsLiveData;
     }
+
     public LiveData<ArrayList<EventComplexView>> getEventsComplexView() {
         return this.eventsComplexViewData;
     }
-    public LiveData<ArrayList<Event>> getEvents() {
+  
+    public LiveData<Page<Event>> getEvents() {
         return eventsLiveData;
     }
 
@@ -67,7 +70,7 @@ public class EventsViewModel extends ViewModel {
         ClientUtils.eventsService.getEvents(searchTerms, city, category, dateRangeStart,
                 dateRangeEnd, minRating, maxRating, sortBy, order, page, size).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<Event>> call, @NonNull Response<ArrayList<Event>> response) {
+            public void onResponse(@NonNull Call<Page<Event>> call, @NonNull Response<Page<Event>> response) {
                 if (response.isSuccessful()) {
                     eventsLiveData.postValue(response.body());
                 } else {
@@ -76,7 +79,7 @@ public class EventsViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<Event>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Page<Event>> call, @NonNull Throwable t) {
                 errorMessage.postValue("Error: " + t.getMessage());
             }
         });

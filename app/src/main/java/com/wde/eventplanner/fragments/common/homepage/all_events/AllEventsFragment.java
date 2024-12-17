@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
 import com.wde.eventplanner.databinding.FragmentAllEventsBinding;
+import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 
@@ -28,6 +29,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,6 +40,8 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
     private FragmentAllEventsBinding binding;
     private EventsViewModel eventsViewModel;
     private String selectedValue = "name";
+    private Integer currentPage = 0;
+    private Integer totalPages;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +60,9 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
         binding.searchInput.setOnEditorActionListener(this::onSearchInputEditorAction);
         binding.searchLayout.setEndIconOnClickListener((v) -> onSearchInputEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null));
 
+        binding.paginationPrevious.setOnClickListener(this::onClickPrevious);
+        binding.paginationNext.setOnClickListener(this::onClickNext);
+
         eventsViewModel = viewModelProvider.get(EventsViewModel.class);
         eventsViewModel.getEvents().observe(getViewLifecycleOwner(), this::eventsChanged);
         eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
@@ -65,12 +72,22 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
             }
         });
 
-        binding.eventsRecyclerView.setAdapter(eventsViewModel.getEvents().isInitialized() ?
-                new EventAdapter(eventsViewModel.getEvents().getValue()) : new EventAdapter());
+        binding.eventsRecyclerView.setAdapter(eventsViewModel.getEvents().isInitialized() && eventsViewModel.getEvents().getValue() != null ?
+                new EventAdapter(eventsViewModel.getEvents().getValue().getContent()) : new EventAdapter());
 
         refreshEvents();
 
         return binding.getRoot();
+    }
+
+    private void onClickPrevious(View v) {
+        currentPage = Math.max(0, currentPage - 1);
+        refreshEvents();
+    }
+
+    private void onClickNext(View v) {
+        currentPage = Math.min(totalPages - 1, currentPage + 1);
+        refreshEvents();
     }
 
     private class SortSpinnerOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
@@ -80,6 +97,7 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
             orderDesc.set(!value.equals(selectedValue) || !orderDesc.get());
             selectedPosition.set(position);
             selectedValue = value;
+            currentPage = 0;
             refreshEvents();
         }
 
@@ -96,6 +114,7 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
                 searchTerms = !searchTerms.isBlank() ? searchTerms : null;
             }
             hideKeyboard(requireContext(), binding.getRoot());
+            currentPage = 0;
             refreshEvents();
             return true;
         }
@@ -109,19 +128,22 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
         this.before = before != null ? before.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_INSTANT) : null;
         this.minRating = minRating;
         this.maxRating = maxRating;
+        currentPage = 0;
         refreshEvents();
     }
 
     private void refreshEvents() {
         String order = orderDesc.get() ? "desc" : "asc";
-        eventsViewModel.fetchEvents(searchTerms, city, category, after, before, minRating, maxRating, selectedValue, order, "0", "10");
+        eventsViewModel.fetchEvents(searchTerms, city, category, after, before, minRating, maxRating, selectedValue, order, currentPage.toString(), "10");
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void eventsChanged(ArrayList<Event> events) {
+    private void eventsChanged(Page<Event> events) {
         if (binding.eventsRecyclerView.getAdapter() != null) {
+            totalPages = events.getTotalPages();
+            binding.pageTextView.setText(String.format(Locale.ENGLISH, "%d / %d", currentPage + 1, totalPages));
             EventAdapter adapter = (EventAdapter) binding.eventsRecyclerView.getAdapter();
-            ArrayList<Event> eventsTmp = new ArrayList<>(events);
+            ArrayList<Event> eventsTmp = new ArrayList<>(events.getContent());
             adapter.events.clear();
             adapter.events.addAll(eventsTmp);
             adapter.notifyDataSetChanged();
