@@ -2,11 +2,14 @@ package com.wde.eventplanner.clients;
 
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.Event;
+import com.wde.eventplanner.models.event.EventComplexView;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface EventsService {
@@ -25,4 +28,7 @@ public interface EventsService {
                                 @Query("order") String order,
                                 @Query("page") String page,
                                 @Query("size") String size);
+
+    @GET("events/{id}/my-events")
+    Call<ArrayList<EventComplexView>> getEventsFromOrganizer(@Path("id") UUID id);
 }
