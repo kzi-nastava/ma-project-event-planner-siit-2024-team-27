@@ -25,10 +25,12 @@ import com.wde.eventplanner.adapters.ListingAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
 import com.wde.eventplanner.databinding.FragmentMyListingsBinding;
 import com.wde.eventplanner.fragments.common.homepage.all_listings.ListingFilterDialogFragment;
+import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;
 import com.wde.eventplanner.viewmodels.ListingsViewModel;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,6 +41,8 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
     private ListingsViewModel listingsViewModel;
     private FragmentMyListingsBinding binding;
     private String selectedValue = "name";
+    private Integer currentPage = 0;
+    private Integer totalPages;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +63,9 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
         binding.searchInput.setOnEditorActionListener(this::onSearchInputEditorAction);
         binding.searchLayout.setEndIconOnClickListener((v) -> onSearchInputEditorAction(null, EditorInfo.IME_ACTION_SEARCH, null));
 
+        binding.paginationPrevious.setOnClickListener(this::onClickPrevious);
+        binding.paginationNext.setOnClickListener(this::onClickNext);
+
         listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), this::listingsObserver);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
@@ -68,8 +75,8 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
             }
         });
 
-        binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() ?
-                new ListingAdapter(listingsViewModel.getListings().getValue(), NavHostFragment.findNavController(this)) :
+        binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() && listingsViewModel.getListings().getValue() != null ?
+                new ListingAdapter(listingsViewModel.getListings().getValue().getContent(), NavHostFragment.findNavController(this)) :
                 new ListingAdapter(NavHostFragment.findNavController(this)));
 
         refreshEvents();
@@ -90,6 +97,16 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
         @Override
         public void onNothingSelected(AdapterView<?> parentView) {
         }
+    }
+
+    private void onClickPrevious(View v) {
+        currentPage = Math.max(0, currentPage - 1);
+        refreshEvents();
+    }
+
+    private void onClickNext(View v) {
+        currentPage = Math.min(totalPages - 1, currentPage + 1);
+        refreshEvents();
     }
 
     private boolean onSearchInputEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -122,10 +139,12 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void listingsObserver(ArrayList<Listing> listings) {
+    private void listingsObserver(Page<Listing> listings) {
         if (binding.listingsRecyclerView.getAdapter() != null) {
+            totalPages = listings.getTotalPages();
+            binding.pageTextView.setText(String.format(Locale.ENGLISH, "%d / %d", currentPage + 1, totalPages));
             ListingAdapter adapter = (ListingAdapter) binding.listingsRecyclerView.getAdapter();
-            ArrayList<Listing> listingsTmp = new ArrayList<>(listings);
+            ArrayList<Listing> listingsTmp = new ArrayList<>(listings.getContent());
             adapter.listings.clear();
             adapter.listings.addAll(listingsTmp);
             adapter.notifyDataSetChanged();
