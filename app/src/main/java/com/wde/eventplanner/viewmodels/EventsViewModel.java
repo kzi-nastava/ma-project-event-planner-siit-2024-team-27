@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModel;
 import com.wde.eventplanner.clients.ClientUtils;
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.Event;
+import com.wde.eventplanner.models.event.EventComplexView;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,12 +20,17 @@ import retrofit2.Response;
 public class EventsViewModel extends ViewModel {
     private final MutableLiveData<ArrayList<Event>> topEventsLiveData = new MutableLiveData<>();
     private final MutableLiveData<Page<Event>> eventsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<EventComplexView>> eventsComplexViewData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     public LiveData<ArrayList<Event>> getTopEvents() {
         return topEventsLiveData;
     }
 
+    public LiveData<ArrayList<EventComplexView>> getEventsComplexView() {
+        return this.eventsComplexViewData;
+    }
+  
     public LiveData<Page<Event>> getEvents() {
         return eventsLiveData;
     }
@@ -73,6 +80,24 @@ public class EventsViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<Page<Event>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void fetchEventsFromOrganizer(String id) {
+        ClientUtils.eventsService.getEventsFromOrganizer(UUID.fromString(id)).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<EventComplexView>> call, @NonNull Response<ArrayList<EventComplexView>> response) {
+                if (response.isSuccessful()) {
+                    eventsComplexViewData.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch events. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<EventComplexView>> call, @NonNull Throwable t) {
                 errorMessage.postValue("Error: " + t.getMessage());
             }
         });
