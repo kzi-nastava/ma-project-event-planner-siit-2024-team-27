@@ -61,8 +61,14 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         holder.binding.listingCardPrice.setText(String.format(Locale.ENGLISH, "%.2f%s", listing.getPrice(), priceEnding));
         holder.binding.listingCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
 
-        if (navController != null)
-            holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ListingDetailSellerFragment));
+        if (navController != null) {
+            // todo dynamic id and fragment by user role
+            if (listing.getType() == ListingType.SERVICE) {
+                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ServiceDetailOrganizerFragment));
+            } else {
+                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ProductDetailOrganizerFragment));
+            }
+        }
     }
 
     @Override
