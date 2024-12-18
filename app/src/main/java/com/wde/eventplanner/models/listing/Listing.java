@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Listing {
     private String id;
+    private Integer version;
     private String name;
     private ListingType type;
     private String description;

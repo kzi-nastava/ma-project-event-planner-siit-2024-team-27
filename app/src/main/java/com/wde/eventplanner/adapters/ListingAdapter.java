@@ -1,6 +1,7 @@
 package com.wde.eventplanner.adapters;
 
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -62,12 +63,14 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         holder.binding.listingCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
 
         if (navController != null) {
-            // todo dynamic id and fragment by user role
-            if (listing.getType() == ListingType.SERVICE) {
-                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ServiceDetailOrganizerFragment));
-            } else {
-                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ProductDetailOrganizerFragment));
-            }
+            // todo dynamic fragment by user role
+            Bundle bundle = new Bundle();
+            bundle.putString("staticId", listing.getId());
+            bundle.putInt("version", listing.getVersion());
+            if (listing.getType() == ListingType.SERVICE)
+                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ServiceDetailOrganizerFragment, bundle));
+            else
+                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ProductDetailOrganizerFragment, bundle));
         }
     }
 

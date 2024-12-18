@@ -7,17 +7,18 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.wde.eventplanner.databinding.ItemCarouselImageBinding;
 
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-    private List<Color> colors;
+    private List<String> images;
     private Context context;
 
-    public ImageAdapter(Context context, List<Color> colors) {
+    public ImageAdapter(Context context, List<String> images) {
         this.context = context;
-        this.colors = colors;
+        this.images = images;
     }
 
     @Override
@@ -28,13 +29,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-        Color color = colors.get(position);
-        holder.binding.carouselImage.setBackgroundColor(color.toArgb());
+        Picasso.get().load(images.get(position)).into(holder.binding.carouselImage);
     }
 
     @Override
     public int getItemCount() {
-        return colors.size();
+        return images.size();
     }
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {

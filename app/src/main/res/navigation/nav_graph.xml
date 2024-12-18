@@ -88,20 +88,48 @@
     <fragment
         android:id="@+id/ServiceDetailSellerFragment"
         android:name="com.wde.eventplanner.fragments.seller.ServiceDetailFragment"
-        tools:layout="@layout/fragment_seller_service_detail" />
+        tools:layout="@layout/fragment_seller_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/ProductDetailSellerFragment"
         android:name="com.wde.eventplanner.fragments.seller.ProductDetailFragment"
-        tools:layout="@layout/fragment_seller_product_detail" />
+        tools:layout="@layout/fragment_seller_product_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/ServiceDetailOrganizerFragment"
         android:name="com.wde.eventplanner.fragments.organizer.ServiceDetailFragment"
-        tools:layout="@layout/fragment_organizer_service_detail" />
+        tools:layout="@layout/fragment_organizer_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/ProductDetailOrganizerFragment"
         android:name="com.wde.eventplanner.fragments.organizer.ProductDetailFragment"
-        tools:layout="@layout/fragment_organizer_service_detail" />
+        tools:layout="@layout/fragment_organizer_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_notifications"

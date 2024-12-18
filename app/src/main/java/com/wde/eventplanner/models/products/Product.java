@@ -16,7 +16,7 @@ public class Product {
     private String name;
     private String description;
     private Double price;
-    //    private List<String> images // todo image service
+    private List<String> images;
     private Double oldPrice;
     private Boolean isActive;
     private Boolean isAvailable;
