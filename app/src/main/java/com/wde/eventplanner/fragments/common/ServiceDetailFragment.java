@@ -34,13 +34,8 @@ public class ServiceDetailFragment extends Fragment {
         binding = FragmentUserServiceDetailBinding.inflate(inflater, container, false);
         ServicesViewModel servicesViewModel = new ViewModelProvider(requireActivity()).get(ServicesViewModel.class);
 
-        ArrayList<Color> colors = new ArrayList<>();
-        colors.add(Color.valueOf(0.3f, 0f, 0.5f));
-        colors.add(Color.valueOf(0.5f, 0f, 1f));
-        colors.add(Color.valueOf(0.7f, 0.5f, 1f));
-
-        ImageAdapter adapter = new ImageAdapter(getContext(), colors);
-        binding.viewPager.setAdapter(adapter);
+        String staticId = requireArguments().getString("staticId");
+        int version = requireArguments().getInt("version");
 
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.comments.setNestedScrollingEnabled(false);
@@ -51,7 +46,7 @@ public class ServiceDetailFragment extends Fragment {
 
         servicesViewModel.getService().observe(getViewLifecycleOwner(), this::populateServiceData);
         // todo fixed service for now
-        servicesViewModel.fetchService("0792d0dd-044d-43df-8031-5f9377522502");
+        servicesViewModel.fetchService(staticId);
 
         return binding.getRoot();
     }
@@ -72,6 +67,9 @@ public class ServiceDetailFragment extends Fragment {
         binding.serviceTitle.setText(service.getName());
         binding.companyName.setText("Company name"); // todo when seller gets his product list
         binding.description.setText(service.getDescription());
+
+        ImageAdapter adapter = new ImageAdapter(getContext(), service.getImages());
+        binding.viewPager.setAdapter(adapter);
 
         // todo comments
         List<Comment> comments = new ArrayList<>();

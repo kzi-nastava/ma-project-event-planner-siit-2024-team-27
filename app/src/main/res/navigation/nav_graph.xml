@@ -134,11 +134,25 @@
     <fragment
         android:id="@+id/ServiceDetailUserFragment"
         android:name="com.wde.eventplanner.fragments.common.ServiceDetailFragment"
-        tools:layout="@layout/fragment_user_service_detail" />
+        tools:layout="@layout/fragment_user_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/ProductDetailUserFragment"
         android:name="com.wde.eventplanner.fragments.common.ProductDetailFragment"
-        tools:layout="@layout/fragment_user_service_detail" />
+        tools:layout="@layout/fragment_user_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_notifications"

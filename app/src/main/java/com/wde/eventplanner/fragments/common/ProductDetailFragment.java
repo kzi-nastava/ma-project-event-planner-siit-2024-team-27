@@ -34,13 +34,8 @@ public class ProductDetailFragment extends Fragment {
         binding = FragmentUserProductDetailBinding.inflate(inflater, container, false);
         ProductsViewModel productsViewModel = new ViewModelProvider(requireActivity()).get(ProductsViewModel.class);
 
-        ArrayList<Color> colors = new ArrayList<>();
-        colors.add(Color.valueOf(0.3f, 0f, 0.5f));
-        colors.add(Color.valueOf(0.5f, 0f, 1f));
-        colors.add(Color.valueOf(0.7f, 0.5f, 1f));
-
-        ImageAdapter adapter = new ImageAdapter(getContext(), colors);
-        binding.viewPager.setAdapter(adapter);
+        String staticId = requireArguments().getString("staticId");
+        int version = requireArguments().getInt("version");
 
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.comments.setNestedScrollingEnabled(false);
@@ -50,8 +45,7 @@ public class ProductDetailFragment extends Fragment {
         });
 
         productsViewModel.getProduct().observe(getViewLifecycleOwner(), this::populateProductData);
-        // todo fixed product for now
-        productsViewModel.fetchProduct("5a1b07b8-e918-4b0f-bcd2-7f1fd04dbb26");
+        productsViewModel.fetchProduct(staticId);
 
         return binding.getRoot();
     }
@@ -72,6 +66,9 @@ public class ProductDetailFragment extends Fragment {
         binding.productTitle.setText(product.getName());
         binding.companyName.setText("Company name"); // todo when seller gets his product list
         binding.description.setText(product.getDescription());
+
+        ImageAdapter adapter = new ImageAdapter(getContext(), product.getImages());
+        binding.viewPager.setAdapter(adapter);
 
         // todo comments
         List<Comment> comments = new ArrayList<>();
