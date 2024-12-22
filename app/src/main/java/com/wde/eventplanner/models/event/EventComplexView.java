@@ -29,7 +29,7 @@ public class EventComplexView {
     private Double longitude;
     private Double latitude;
     private List<ProductBudgetItemDTO> productBudgetItems;
-//    private List<ServiceBudgetItemDTO> serviceBudgetItems; // todo when service buying is added
+//    private List<ServiceBudgetItem> serviceBudgetItems; // todo when service buying is added
 //    private List<String> images; // todo image service
     // todo: event activities
 }

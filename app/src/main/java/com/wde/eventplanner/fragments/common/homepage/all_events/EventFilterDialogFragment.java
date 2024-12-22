@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.databinding.DialogEventFilterBinding;
 import com.wde.eventplanner.components.CustomDropDown;
-import com.wde.eventplanner.models.EventType;
+import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 
 import java.text.SimpleDateFormat;
@@ -58,8 +58,7 @@ public class EventFilterDialogFragment extends DialogFragment {
 
         @SuppressWarnings("unchecked")
         CustomDropDown<String> cityDropdown = binding.cityDropdown;
-        ArrayList<String> cities = new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities)));
-        cityDropdown.changeValues(cities, String::toString);
+        cityDropdown.changeValues(new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities))));
 
         binding.afterDate.setOnClickListener(v -> {
             if (!calendarIsOpen) openDatePicker(binding.afterDate, after);

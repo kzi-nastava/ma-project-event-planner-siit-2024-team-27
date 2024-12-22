@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.EventTypeAdapter;
 import com.wde.eventplanner.databinding.FragmentEventTypesBinding;
-import com.wde.eventplanner.models.EventType;
+import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 
 import java.util.ArrayList;

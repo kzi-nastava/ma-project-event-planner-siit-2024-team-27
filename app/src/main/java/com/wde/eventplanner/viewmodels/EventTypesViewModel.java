@@ -6,11 +6,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
-import com.wde.eventplanner.models.EventType;
+import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.models.event.RecommendedListingCategoriesDTO;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
