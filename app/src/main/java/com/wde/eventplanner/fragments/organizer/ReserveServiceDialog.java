@@ -28,7 +28,7 @@ public class ReserveServiceDialog extends DialogFragment {
     private DialogReserveServiceBinding binding;
     private List<BookingSlots> freeSlots;
     private BookingSlots selectedSlots;
-    private Service service;
+    private final Service service;
 
     public ReserveServiceDialog(Service service) {
         this.service = service;
