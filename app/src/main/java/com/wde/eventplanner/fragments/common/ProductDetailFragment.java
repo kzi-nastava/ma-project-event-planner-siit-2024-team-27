@@ -1,6 +1,7 @@
 package com.wde.eventplanner.fragments.common;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,7 @@ public class ProductDetailFragment extends Fragment {
     private void populateProductData(Product product) {
         if (product.getOldPrice() != null) {
             binding.discountedPrice.setText(String.format(Locale.US, "%.2f€", product.getOldPrice()));
+            binding.discountedPrice.setPaintFlags(binding.discountedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             binding.discountedPrice.setText(null);
         }

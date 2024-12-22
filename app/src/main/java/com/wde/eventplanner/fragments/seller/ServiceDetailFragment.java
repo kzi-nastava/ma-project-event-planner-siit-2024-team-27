@@ -1,5 +1,6 @@
 package com.wde.eventplanner.fragments.seller;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,7 @@ public class ServiceDetailFragment extends Fragment {
     private void populateServiceData(Service service) {
         if (service.getOldPrice() != null) {
             binding.discountedPrice.setText(String.format(Locale.US, "%.2f€/hr", service.getOldPrice()));
+            binding.discountedPrice.setPaintFlags(binding.discountedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             binding.discountedPrice.setText(null);
         }
