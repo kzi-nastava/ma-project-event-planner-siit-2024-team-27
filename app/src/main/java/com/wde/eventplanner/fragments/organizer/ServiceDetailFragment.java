@@ -36,10 +36,6 @@ public class ServiceDetailFragment extends Fragment {
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.comments.setNestedScrollingEnabled(false);
 
-        binding.buyButton.setOnClickListener(v -> {
-
-        });
-
         servicesViewModel.getService().observe(getViewLifecycleOwner(), this::populateServiceData);
         servicesViewModel.fetchService(staticId);
 
@@ -47,21 +43,23 @@ public class ServiceDetailFragment extends Fragment {
     }
 
     private void populateServiceData(Service service) {
+        ReserveServiceDialog reserveServiceDialog = new ReserveServiceDialog(service);
+        binding.buyButton.setOnClickListener(v -> reserveServiceDialog.show(getParentFragmentManager(), "reserveServiceDialog"));
+
         if (service.getOldPrice() != null) {
             binding.discountedPrice.setText(String.format(Locale.US, "%.2f€/hr", service.getOldPrice()));
             binding.discountedPrice.setPaintFlags(binding.discountedPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
+        } else
             binding.discountedPrice.setText(null);
-        }
-        if (service.getRating() != null) {
+
+        if (service.getRating() != null)
             binding.rating.setText(String.format(Locale.US, "%.1f", service.getRating()));
-        } else {
+        else
             binding.rating.setText("n\\a");
-        }
 
         binding.price.setText(String.format(Locale.US, "%.2f€/hr", service.getPrice()));
         binding.serviceTitle.setText(service.getName());
-        binding.companyName.setText("Company name"); // todo when seller gets his product list
+        binding.companyName.setText("Company name"); // todo when seller gets his service list
         binding.description.setText(service.getDescription());
 
         ImageAdapter adapter = new ImageAdapter(getContext(), service.getImages());
