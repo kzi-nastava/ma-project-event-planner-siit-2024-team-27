@@ -1,6 +1,6 @@
 package com.wde.eventplanner.clients;
 
-import com.wde.eventplanner.models.EventType;
+import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.models.event.RecommendedListingCategoriesDTO;
 
 import java.util.ArrayList;

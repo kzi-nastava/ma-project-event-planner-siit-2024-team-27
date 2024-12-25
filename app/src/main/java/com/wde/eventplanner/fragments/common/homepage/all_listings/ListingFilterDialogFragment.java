@@ -57,7 +57,7 @@ public class ListingFilterDialogFragment extends DialogFragment {
                 new CustomDropDown.CustomDropDownItem<>("All listings", null),
                 new CustomDropDown.CustomDropDownItem<>("Products", ListingType.PRODUCT),
                 new CustomDropDown.CustomDropDownItem<>("Services", ListingType.SERVICE))));
-        binding.typeDropdown.setOnDropdownItemClickListener(this::onTypeDropdownItemClick);
+        typeDropdown.setOnDropdownItemClickListener(this::onTypeDropdownItemClick);
 
         viewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), this::onCategoriesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
@@ -71,10 +71,9 @@ public class ListingFilterDialogFragment extends DialogFragment {
         return binding.getRoot();
     }
 
-    private void onTypeDropdownItemClick() {
+    private void onTypeDropdownItemClick(ListingType type) {
         @SuppressWarnings("unchecked")
         CustomDropDown<ListingCategory> categoryDropdown = binding.categoryDropdown;
-        ListingType type = (ListingType) binding.typeDropdown.getSelected();
         categoryDropdown.changeFilter(category -> category.getListingType() == type || type == null);
     }
 

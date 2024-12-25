@@ -21,6 +21,7 @@ import com.wde.eventplanner.adapters.DropdownAdapter;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     private CustomDropDownItem<T> selected;
     private Function<T, String> getName;
     private ArrayList<T> originalValues;
-    private Runnable callback;
+    private Consumer<T> callback;
 
     public T getSelected() {
         return selected == null ? null : selected.value;
@@ -61,7 +62,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         setOnClickListener(v -> {
             if (getText().length() > 0)
                 setText(getText());
-            setDropdownHeight(items.size());
+            setDropdownHeight(items != null ? items.size() : 0);
             showDropDown();
         });
     }
@@ -89,14 +90,14 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         setCursorVisible(false);
     }
 
-    public void setOnDropdownItemClickListener(Runnable callback) {
+    public void setOnDropdownItemClickListener(Consumer<T> callback) {
         this.callback = callback;
     }
 
     @SuppressWarnings("unchecked")
     public void onDropdownItemClicked(AdapterView<?> parent, View v, int position, long id) {
         selected = (CustomDropDownItem<T>) parent.getItemAtPosition(position);
-        if (callback != null) callback.run();
+        if (callback != null) callback.accept(selected.value);
     }
 
     private void onDropdownFocusChanged(View v, boolean hasFocus) {
@@ -142,6 +143,11 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
         super.onFilterComplete(count);
     }
 
+    public void setSelected(int index) {
+        selected = items.get(index);
+        setText(selected.name);
+    }
+
     public void clearItems() {
         setText("");
         selected = null;
@@ -168,6 +174,10 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
             setItems(values.stream().map(value -> new CustomDropDownItem<>(getName.apply(value), value)).collect(Collectors.toCollection(ArrayList::new)));
         } else
             clearItems();
+    }
+
+    public void changeValues(ArrayList<T> values) {
+        changeValues(values, Object::toString, null);
     }
 
     public void changeValues(ArrayList<T> values, Function<T, String> getName) {

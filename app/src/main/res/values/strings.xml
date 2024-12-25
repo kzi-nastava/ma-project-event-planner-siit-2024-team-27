@@ -97,4 +97,6 @@
     <string name="edit_type">Edit type</string>
     <string name="contact">Contact</string>
     <string name="buy">Buy</string>
+    <string name="select_event_and_time">Select event and time</string>
+    <string name="reserve">Reserve</string>
 </resources>

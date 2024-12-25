@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.ListingAdapter;
@@ -79,7 +80,8 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
         });
 
         binding.listingsRecyclerView.setAdapter(listingsViewModel.getListings().isInitialized() && listingsViewModel.getListings().getValue() != null ?
-                new ListingAdapter(listingsViewModel.getListings().getValue().getContent()) : new ListingAdapter());
+                new ListingAdapter(listingsViewModel.getListings().getValue().getContent(), NavHostFragment.findNavController(this)) :
+                new ListingAdapter(NavHostFragment.findNavController(this)));
 
         refreshEvents();
 

@@ -100,20 +100,20 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/editButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:text="@string/edit" />
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
                 android:text="@string/hide" />
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:text="@string/delete" />
         </LinearLayout>

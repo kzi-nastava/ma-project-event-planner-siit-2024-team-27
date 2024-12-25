@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.components.MultiDropDown;
 import com.wde.eventplanner.databinding.DialogEditEventTypeBinding;
-import com.wde.eventplanner.models.EventType;
+import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;

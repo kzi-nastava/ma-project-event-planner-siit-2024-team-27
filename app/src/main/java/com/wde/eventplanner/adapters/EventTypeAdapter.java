@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.wde.eventplanner.databinding.CardEventTypeBinding;
 import com.wde.eventplanner.fragments.admin.event_categories.EditEventTypeDialogFragment;
 import com.wde.eventplanner.fragments.admin.event_categories.EventTypesFragment;
-import com.wde.eventplanner.models.EventType;
+import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 
 import java.util.ArrayList;

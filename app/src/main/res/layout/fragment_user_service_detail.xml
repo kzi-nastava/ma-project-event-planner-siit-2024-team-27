@@ -100,7 +100,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/contactButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/accent2"
                 android:text="@string/contact" />

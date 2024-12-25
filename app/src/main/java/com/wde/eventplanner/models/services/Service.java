@@ -18,7 +18,7 @@ public class Service {
     private String description;
     private Double price;
     private Double oldPrice;
-    //    private List<String> images // todo image service
+    private List<String> images;
     private Boolean isActive;
     private Boolean isAvailable;
     private Boolean isPrivate;

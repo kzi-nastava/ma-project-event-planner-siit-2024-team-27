@@ -68,15 +68,15 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
         });
 
         categoryDropdown.changeValues(new ArrayList<>(this.listingCategories), ListingCategory::getName);
-        categoryDropdown.setOnDropdownItemClickListener(() -> {
-            budgetItem.setListingCategoryId(categoryDropdown.getSelected().getId());
+        categoryDropdown.setOnDropdownItemClickListener(category -> {
+            budgetItem.setListingCategoryId(category.getId());
             budgetItemAdapterCallback.changeFilter();
         });
 
         typeDropdown.disableAutoComplete();
         typeDropdown.changeValues(new ArrayList<>(Arrays.asList(ListingType.values())), ListingType::toString);
-        typeDropdown.setOnDropdownItemClickListener(() -> {
-            budgetItem.setListingType(typeDropdown.getSelected());
+        typeDropdown.setOnDropdownItemClickListener(type -> {
+            budgetItem.setListingType(type);
             budgetItem.setListingCategoryId(null);
             budgetItemAdapterCallback.changeFilter();
             categoryDropdown.setEnabled(true);
