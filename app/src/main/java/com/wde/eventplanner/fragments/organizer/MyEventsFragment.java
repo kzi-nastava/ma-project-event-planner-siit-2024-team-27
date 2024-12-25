@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.EventAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.FragmentMyEventsBinding;
 import com.wde.eventplanner.fragments.common.homepage.all_events.EventFilterDialogFragment;
 import com.wde.eventplanner.models.Page;
@@ -72,7 +72,7 @@ public class MyEventsFragment extends Fragment implements EventFilterDialogFragm
         eventsViewModel.getEvents().observe(getViewLifecycleOwner(), this::eventsChanged);
         eventsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), error);
                 eventsViewModel.clearErrorMessage();
             }
         });

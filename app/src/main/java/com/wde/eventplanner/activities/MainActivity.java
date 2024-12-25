@@ -9,7 +9,6 @@ import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
@@ -23,6 +22,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.components.TokenManager;
 import com.wde.eventplanner.databinding.ActivityMainBinding;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 import com.wde.eventplanner.viewmodels.ListingsViewModel;
@@ -31,7 +32,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
+    public ActivityMainBinding binding;
+    public NavController navController;
 
     // TOP LEVEL DESTINATIONS (ADD NEW PAGES HERE)
     private static final int[] TOP_LEVEL_DESTINATIONS = {
@@ -59,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
         // Set up NavController
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         if (navHostFragment != null) {
-            NavController navController = navHostFragment.getNavController();
+            navController = navHostFragment.getNavController();
             appBarConfiguration = new AppBarConfiguration.Builder(TOP_LEVEL_DESTINATIONS).setOpenableLayout(binding.drawerLayout).build();
 
             // Link toolbar and NavigationView with NavController
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(binding.navigationView, navController);
+            TokenManager.adjustMenu(this);
+
             binding.navigationView.getMenu().getItem(1).setChecked(true);
 
             navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
@@ -91,8 +95,14 @@ public class MainActivity extends AppCompatActivity {
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             });
 
+            binding.logoutButton.setOnClickListener(view -> {
+                TokenManager.clearToken(this);
+                TokenManager.adjustMenu(this);
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+            });
+
             // wait for homepage data to fetch
-            final View content = findViewById(android.R.id.content);
+            View content = findViewById(android.R.id.content);
             Handler handler = new Handler(Looper.getMainLooper());
             ViewModelProvider viewModelProvider = new ViewModelProvider(this);
             EventsViewModel eventsViewModel = viewModelProvider.get(EventsViewModel.class);
@@ -105,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     alreadyShowed.set(true);
                 if (timeout.get() && !alreadyShowed.get()) {
                     alreadyShowed.set(true);
-                    Toast.makeText(this, "Error: data fetch timed out", Toast.LENGTH_SHORT).show();
+                    SingleToast.show(this, "Error: data fetch timed out");
                 }
                 return timeout.get() || eventsViewModel.getTopEvents().isInitialized() && listingsViewModel.getTopListings().isInitialized();
             });

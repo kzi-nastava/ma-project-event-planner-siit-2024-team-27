@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.components.CustomDropDown;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.DialogReserveServiceBinding;
 import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.serviceBudgetItem.BookingSlots;
@@ -57,7 +57,7 @@ public class ReserveServiceDialog extends DialogFragment {
         viewModel.fetchSlotsForService(service);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), error);
                 viewModel.clearErrorMessage();
             }
         });
@@ -72,11 +72,11 @@ public class ReserveServiceDialog extends DialogFragment {
         String endTime = ((CustomDropDown<String>) binding.endTimeDropdown).getSelected();
 
         if (event == null || startTime == null || endTime == null)
-            Toast.makeText(requireContext(), "Please fill out all the selections!", Toast.LENGTH_SHORT).show();
+            SingleToast.show(requireContext(), "Please fill out all the selections!");
         else {
             viewModel.reserveService(new ReserveService(event.getId(), service.getStaticServiceId(), startTime, endTime)).observe(getViewLifecycleOwner(), success -> {
                 if (success) {
-                    Toast.makeText(requireContext(), "Service was successfully reserved!", Toast.LENGTH_SHORT).show();
+                    SingleToast.show(requireContext(), "Service was successfully reserved!");
                     dismiss();
                 }
             });

@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_close"
+        android:icon="@drawable/ic_close"
+        android:title="@string/close" />
+    <item
+        android:id="@+id/nav_homepage"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/nav_notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications" />
+    <item
+        android:id="@+id/nav_event_types"
+        android:icon="@drawable/ic_event"
+        android:title="@string/event_types" />
+    <item
+        android:id="@+id/nav_listing_categories"
+        android:icon="@drawable/ic_storefront"
+        android:title="@string/listing_categories" />
+</menu>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.components.MultiDropDown;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.DialogEditEventTypeBinding;
 import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
@@ -58,7 +58,7 @@ public class EditEventTypeDialogFragment extends DialogFragment {
         listingCategoriesViewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), this::onCategoriesChanged);
         listingCategoriesViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), error);
                 listingCategoriesViewModel.clearErrorMessage();
             }
         });

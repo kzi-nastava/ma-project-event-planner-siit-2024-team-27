@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.ListingAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
 import com.wde.eventplanner.components.ShakeDetector;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.FragmentAllListingsBinding;
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;
@@ -74,7 +74,7 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
         listingsViewModel.getListings().observe(getViewLifecycleOwner(), this::listingsObserver);
         listingsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), error);
                 listingsViewModel.clearErrorMessage();
             }
         });

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.GuestListAdapter;
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.components.ItemDividerDecoration;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventGuestsBinding;
 import com.wde.eventplanner.models.event.GuestInfo;
 import com.wde.eventplanner.viewmodels.CreateEventViewModel;
@@ -60,7 +60,7 @@ public class EventGuestsFragment extends Fragment implements ViewPagerAdapter.Ha
         if (binding.guestListEmailInput.getText() != null) {
             String email = binding.guestListEmailInput.getText().toString().toLowerCase().trim();
             if (!email.matches(EMAIL_REGEX))
-                Toast.makeText(getActivity(), "Invalid email address!", Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), "Invalid email address!");
             else if (createEventViewModel.guestList.stream().noneMatch(guestInfo -> guestInfo.getEmail().equals(email))) {
                 createEventViewModel.guestList.add(new GuestInfo(null, null, email));
                 int position = createEventViewModel.guestList.size() - 1;
@@ -85,7 +85,7 @@ public class EventGuestsFragment extends Fragment implements ViewPagerAdapter.Ha
                         binding.guestList.getAdapter().notifyItemChanged(position);
                 });
             } else
-                Toast.makeText(getActivity(), "Guest is already invited!", Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), "Guest is already invited!");
         }
     }
 

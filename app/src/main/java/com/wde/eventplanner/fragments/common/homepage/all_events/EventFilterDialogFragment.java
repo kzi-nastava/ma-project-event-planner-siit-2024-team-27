@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +14,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.DialogEventFilterBinding;
 import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.models.event.EventType;
@@ -73,7 +73,7 @@ public class EventFilterDialogFragment extends DialogFragment {
         viewModel.getEventTypes().observe(getViewLifecycleOwner(), this::OnTypesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), error);
                 viewModel.clearErrorMessage();
             }
         });
