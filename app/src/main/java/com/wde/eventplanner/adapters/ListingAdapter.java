@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.components.TokenManager;
 import com.wde.eventplanner.databinding.CardListingBinding;
 import com.wde.eventplanner.models.listing.Listing;
 import com.wde.eventplanner.models.listing.ListingType;
+import com.wde.eventplanner.models.user.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,15 +65,20 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         holder.binding.listingCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
 
         if (navController != null) {
-            // todo dynamic fragment by user role
             Bundle bundle = new Bundle();
             bundle.putString("staticId", listing.getId());
             bundle.putInt("version", listing.getVersion());
-            if (listing.getType() == ListingType.SERVICE)
-                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ServiceDetailOrganizerFragment, bundle));
-            else
-                holder.binding.cardView.setOnClickListener(v -> navController.navigate(R.id.ProductDetailOrganizerFragment, bundle));
+            UserRole role = TokenManager.getRole(holder.binding.getRoot().getContext());
+            holder.binding.cardView.setOnClickListener(v -> navController.navigate(getFragmentId(role, listing), bundle));
         }
+    }
+
+    private static int getFragmentId(UserRole role, Listing listing) {
+        if (role == UserRole.ORGANIZER)
+            return listing.getType() == ListingType.SERVICE ? R.id.ServiceDetailOrganizerFragment : R.id.ProductDetailOrganizerFragment;
+        else if (role == UserRole.SELLER)
+            return listing.getType() == ListingType.SERVICE ? R.id.ServiceDetailSellerFragment : R.id.ProductDetailSellerFragment;
+        return listing.getType() == ListingType.SERVICE ? R.id.ServiceDetailUserFragment : R.id.ProductDetailUserFragment;
     }
 
     @Override

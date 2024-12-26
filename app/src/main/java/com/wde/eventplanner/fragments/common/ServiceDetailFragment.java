@@ -46,7 +46,6 @@ public class ServiceDetailFragment extends Fragment {
         });
 
         servicesViewModel.getService().observe(getViewLifecycleOwner(), this::populateServiceData);
-        // todo fixed service for now
         servicesViewModel.fetchService(staticId);
 
         return binding.getRoot();

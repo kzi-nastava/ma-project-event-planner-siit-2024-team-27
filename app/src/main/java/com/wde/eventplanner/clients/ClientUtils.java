@@ -69,5 +69,6 @@ public class ClientUtils {
     public static ServicesService servicesService = retrofit.create(ServicesService.class);
     public static ProductBudgetItemService productBudgetItemService = retrofit.create(ProductBudgetItemService.class);
     public static ServiceBudgetItemService serviceBudgetItemService = retrofit.create(ServiceBudgetItemService.class);
+    public static UsersService usersService = retrofit.create(UsersService.class);
 }
 

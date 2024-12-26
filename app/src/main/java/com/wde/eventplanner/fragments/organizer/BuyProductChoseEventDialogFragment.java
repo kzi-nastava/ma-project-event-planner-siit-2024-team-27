@@ -12,16 +12,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.components.CustomDropDown;
+import com.wde.eventplanner.components.TokenManager;
 import com.wde.eventplanner.databinding.DialogBuyProductChoseEventBinding;
-import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.event.EventComplexView;
-import com.wde.eventplanner.models.listingCategory.ListingCategory;
-import com.wde.eventplanner.models.listingCategory.ReplacingListingCategory;
 import com.wde.eventplanner.models.productBudgetItem.BuyProductDTO;
 import com.wde.eventplanner.models.productBudgetItem.ProductBudgetItemDTO;
 import com.wde.eventplanner.models.products.Product;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
-import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 import com.wde.eventplanner.viewmodels.ProductBudgetItemViewModel;
 
 import java.util.ArrayList;
@@ -51,9 +48,7 @@ public class BuyProductChoseEventDialogFragment extends DialogFragment {
         binding.closeButton.setOnClickListener(v -> dismiss());
         binding.buyButton.setOnClickListener(v -> buyProduct());
 
-        // todo change fixed organizer id when the session is implemented,
-        // todo for now it is fixed at "1d832a6e-7b3f-4cd4-bc37-fac3e0ef9236"
-        viewModel.fetchEventsFromOrganizer("1d832a6e-7b3f-4cd4-bc37-fac3e0ef9236");
+        viewModel.fetchEventsFromOrganizer(TokenManager.getProfileId(requireContext()).toString());
         viewModel.getEventsComplexView().observe(getViewLifecycleOwner(), this::onEventsChanged);
 
         return binding.getRoot();

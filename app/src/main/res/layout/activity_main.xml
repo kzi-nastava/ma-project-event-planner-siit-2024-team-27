@@ -52,8 +52,7 @@
         android:paddingTop="12dp"
         app:itemIconTint="@color/foreground_navigation_item"
         app:itemTextAppearance="@style/NavigationItemTextStyle"
-        app:itemTextColor="@color/foreground_navigation_item"
-        app:menu="@menu/nav_menu">
+        app:itemTextColor="@color/foreground_navigation_item">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
@@ -68,6 +67,42 @@
             android:drawableTint="@color/foreground_navigation_item"
             android:gravity="end|center_vertical"
             android:text="@string/login_register"
+            android:textAppearance="@style/NavigationItemTextStyle"
+            android:textColor="@color/foreground_navigation_item"
+            android:textFontWeight="500"
+            app:cornerRadius="100dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/profile_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="80dp"
+            android:backgroundTint="@color/secondary_background"
+            android:drawableRight="@drawable/ic_account"
+            android:drawableTint="@color/foreground_navigation_item"
+            android:gravity="end|center_vertical"
+            android:text="@string/profile"
+            android:textAppearance="@style/NavigationItemTextStyle"
+            android:textColor="@color/foreground_navigation_item"
+            android:textFontWeight="500"
+            app:cornerRadius="100dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="start|bottom"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="@color/secondary_background"
+            android:drawableRight="@drawable/ic_logout"
+            android:drawableTint="@color/foreground_navigation_item"
+            android:gravity="end|center_vertical"
+            android:text="@string/log_out"
             android:textAppearance="@style/NavigationItemTextStyle"
             android:textColor="@color/foreground_navigation_item"
             android:textFontWeight="500"

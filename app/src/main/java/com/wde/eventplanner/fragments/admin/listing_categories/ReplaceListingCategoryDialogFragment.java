@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.DialogReplaceListingCategoryBinding;
 import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.models.listing.ListingType;
@@ -44,7 +44,7 @@ public class ReplaceListingCategoryDialogFragment extends DialogFragment {
         viewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), this::onCategoriesChanged);
         viewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
             if (error != null) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), error);
                 viewModel.clearErrorMessage();
             }
         });

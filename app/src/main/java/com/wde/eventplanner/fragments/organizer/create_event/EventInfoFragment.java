@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventInfoBinding;
 import com.wde.eventplanner.models.event.GuestInfo;
 import com.wde.eventplanner.models.event.GuestList;
@@ -40,7 +40,7 @@ public class EventInfoFragment extends Fragment implements ViewPagerAdapter.HasT
         ArrayList<String> emails = createEventViewModel.guestList.stream().map(GuestInfo::getEmail).collect(Collectors.toCollection(ArrayList::new));
         GuestList guestList = new GuestList(emails, "eventId", "OrgName", "OrgSurname");
         invitationsViewModel.sendInvitations(guestList).observe(getViewLifecycleOwner(), error -> {
-            if (error != null) Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+            if (error != null) SingleToast.show(requireContext(), error);
         });
     }
 

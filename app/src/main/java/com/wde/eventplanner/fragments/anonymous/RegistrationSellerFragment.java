@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +22,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.FragmentRegistrationSellerBinding;
 import com.wde.eventplanner.models.DemoUser;
 
@@ -79,60 +79,60 @@ public class RegistrationSellerFragment extends Fragment {
 
         // Input Validation
         if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || companyName.isEmpty() || city.isEmpty()) {
-            showToast("Please fill in all the required fields");
+            SingleToast.show(requireContext(), "Please fill in all the required fields");
             return;
         }
 
         if (!name.matches(NAME_REGEX)) {
-            showToast("Invalid name format");
+            SingleToast.show(requireContext(), "Invalid name format");
             return;
         }
         if (!surname.matches(NAME_REGEX)) {
-            showToast("Invalid surname format");
+            SingleToast.show(requireContext(), "Invalid surname format");
             return;
         }
 
         if (!email.matches(EMAIL_REGEX)) {
-            showToast("Invalid email format");
+            SingleToast.show(requireContext(), "Invalid email format");
             return;
         }
 
         if (!isValidUser(email)) {
-            showToast("There is an existing account with the same email.");
+            SingleToast.show(requireContext(), "There is an existing account with the same email.");
             return;
         }
 
         if (!isStrongPassword(password)) {
-            showToast("Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
+            SingleToast.show(requireContext(), "Password is too weak. Use 8+ chars, upper & lowercase, number, and special char.");
             return;
         }
 
         if (!password.equals(repeatPassword)) {
-            showToast("Passwords do not match");
+            SingleToast.show(requireContext(), "Passwords do not match");
             return;
         }
 
         if (!phone.isEmpty() && !phone.matches(PHONE_REGEX)) {
-            showToast("Invalid phone number format");
+            SingleToast.show(requireContext(), "Invalid phone number format");
             return;
         }
 
         if (!city.matches(CITY_REGEX)) {
-            showToast("Invalid city format");
+            SingleToast.show(requireContext(), "Invalid city format");
             return;
         }
 
         if (!address.matches(ADDRESS_REGEX)) {
-            showToast("Invalid address format");
+            SingleToast.show(requireContext(), "Invalid address format");
             return;
         }
 
         if (!description.isEmpty() && description.length() < 10) {
-            showToast("Description is too short. Please provide at least 10 characters.");
+            SingleToast.show(requireContext(), "Description is too short. Please provide at least 10 characters.");
             return;
         }
 
-        showToast("Successful registration. Confirmation email sent.");
+        SingleToast.show(requireContext(), "Successful registration. Confirmation email sent.");
 
         NavController navController = Navigation.findNavController(requireView());
         NavOptions navOptions = new NavOptions.Builder()
@@ -149,9 +149,5 @@ public class RegistrationSellerFragment extends Fragment {
             }
         }
         return true;
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

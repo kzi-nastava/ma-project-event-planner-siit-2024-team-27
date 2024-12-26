@@ -1,26 +1,22 @@
 package com.wde.eventplanner.fragments.organizer.create_event;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.wde.eventplanner.adapters.BudgetItemAdapter;
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.components.CustomDropDown;
+import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventBudgetBinding;
 import com.wde.eventplanner.models.event.ListingBudgetItemDTO;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
-import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 
 import java.util.ArrayList;
@@ -60,7 +56,7 @@ public class EventBudgetFragment extends Fragment implements ViewPagerAdapter.Ha
                 binding.listingBudgetItemsRecyclerView.getAdapter().notifyItemChanged(budgetItems.size() - 1);
 
             } else {
-                Toast.makeText(requireContext(), "Fill out all previous items", Toast.LENGTH_SHORT).show();
+                SingleToast.show(requireContext(), "Fill out all previous items");
             }
         });
 
@@ -76,6 +72,7 @@ public class EventBudgetFragment extends Fragment implements ViewPagerAdapter.Ha
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void changeFilter() {
         for (int i = 0; i < binding.listingBudgetItemsRecyclerView.getAdapter().getItemCount(); i++) {
             // get holder of current card (the holder contains dropdowns that need to be reset)
