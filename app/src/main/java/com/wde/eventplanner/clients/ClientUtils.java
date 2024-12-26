@@ -1,5 +1,8 @@
 package com.wde.eventplanner.clients;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -7,6 +10,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.wde.eventplanner.BuildConfig;
+import com.wde.eventplanner.components.TokenManager;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -14,23 +18,36 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClientUtils {
+    @SuppressLint("StaticFieldLeak")
+    public static Context context;
     public static final String SERVICE_API_PATH = "http://" + BuildConfig.IP_ADDR + ":8080/api/v1/";
 
-    public static OkHttpClient test() {
+    public static OkHttpClient buildHttpClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        Interceptor authInterceptor = chain -> {
+            Request.Builder requestBuilder = chain.request().newBuilder();
+            String token = TokenManager.getToken(context);
+            if (token != null)
+                requestBuilder.header("Authorization", "Bearer " + token);
+            return chain.proceed(requestBuilder.build());
+        };
 
         return new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .readTimeout(5, TimeUnit.SECONDS)
                 .writeTimeout(5, TimeUnit.SECONDS)
-                .addInterceptor(interceptor).build();
+                .addInterceptor(interceptor)
+                .addInterceptor(authInterceptor).build();
     }
 
     private static class LocalDateDeserializer implements JsonDeserializer<LocalDate> {
@@ -56,7 +73,7 @@ public class ClientUtils {
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVICE_API_PATH)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(test())
+            .client(buildHttpClient())
             .build();
 
     public static NotificationsService notificationsService = retrofit.create(NotificationsService.class);
