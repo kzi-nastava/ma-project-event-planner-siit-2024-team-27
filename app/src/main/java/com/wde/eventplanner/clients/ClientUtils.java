@@ -7,7 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.wde.eventplanner.BuildConfig;
-import com.wde.eventplanner.components.TokenManager;
+import com.wde.eventplanner.utils.TokenManager;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;

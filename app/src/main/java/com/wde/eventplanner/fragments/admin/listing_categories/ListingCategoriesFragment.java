@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.ListingCategoryActiveAdapter;
 import com.wde.eventplanner.adapters.ListingCategoryPendingAdapter;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentListingCategoriesBinding;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
 import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;

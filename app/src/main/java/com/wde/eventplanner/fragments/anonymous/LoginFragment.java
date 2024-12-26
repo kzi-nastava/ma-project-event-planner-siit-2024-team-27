@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.components.SingleToast;
-import com.wde.eventplanner.components.TokenManager;
+import com.wde.eventplanner.utils.SingleToast;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.databinding.FragmentLoginBinding;
 import com.wde.eventplanner.models.user.User;
 import com.wde.eventplanner.viewmodels.UsersViewModel;

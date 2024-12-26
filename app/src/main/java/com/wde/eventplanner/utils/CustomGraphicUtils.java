@@ -1,4 +1,4 @@
-package com.wde.eventplanner.components;
+package com.wde.eventplanner.utils;
 
 import android.content.Context;
 import android.content.res.Resources;

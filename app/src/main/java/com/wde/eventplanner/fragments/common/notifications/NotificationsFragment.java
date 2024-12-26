@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.NotificationsAdapter;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentNotificationsBinding;
 import com.wde.eventplanner.models.Notification;
 import com.wde.eventplanner.viewmodels.NotificationsViewModel;

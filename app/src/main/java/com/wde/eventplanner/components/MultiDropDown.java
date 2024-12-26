@@ -1,7 +1,7 @@
 package com.wde.eventplanner.components;
 
-import static com.wde.eventplanner.components.CustomGraphicUtils.dp2px;
-import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
+import static com.wde.eventplanner.utils.CustomGraphicUtils.dp2px;
+import static com.wde.eventplanner.utils.CustomGraphicUtils.hideKeyboard;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

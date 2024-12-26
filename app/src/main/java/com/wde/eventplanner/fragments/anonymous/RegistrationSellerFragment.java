@@ -22,7 +22,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentRegistrationSellerBinding;
 import com.wde.eventplanner.models.DemoUser;
 

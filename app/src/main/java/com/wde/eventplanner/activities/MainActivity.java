@@ -1,6 +1,6 @@
 package com.wde.eventplanner.activities;
 
-import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
+import static com.wde.eventplanner.utils.CustomGraphicUtils.hideKeyboard;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -22,9 +22,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.clients.ClientUtils;
-import com.wde.eventplanner.components.SingleToast;
-import com.wde.eventplanner.components.TokenManager;
+import com.wde.eventplanner.utils.SingleToast;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.databinding.ActivityMainBinding;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 import com.wde.eventplanner.viewmodels.ListingsViewModel;
