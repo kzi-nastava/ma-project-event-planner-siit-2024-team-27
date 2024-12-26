@@ -22,6 +22,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.clients.ClientUtils;
 import com.wde.eventplanner.components.SingleToast;
 import com.wde.eventplanner.components.TokenManager;
 import com.wde.eventplanner.databinding.ActivityMainBinding;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         SplashScreen.installSplashScreen(this);
+        ClientUtils.context = this;
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setSupportActionBar(binding.toolbar);
