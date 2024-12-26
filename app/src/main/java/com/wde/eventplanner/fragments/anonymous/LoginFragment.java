@@ -55,8 +55,6 @@ public class LoginFragment extends Fragment {
             if (token != null && token.getToken() != null && !token.getToken().isBlank()) {
                 TokenManager.saveToken(token.getToken(), requireContext());
                 TokenManager.adjustMenu(requireActivity());
-
-
             } else
                 SingleToast.show(requireContext(), "Wrong email or password");
         });

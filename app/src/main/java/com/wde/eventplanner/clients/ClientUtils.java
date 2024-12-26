@@ -1,8 +1,5 @@
 package com.wde.eventplanner.clients;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -26,8 +23,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClientUtils {
-    @SuppressLint("StaticFieldLeak")
-    public static Context context;
     public static final String SERVICE_API_PATH = "http://" + BuildConfig.IP_ADDR + ":8080/api/v1/";
 
     public static OkHttpClient buildHttpClient() {
@@ -36,7 +31,7 @@ public class ClientUtils {
 
         Interceptor authInterceptor = chain -> {
             Request.Builder requestBuilder = chain.request().newBuilder();
-            String token = TokenManager.getToken(context);
+            String token = TokenManager.getToken(null);
             if (token != null)
                 requestBuilder.header("Authorization", "Bearer " + token);
             return chain.proceed(requestBuilder.build());
