@@ -6,11 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
-import com.wde.eventplanner.models.Notification;
 import com.wde.eventplanner.models.productBudgetItem.BuyProductDTO;
 import com.wde.eventplanner.models.productBudgetItem.ProductBudgetItemDTO;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

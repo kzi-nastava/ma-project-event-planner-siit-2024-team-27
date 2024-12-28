@@ -2,31 +2,42 @@ package com.wde.eventplanner.activities;
 
 import static com.wde.eventplanner.utils.CustomGraphicUtils.hideKeyboard;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
+import android.Manifest;
 import android.widget.EditText;
 
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.services.NotificationService;
+import com.wde.eventplanner.utils.MenuManager;
 import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.databinding.ActivityMainBinding;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 import com.wde.eventplanner.viewmodels.ListingsViewModel;
+import com.wde.eventplanner.viewmodels.NotificationsViewModel;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -53,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         SplashScreen.installSplashScreen(this);
+        setupNotifications();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setSupportActionBar(binding.toolbar);
@@ -67,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             // Link toolbar and NavigationView with NavController
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(binding.navigationView, navController);
-            TokenManager.adjustMenu(this);
+            MenuManager.adjustMenu(this);
 
             binding.navigationView.getMenu().getItem(1).setChecked(true);
 
@@ -97,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
             binding.logoutButton.setOnClickListener(view -> {
                 TokenManager.clearToken(this);
-                TokenManager.adjustMenu(this);
+                MenuManager.adjustMenu(this);
+                NotificationService.unsubscribe();
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             });
 
@@ -107,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             ViewModelProvider viewModelProvider = new ViewModelProvider(this);
             EventsViewModel eventsViewModel = viewModelProvider.get(EventsViewModel.class);
             ListingsViewModel listingsViewModel = viewModelProvider.get(ListingsViewModel.class);
+            NotificationsViewModel notificationsViewModel = viewModelProvider.get(NotificationsViewModel.class);
             AtomicBoolean alreadyShowed = new AtomicBoolean(false);
             AtomicBoolean timeout = new AtomicBoolean(false);
             handler.postDelayed(() -> timeout.set(true), 3000);
@@ -119,12 +133,47 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return timeout.get() || eventsViewModel.getTopEvents().isInitialized() && listingsViewModel.getTopListings().isInitialized();
             });
+
+            notificationsViewModel.getNotifications().observe(this, notifications -> {
+                if (notifications.stream().anyMatch(notification -> !notification.isSeen()))
+                    binding.navigationView.getMenu().findItem(R.id.nav_notifications).setIcon(R.drawable.ic_notifications_on);
+                else
+                    binding.navigationView.getMenu().findItem(R.id.nav_notifications).setIcon(R.drawable.ic_notifications);
+            });
+        }
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("type")) {
+            String type = intent.getStringExtra("type");
+            String entityId = intent.getStringExtra("entityId");
+            MenuManager.navigateToFragment(type, entityId, this, navController);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(@NonNull Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.hasExtra("type")) {
+            String type = intent.getStringExtra("type");
+            String entityId = intent.getStringExtra("entityId");
+            MenuManager.navigateToFragment(type, entityId, this, navController);
         }
     }
 
     private boolean notCurrent(NavController navController, int id) {
         NavDestination currentDestination = navController.getCurrentDestination();
         return currentDestination == null || currentDestination.getId() != id;
+    }
+
+    private void setupNotifications() {
+        NotificationChannel channel = new NotificationChannel("user_notifications", "User notifications", NotificationManager.IMPORTANCE_HIGH);
+        getSystemService(NotificationManager.class).createNotificationChannel(channel);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            }).launch(Manifest.permission.POST_NOTIFICATIONS);
+
+        NotificationService.onMessageReceived = () -> MenuManager.refreshNotificationIcon(this);
     }
 
     @Override
@@ -145,16 +194,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 
     @Override
     public void onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
             binding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        else
             super.onBackPressed();
-        }
     }
 }

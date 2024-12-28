@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "484734811700",
+    "project_id": "wedoevents-rs",
+    "storage_bucket": "wedoevents-rs.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484734811700:android:bef186b4db9f31edf3d461",
+        "android_client_info": {
+          "package_name": "com.wde.eventplanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmkVJ6S8qqMqatHjd5ydxVFJ0WOi_yDsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

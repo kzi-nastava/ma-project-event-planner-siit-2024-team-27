@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.services.NotificationService;
+import com.wde.eventplanner.utils.MenuManager;
 import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.databinding.FragmentLoginBinding;
@@ -54,7 +56,8 @@ public class LoginFragment extends Fragment {
         viewModel.login(new User(email, password)).observe(getViewLifecycleOwner(), token -> {
             if (token != null && token.getToken() != null && !token.getToken().isBlank()) {
                 TokenManager.saveToken(token.getToken(), requireContext());
-                TokenManager.adjustMenu(requireActivity());
+                MenuManager.adjustMenu(requireActivity());
+                NotificationService.subscribe(TokenManager.getProfileId(requireContext()));
             } else
                 SingleToast.show(requireContext(), "Wrong email or password");
         });
