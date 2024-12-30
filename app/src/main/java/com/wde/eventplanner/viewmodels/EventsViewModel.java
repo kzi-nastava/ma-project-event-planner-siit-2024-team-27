@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
 import com.wde.eventplanner.models.Page;
+import com.wde.eventplanner.models.event.AgendaItem;
 import com.wde.eventplanner.models.event.Event;
+import com.wde.eventplanner.models.event.EventActivitiesDTO;
 import com.wde.eventplanner.models.event.EventComplexView;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class EventsViewModel extends ViewModel {
     public LiveData<ArrayList<EventComplexView>> getEventsComplexView() {
         return this.eventsComplexViewData;
     }
-  
+
     public LiveData<Page<Event>> getEvents() {
         return eventsLiveData;
     }
@@ -101,5 +103,25 @@ public class EventsViewModel extends ViewModel {
                 errorMessage.postValue("Error: " + t.getMessage());
             }
         });
+    }
+
+    public LiveData<ArrayList<UUID>> createAgenda(ArrayList<AgendaItem> agendaItems) {
+        MutableLiveData<ArrayList<UUID>> ids = new MutableLiveData<>();
+        ClientUtils.eventsService.createAgenda(new EventActivitiesDTO(agendaItems)).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<UUID>> call, @NonNull Response<ArrayList<UUID>> response) {
+                if (response.isSuccessful()) {
+                    ids.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to create agenda. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<UUID>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+        return ids;
     }
 }
