@@ -2,11 +2,13 @@ package com.wde.eventplanner.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 
+import com.wde.eventplanner.models.event.AgendaItem;
 import com.wde.eventplanner.models.event.GuestInfo;
 
 import java.util.ArrayList;
 
 public class CreateEventViewModel extends ViewModel {
+    public final ArrayList<AgendaItem> agendaItems = new ArrayList<>();
     public final ArrayList<GuestInfo> guestList = new ArrayList<>();
 
     public void clearAllData() {

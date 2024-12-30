@@ -16,9 +16,11 @@ import com.wde.eventplanner.models.event.GuestInfo;
 import com.wde.eventplanner.models.event.GuestList;
 import com.wde.eventplanner.viewmodels.CreateEventViewModel;
 import com.wde.eventplanner.viewmodels.InvitationsViewModel;
+import com.wde.eventplanner.viewmodels.EventsViewModel;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class EventInfoFragment extends Fragment implements ViewPagerAdapter.HasTitle {
     private FragmentEventInfoBinding binding;
@@ -35,10 +37,15 @@ public class EventInfoFragment extends Fragment implements ViewPagerAdapter.HasT
         // poziv ka serveru može da se uradi ovde
         CreateEventViewModel createEventViewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
         InvitationsViewModel invitationsViewModel = new ViewModelProvider(requireActivity()).get(InvitationsViewModel.class);
+        EventsViewModel eventsViewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
 
+        createEventViewModel.agendaItems.removeIf(item -> !item.isFilled());
+        eventsViewModel.createAgenda(createEventViewModel.agendaItems).observe(getViewLifecycleOwner(), ids -> {
+            ArrayList<UUID> agendaItemIds = ids; // todo here are agenda item ids for creating event
+        });
 
         ArrayList<String> emails = createEventViewModel.guestList.stream().map(GuestInfo::getEmail).collect(Collectors.toCollection(ArrayList::new));
-        GuestList guestList = new GuestList(emails, "eventId", "OrgName", "OrgSurname");
+        GuestList guestList = new GuestList(emails, "eventId", "OrgName", "OrgSurname");  // todo add fixed params
         invitationsViewModel.sendInvitations(guestList).observe(getViewLifecycleOwner(), error -> {
             if (error != null) SingleToast.show(requireContext(), error);
         });
