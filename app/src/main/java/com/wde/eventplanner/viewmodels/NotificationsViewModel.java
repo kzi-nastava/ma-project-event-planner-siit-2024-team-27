@@ -6,9 +6,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
-import com.wde.eventplanner.models.Notification;
+import com.wde.eventplanner.models.notification.Notification;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +49,7 @@ public class NotificationsViewModel extends ViewModel {
         });
     }
 
-    public void readNotification(String id) {
+    public void readNotification(UUID id) {
         ClientUtils.notificationsService.readNotification(id).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {

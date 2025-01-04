@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.components.TokenManager;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.databinding.CardListingBinding;
 import com.wde.eventplanner.models.listing.Listing;
 import com.wde.eventplanner.models.listing.ListingType;

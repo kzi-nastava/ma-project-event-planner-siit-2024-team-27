@@ -1,6 +1,6 @@
 package com.wde.eventplanner.fragments.common.homepage.all_listings;
 
-import static com.wde.eventplanner.components.CustomGraphicUtils.hideKeyboard;
+import static com.wde.eventplanner.utils.CustomGraphicUtils.hideKeyboard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.ListingAdapter;
 import com.wde.eventplanner.adapters.SortSpinnerAdapter;
 import com.wde.eventplanner.components.ShakeDetector;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentAllListingsBinding;
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;

@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.components.CustomDropDown;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.DialogReserveServiceBinding;
 import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.serviceBudgetItem.BookingSlots;

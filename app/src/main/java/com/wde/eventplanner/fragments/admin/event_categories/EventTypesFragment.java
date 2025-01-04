@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.EventTypeAdapter;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventTypesBinding;
 import com.wde.eventplanner.models.event.EventType;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;

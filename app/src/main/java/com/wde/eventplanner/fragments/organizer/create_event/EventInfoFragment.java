@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventInfoBinding;
 import com.wde.eventplanner.models.event.GuestInfo;
 import com.wde.eventplanner.models.event.GuestList;

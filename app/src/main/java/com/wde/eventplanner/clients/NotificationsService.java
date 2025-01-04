@@ -1,8 +1,9 @@
 package com.wde.eventplanner.clients;
 
-import com.wde.eventplanner.models.Notification;
+import com.wde.eventplanner.models.notification.Notification;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,5 +15,5 @@ public interface NotificationsService {
     Call<ArrayList<Notification>> getNotifications();
 
     @PUT("notifications/{id}")
-    Call<Void> readNotification(@Path("id") String id);
+    Call<Void> readNotification(@Path("id") UUID id);
 }

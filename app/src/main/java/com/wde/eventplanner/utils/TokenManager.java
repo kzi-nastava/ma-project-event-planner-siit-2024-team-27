@@ -1,21 +1,13 @@
-package com.wde.eventplanner.components;
+package com.wde.eventplanner.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme;
 import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
-import com.google.android.material.navigation.NavigationView;
-import com.wde.eventplanner.R;
-import com.wde.eventplanner.activities.MainActivity;
-import com.wde.eventplanner.databinding.ActivityMainBinding;
 import com.wde.eventplanner.models.user.UserRole;
 
 import org.json.JSONObject;
@@ -89,32 +81,5 @@ public class TokenManager {
         instance.role = UserRole.ANONYMOUS;
         instance.profileId = null;
         instance.token = null;
-    }
-
-    public static void adjustMenu(Activity activity) {
-        NavController navController = ((MainActivity) activity).navController;
-        ActivityMainBinding binding = ((MainActivity) activity).binding;
-        NavigationView navigationView = binding.navigationView;
-        UserRole role = getRole(activity);
-        navigationView.getMenu().clear();
-
-        if (role == UserRole.ADMIN) navigationView.inflateMenu(R.menu.menu_admin);
-        else if (role == UserRole.ORGANIZER) navigationView.inflateMenu(R.menu.menu_organizer);
-        else if (role == UserRole.SELLER) navigationView.inflateMenu(R.menu.menu_seller);
-        else if (role == UserRole.GUEST) navigationView.inflateMenu(R.menu.menu_guest);
-        else if (role == UserRole.ANONYMOUS) navigationView.inflateMenu(R.menu.menu_anonymous);
-
-        if (role == UserRole.ANONYMOUS) {
-            binding.loginButton.setVisibility(View.VISIBLE);
-            binding.logoutButton.setVisibility(View.INVISIBLE);
-            binding.profileButton.setVisibility(View.INVISIBLE);
-        } else {
-            binding.loginButton.setVisibility(View.INVISIBLE);
-            binding.logoutButton.setVisibility(View.VISIBLE);
-            binding.profileButton.setVisibility(View.VISIBLE);
-        }
-
-        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(navController.getGraph().getStartDestinationId(), true).build();
-        navController.navigate(R.id.nav_homepage, null, navOptions);
     }
 }

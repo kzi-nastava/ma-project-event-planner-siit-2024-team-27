@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.NotificationsAdapter;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.MenuManager;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentNotificationsBinding;
-import com.wde.eventplanner.models.Notification;
+import com.wde.eventplanner.models.notification.Notification;
 import com.wde.eventplanner.viewmodels.NotificationsViewModel;
 
 import java.util.ArrayList;
@@ -39,7 +41,8 @@ public class NotificationsFragment extends Fragment {
         });
 
         binding.notificationsRecyclerView.setAdapter(viewModel.getNotifications().isInitialized() ?
-                new NotificationsAdapter(viewModel.getNotifications().getValue()) : new NotificationsAdapter());
+                new NotificationsAdapter(viewModel.getNotifications().getValue(), NavHostFragment.findNavController(this)) :
+                new NotificationsAdapter(NavHostFragment.findNavController(this)));
 
         viewModel.fetchNotifications();
         return binding.getRoot();
@@ -54,9 +57,15 @@ public class NotificationsFragment extends Fragment {
             adapter.notifications.addAll(notificationsTmp);
             adapter.notifyDataSetChanged();
         }
-        for (Notification notification : notifications) {
+
+        for (Notification notification : notifications)
             if (!notification.isSeen())
                 viewModel.readNotification(notification.getId());
-        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MenuManager.refreshNotificationIcon(requireActivity());
     }
 }

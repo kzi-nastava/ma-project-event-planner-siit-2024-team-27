@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EventPlanner</string>
+    <string name="app_name">WeDoEvents</string>
     <string name="phone">Phone</string>
     <string name="login">Login</string>
     <string name="email">Email</string>

@@ -7,12 +7,12 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.wde.eventplanner.BuildConfig;
-import com.wde.eventplanner.components.TokenManager;
+import com.wde.eventplanner.utils.TokenManager;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -55,14 +55,21 @@ public class ClientUtils {
     private static class LocalTimeDeserializer implements JsonDeserializer<LocalTime> {
         @Override
         public LocalTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            String timeString = json.getAsString();
-            return LocalTime.parse(timeString, DateTimeFormatter.ISO_LOCAL_TIME);
+            return LocalTime.parse(json.getAsString());
+        }
+    }
+
+    private static class LocalDateTimeDeserializer implements JsonDeserializer<LocalDateTime> {
+        @Override
+        public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return LocalDateTime.parse(json.getAsString());
         }
     }
 
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
             .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
             .create();
 
     public static Retrofit retrofit = new Retrofit.Builder()

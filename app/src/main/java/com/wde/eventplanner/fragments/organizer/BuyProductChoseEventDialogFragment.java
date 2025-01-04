@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.components.CustomDropDown;
-import com.wde.eventplanner.components.TokenManager;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.databinding.DialogBuyProductChoseEventBinding;
 import com.wde.eventplanner.models.event.EventComplexView;
 import com.wde.eventplanner.models.productBudgetItem.BuyProductDTO;

@@ -14,7 +14,7 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.DialogEventFilterBinding;
 import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.models.event.EventType;

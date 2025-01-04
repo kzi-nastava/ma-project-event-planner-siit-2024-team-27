@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.GuestListAdapter;
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.components.ItemDividerDecoration;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventGuestsBinding;
 import com.wde.eventplanner.models.event.GuestInfo;
 import com.wde.eventplanner.viewmodels.CreateEventViewModel;
