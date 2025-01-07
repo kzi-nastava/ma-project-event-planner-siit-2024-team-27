@@ -101,4 +101,10 @@
     <string name="reserve">Reserve</string>
     <string name="log_out">Log out</string>
     <string name="profile">Profile</string>
+    <string name="listing_reviews">Listing reviews</string>
+    <string name="event_reviews">Event reviews</string>
+    <string name="reviews">Reviews</string>
+    <string name="view_details">View details</string>
+    <string name="approve">Approve</string>
+    <string name="decline">Decline</string>
 </resources>

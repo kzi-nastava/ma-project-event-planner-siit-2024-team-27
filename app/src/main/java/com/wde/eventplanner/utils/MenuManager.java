@@ -52,6 +52,7 @@ public class MenuManager {
     public static void navigateToFragment(String type, String entityId, Context context, NavController navController) {
         UserRole role = TokenManager.getRole(context);
         Bundle bundle = new Bundle();
+        type = type.toUpperCase();
         int fragmentId = -1;
 
         if (role == UserRole.ORGANIZER) {
