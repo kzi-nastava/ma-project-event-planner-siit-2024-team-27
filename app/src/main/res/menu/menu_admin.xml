@@ -19,8 +19,4 @@
         android:id="@+id/nav_listing_categories"
         android:icon="@drawable/ic_storefront"
         android:title="@string/listing_categories" />
-    <item
-        android:id="@+id/nav_reviews"
-        android:icon="@drawable/ic_reviews"
-        android:title="@string/reviews" />
 </menu>

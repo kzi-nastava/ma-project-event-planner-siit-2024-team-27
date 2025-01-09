@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             R.id.nav_notifications,
             R.id.nav_event_types,
             R.id.nav_listing_categories,
-            R.id.nav_reviews,
             R.id.nav_login
     };
 

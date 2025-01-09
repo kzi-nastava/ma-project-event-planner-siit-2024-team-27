@@ -62,7 +62,6 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     public static void subscribe(UUID profileId) {
-        FirebaseMessaging.getInstance().deleteToken();
         FirebaseMessaging.getInstance().subscribeToTopic("user_" + profileId);
     }
 

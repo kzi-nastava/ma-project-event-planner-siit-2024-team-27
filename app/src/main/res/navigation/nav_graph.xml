@@ -166,10 +166,6 @@
         android:id="@+id/nav_listing_categories"
         android:name="com.wde.eventplanner.fragments.admin.listing_categories.ListingCategoriesFragment"
         tools:layout="@layout/fragment_listing_categories" />
-    <fragment
-        android:id="@+id/nav_reviews"
-        android:name="com.wde.eventplanner.fragments.admin.reviews.ReviewsFragment"
-        tools:layout="@layout/fragment_reviews" />
 
     <fragment
         android:id="@+id/nav_service_detail_organizer"

@@ -66,7 +66,7 @@ public class ClientUtils {
         }
     }
 
-    private static final Gson gson = new GsonBuilder()
+    private static final Gson gson = new GsonBuilder().setLenient()
             .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
             .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
@@ -89,7 +89,5 @@ public class ClientUtils {
     public static ProductBudgetItemService productBudgetItemService = retrofit.create(ProductBudgetItemService.class);
     public static ServiceBudgetItemService serviceBudgetItemService = retrofit.create(ServiceBudgetItemService.class);
     public static UsersService usersService = retrofit.create(UsersService.class);
-    public static ListingReviewsService listingReviewsService = retrofit.create(ListingReviewsService.class);
-    public static EventReviewsService eventReviewsService = retrofit.create(EventReviewsService.class);
 }
 
