@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.wde.eventplanner.adapters.AgendaItemAdapter;
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
-import com.wde.eventplanner.components.SingleToast;
+import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventAgendaBinding;
 import com.wde.eventplanner.models.event.AgendaItem;
 import com.wde.eventplanner.viewmodels.CreateEventViewModel;
