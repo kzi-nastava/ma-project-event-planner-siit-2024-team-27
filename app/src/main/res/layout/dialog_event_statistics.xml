@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:theme="@style/CardViewTextInputOverlay"
+    app:cardBackgroundColor="@color/edge"
+    app:cardCornerRadius="25dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="312dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/closeButton"
+            android:layout_width="42dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/edge"
+            android:paddingStart="8dp"
+            android:paddingTop="9dp"
+            android:paddingEnd="8dp"
+            app:cornerRadius="100dp"
+            app:icon="@drawable/ic_close"
+            app:iconGravity="top"
+            app:iconSize="22dp"
+            app:iconTint="@color/pale_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="42dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/event_statistics"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/barChart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/yAxisLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="-8dp"
+            android:rotation="-90"
+            android:text="@string/count"
+            android:textColor="@color/pale_text"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/barChart"
+            app:layout_constraintEnd_toStartOf="@id/barChart"
+            app:layout_constraintTop_toTopOf="@id/barChart" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/xAxisLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/rating"
+            android:textColor="@color/pale_text"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/barChart"
+            app:layout_constraintStart_toStartOf="@id/barChart"
+            app:layout_constraintTop_toBottomOf="@id/barChart" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
