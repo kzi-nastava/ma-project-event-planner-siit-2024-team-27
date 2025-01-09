@@ -107,4 +107,5 @@
     <string name="view_details">View details</string>
     <string name="approve">Approve</string>
     <string name="decline">Decline</string>
+    <string name="add_profile_photo">Add profile photo.</string>
 </resources>

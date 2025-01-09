@@ -48,6 +48,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     private ArrayList<T> originalValues;
     private Consumer<T> callback;
 
+    @Nullable
     public T getSelected() {
         return selected == null ? null : selected.value;
     }

@@ -194,8 +194,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:inputType="textMultiLine"
-                android:lines="4"
-                android:minHeight="120dp" />
+                android:minHeight="120dp"
+                android:minLines="4" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- City -->
@@ -204,16 +204,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="@string/city"
+            app:endIconDrawable="@drawable/ic_down_arrow"
+            app:endIconMode="custom"
+            app:endIconTint="@color/pale_text"
+            app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/descriptionLayout">
+            app:layout_constraintTop_toBottomOf="@id/descriptionLayout"
+            app:placeholderText="@string/city">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.wde.eventplanner.components.CustomDropDown
                 android:id="@+id/inputCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:paddingHorizontal="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Address -->
@@ -234,27 +238,43 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Select Image Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectImageButton"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/select_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addressLayout" />
-
         <!-- Image Preview -->
-        <ImageView
-            android:id="@+id/selectedImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/selectedImageLayout"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
             android:layout_marginTop="16dp"
-            android:src="@android:drawable/ic_menu_camera"
+            android:backgroundTint="@color/on_surface_container_highest"
+            app:cardCornerRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/selectImageButton" />
+            app:layout_constraintTop_toBottomOf="@id/addressLayout">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/removeImageButton"
+                android:layout_width="36dp"
+                android:layout_height="47dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/overlay_close_back"
+                android:padding="6dp"
+                android:translationZ="4dp"
+                android:visibility="gone"
+                app:cornerRadius="100dp"
+                app:icon="@drawable/ic_close"
+                app:iconGravity="top"
+                app:iconSize="22dp"
+                app:iconTint="@color/overlay_close_front" />
+
+            <ImageView
+                android:id="@+id/selectedImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/add_profile_photo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add_image" />
+        </androidx.cardview.widget.CardView>
 
         <!-- Register Button -->
         <com.google.android.material.button.MaterialButton
@@ -262,12 +282,12 @@
             style="@style/CustomAccentButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="70dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/selectedImageView" />
-
+            app:layout_constraintTop_toBottomOf="@id/selectedImageLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

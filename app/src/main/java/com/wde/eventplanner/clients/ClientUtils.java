@@ -66,7 +66,7 @@ public class ClientUtils {
         }
     }
 
-    private static final Gson gson = new GsonBuilder()
+    private static final Gson gson = new GsonBuilder().setLenient()
             .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
             .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
