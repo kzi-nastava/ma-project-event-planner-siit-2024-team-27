@@ -1,9 +1,13 @@
 package com.wde.eventplanner.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.OpenableColumns;
+
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,5 +52,32 @@ public class FileManager {
         }
 
         return result;
+    }
+
+    public static File saveFileToDownloads(InputStream inputStream, String fileName) throws IOException {
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+        OutputStream outputStream = new FileOutputStream(file);
+
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1)
+            outputStream.write(buffer, 0, bytesRead);
+
+        outputStream.close();
+        inputStream.close();
+
+        return file;
+    }
+
+    public static void openPdf(Context context, File pdfFile) {
+        Uri pdfUri = FileProvider.getUriForFile(context, "com.wde.eventplanner.fileprovider", pdfFile);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(pdfUri, "application/pdf");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        if (intent.resolveActivity(context.getPackageManager()) != null)
+            context.startActivity(intent);
+        else
+            SingleToast.show(context, "No PDF viewer app found!");
     }
 }
