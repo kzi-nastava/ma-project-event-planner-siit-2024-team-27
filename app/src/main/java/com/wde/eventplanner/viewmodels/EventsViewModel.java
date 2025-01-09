@@ -10,19 +10,25 @@ import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.AgendaItem;
 import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.event.EventActivitiesDTO;
+import com.wde.eventplanner.models.event.EventAdminDTO;
 import com.wde.eventplanner.models.event.EventComplexView;
+import com.wde.eventplanner.utils.FileManager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EventsViewModel extends ViewModel {
+    private final MutableLiveData<ArrayList<EventComplexView>> eventsComplexViewData = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<EventAdminDTO>> publicEventsLiveData = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<Event>> topEventsLiveData = new MutableLiveData<>();
     private final MutableLiveData<Page<Event>> eventsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<ArrayList<EventComplexView>> eventsComplexViewData = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     public LiveData<ArrayList<Event>> getTopEvents() {
@@ -31,6 +37,10 @@ public class EventsViewModel extends ViewModel {
 
     public LiveData<ArrayList<EventComplexView>> getEventsComplexView() {
         return this.eventsComplexViewData;
+    }
+
+    public LiveData<ArrayList<EventAdminDTO>> getPublicEvents() {
+        return this.publicEventsLiveData;
     }
 
     public LiveData<Page<Event>> getEvents() {
@@ -58,6 +68,24 @@ public class EventsViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<ArrayList<Event>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void fetchPublicEvents() {
+        ClientUtils.eventsService.getPublicEvents().enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<EventAdminDTO>> call, @NonNull Response<ArrayList<EventAdminDTO>> response) {
+                if (response.isSuccessful()) {
+                    publicEventsLiveData.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch events. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<EventAdminDTO>> call, @NonNull Throwable t) {
                 errorMessage.postValue("Error: " + t.getMessage());
             }
         });
@@ -123,5 +151,31 @@ public class EventsViewModel extends ViewModel {
             }
         });
         return ids;
+    }
+
+    public LiveData<File> downloadReport(UUID eventId, String eventName) {
+        MutableLiveData<File> file = new MutableLiveData<>();
+        ClientUtils.eventsService.getPdfReport(eventId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (responseBody != null) {
+                            String fileName = "event_" + eventName.strip().replaceAll("\\s+", "_").toLowerCase() + "_report.pdf";
+                            file.postValue(FileManager.saveFileToDownloads(responseBody.byteStream(), fileName));
+                        } else
+                            errorMessage.postValue("Failed to retrieve PDF. Response body is null.");
+                    } catch (IOException e) {
+                        errorMessage.postValue("Failed to save pdf report. Error: " + e.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                errorMessage.postValue("Failed to download pdf report. Code: " + t.getMessage());
+            }
+        });
+        return file;
     }
 }

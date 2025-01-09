@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             R.id.nav_event_types,
             R.id.nav_listing_categories,
             R.id.nav_reviews,
+            R.id.nav_statistics,
             R.id.nav_login
     };
 
@@ -66,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
         SplashScreen.installSplashScreen(this);
         setupNotifications();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+            }).launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setSupportActionBar(binding.toolbar);

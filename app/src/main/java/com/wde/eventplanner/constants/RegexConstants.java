@@ -6,6 +6,7 @@ public class RegexConstants {
     public static final String HAS_SPECIAL_CHAR_REGEX = ".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*";
     public static final int MIN_PASSWORD_LENGTH = 8;
     public static final String NAME_REGEX = "^[A-Za-z ]{1,50}$";
+    public static final String CITY_REGEX = "^[A-Za-z ]{1,50}$";
     public static final String ADDRESS_REGEX = "^[A-Za-z0-9 ,.-]{5,100}$"; // allows alphanumeric characters and common address symbols
     public static final String PHONE_REGEX = "^\\+?\\d+$";
 
@@ -17,5 +18,7 @@ public class RegexConstants {
         boolean hasSpecialChar = password.matches(HAS_SPECIAL_CHAR_REGEX);
 
         return hasUppercase && hasLowercase && hasDigit && hasSpecialChar;
+    }
+    private RegexConstants() {
     }
 }

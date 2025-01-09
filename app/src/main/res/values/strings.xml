@@ -107,5 +107,10 @@
     <string name="view_details">View details</string>
     <string name="approve">Approve</string>
     <string name="decline">Decline</string>
-    <string name="add_profile_photo">Add profile photo.</string>
+    <string name="public_events">Public events</string>
+    <string name="download">Download</string>
+    <string name="view_graph">View graph</string>
+    <string name="event_statistics">Event statistics</string>
+    <string name="rating">Rating</string>
+    <string name="count">Count</string>
 </resources>

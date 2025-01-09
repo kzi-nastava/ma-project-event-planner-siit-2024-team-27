@@ -21,6 +21,4 @@
     <color name="edge2">#383838</color>
     <color name="edge3">#958E99</color>
     <color name="dropdown">#3D3D3D</color>
-    <color name="overlay_close_back">#70212121</color>
-    <color name="overlay_close_front">#C0E0E0E0</color>
 </resources>

@@ -1,12 +1,12 @@
 package com.wde.eventplanner.fragments.anonymous;
 
 import static com.wde.eventplanner.constants.RegexConstants.ADDRESS_REGEX;
+import static com.wde.eventplanner.constants.RegexConstants.CITY_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.EMAIL_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.NAME_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.PHONE_REGEX;
 import static com.wde.eventplanner.constants.RegexConstants.isStrongPassword;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,79 +15,57 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.wde.eventplanner.R;
-import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentRegistrationSellerBinding;
-import com.wde.eventplanner.models.user.RegistrationRequest;
-import com.wde.eventplanner.utils.FileManager;
-import com.wde.eventplanner.viewmodels.UsersViewModel;
+import com.wde.eventplanner.models.DemoUser;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.UUID;
+import java.util.List;
 
 public class RegistrationSellerFragment extends Fragment {
-    private ActivityResultLauncher<Intent> imagePickerLauncher;
     private FragmentRegistrationSellerBinding binding;
-    private UsersViewModel viewModel;
-    private Uri image;
+    private static final int PICK_IMAGE_REQUEST = 1;  // Request code for image selection
+    private Uri selectedImageUri;
+    private List<DemoUser> userList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRegistrationSellerBinding.inflate(inflater, container, false);
-        viewModel = new ViewModelProvider(requireActivity()).get(UsersViewModel.class);
 
-        imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null)
-                setImage(result.getData().getData());
-        });
+        userList = new ArrayList<>();
+        userList.add(new DemoUser("email@email.com", "Faks1312!"));
+        userList.add(new DemoUser("ftn@ftn.com", "Faks1312!"));
+        userList.add(new DemoUser("a@a.com", "Faks1312!"));
 
-        binding.selectedImageView.setOnClickListener(v -> openImagePicker());
+        binding.selectImageButton.setOnClickListener(v -> openImagePicker());
         binding.registerButton.setOnClickListener(v -> registerSeller());
-        binding.removeImageButton.setOnClickListener(v -> removeImage());
-
-        @SuppressWarnings("unchecked")
-        CustomDropDown<String> cityDropdown = binding.inputCity;
-        cityDropdown.changeValues(new ArrayList<>(Arrays.asList(binding.getRoot().getContext().getResources().getStringArray(R.array.cities))));
 
         return binding.getRoot();
     }
 
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        imagePickerLauncher.launch(intent);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    private void setImage(Uri uri) {
-        binding.selectedImageView.setImageURI(uri);
-        binding.removeImageButton.setVisibility(View.VISIBLE);
-        image = uri;
-    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    private void removeImage() {
-        binding.selectedImageView.setImageResource(R.drawable.add_image);
-        binding.removeImageButton.setVisibility(View.GONE);
-        image = null;
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
+            selectedImageUri = data.getData();
+            binding.selectedImageView.setImageURI(selectedImageUri);
+        }
     }
 
     private void registerSeller() {
-        if (binding.inputName.getText() == null || binding.inputSurname.getText() == null || binding.inputEmail.getText() == null || binding.inputPassword.getText() == null || binding.inputRepeatPassword.getText() == null ||
-                binding.inputCompanyName.getText() == null || binding.inputPhone.getText() == null || binding.inputDescription.getText() == null || binding.inputAddress.getText() == null) {
-            SingleToast.show(requireContext(), "Error occurred, please try again!");
-            return;
-        }
-
         String name = binding.inputName.getText().toString().trim();
         String surname = binding.inputSurname.getText().toString().trim();
         String email = binding.inputEmail.getText().toString().trim();
@@ -96,11 +74,11 @@ public class RegistrationSellerFragment extends Fragment {
         String companyName = binding.inputCompanyName.getText().toString().trim();
         String phone = binding.inputPhone.getText().toString().trim();
         String description = binding.inputDescription.getText().toString().trim();
+        String city = binding.inputCity.getText().toString().trim();
         String address = binding.inputAddress.getText().toString().trim();
-        String city = (String) binding.inputCity.getSelected();
 
         // Input Validation
-        if (name.isBlank() || surname.isBlank() || email.isBlank() || password.isBlank() || repeatPassword.isBlank() || companyName.isBlank() || city == null || city.isBlank()) {
+        if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || companyName.isEmpty() || city.isEmpty()) {
             SingleToast.show(requireContext(), "Please fill in all the required fields");
             return;
         }
@@ -109,7 +87,6 @@ public class RegistrationSellerFragment extends Fragment {
             SingleToast.show(requireContext(), "Invalid name format");
             return;
         }
-
         if (!surname.matches(NAME_REGEX)) {
             SingleToast.show(requireContext(), "Invalid surname format");
             return;
@@ -117,6 +94,11 @@ public class RegistrationSellerFragment extends Fragment {
 
         if (!email.matches(EMAIL_REGEX)) {
             SingleToast.show(requireContext(), "Invalid email format");
+            return;
+        }
+
+        if (!isValidUser(email)) {
+            SingleToast.show(requireContext(), "There is an existing account with the same email.");
             return;
         }
 
@@ -135,6 +117,11 @@ public class RegistrationSellerFragment extends Fragment {
             return;
         }
 
+        if (!city.matches(CITY_REGEX)) {
+            SingleToast.show(requireContext(), "Invalid city format");
+            return;
+        }
+
         if (!address.matches(ADDRESS_REGEX)) {
             SingleToast.show(requireContext(), "Invalid address format");
             return;
@@ -145,33 +132,22 @@ public class RegistrationSellerFragment extends Fragment {
             return;
         }
 
-        RegistrationRequest request = new RegistrationRequest(email, password, true, false, "SELLER", name, surname, city, address, phone); // todo companyName and description
-        viewModel.register(request).observe(getViewLifecycleOwner(), response -> {
-            if (response.isBlank())
-                SingleToast.show(requireContext(), "There is an existing account with the same email.");
-            else {
-                SingleToast.show(requireContext(), "Registration successful. A verification email has been sent.");
-                if (image != null) {
-                    try {
-                        File imageFile = FileManager.getFileFromUri(requireContext(), image);
-                        viewModel.putImage(imageFile, UUID.fromString(response)).observe(getViewLifecycleOwner(), response2 -> {
-                            if (!response2.isSuccessful())
-                                SingleToast.show(requireContext(), "Failed to add image to the profile!");
-                            navigateToHome();
-                        });
-                    } catch (Exception e) {
-                        SingleToast.show(requireContext(), "Failed to load the image!");
-                    }
-                } else navigateToHome();
-            }
-        });
-    }
+        SingleToast.show(requireContext(), "Successful registration. Confirmation email sent.");
 
-    private void navigateToHome() {
         NavController navController = Navigation.findNavController(requireView());
         NavOptions navOptions = new NavOptions.Builder()
                 .setPopUpTo(navController.getGraph().getStartDestinationId(), true)
                 .build(); // Clear Backstack
         navController.navigate(R.id.action_seller_registration_to_homepage, null, navOptions);
+
+    }
+
+    private boolean isValidUser(String email) {
+        for (DemoUser user : userList) {
+            if (user.getEmail().equals(email)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

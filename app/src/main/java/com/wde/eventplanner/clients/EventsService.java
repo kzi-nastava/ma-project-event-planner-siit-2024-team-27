@@ -2,12 +2,14 @@ package com.wde.eventplanner.clients;
 
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.Event;
+import com.wde.eventplanner.models.event.EventAdminDTO;
 import com.wde.eventplanner.models.event.EventComplexView;
 import com.wde.eventplanner.models.event.EventActivitiesDTO;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -37,4 +39,10 @@ public interface EventsService {
 
     @POST("events/agenda")
     Call<ArrayList<UUID>> createAgenda(@Body EventActivitiesDTO eventActivitiesDTO);
+
+    @GET("events/public")
+    Call<ArrayList<EventAdminDTO>> getPublicEvents();
+
+    @GET("events/{id}/pdf")
+    Call<ResponseBody> getPdfReport(@Path("id") UUID id);
 }
