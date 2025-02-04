@@ -91,5 +91,6 @@ public class ClientUtils {
     public static UsersService usersService = retrofit.create(UsersService.class);
     public static ListingReviewsService listingReviewsService = retrofit.create(ListingReviewsService.class);
     public static EventReviewsService eventReviewsService = retrofit.create(EventReviewsService.class);
+    public static GuestService guestService = retrofit.create(GuestService.class);
 }
 

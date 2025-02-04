@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.EventAdapter;
@@ -73,7 +74,8 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
         });
 
         binding.eventsRecyclerView.setAdapter(eventsViewModel.getEvents().isInitialized() && eventsViewModel.getEvents().getValue() != null ?
-                new EventAdapter(eventsViewModel.getEvents().getValue().getContent()) : new EventAdapter());
+                new EventAdapter(eventsViewModel.getEvents().getValue().getContent(), NavHostFragment.findNavController(this)) :
+                new EventAdapter(NavHostFragment.findNavController(this)));
 
         refreshEvents();
 

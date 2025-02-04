@@ -12,6 +12,7 @@ import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.event.EventActivitiesDTO;
 import com.wde.eventplanner.models.event.EventAdminDTO;
 import com.wde.eventplanner.models.event.EventComplexView;
+import com.wde.eventplanner.models.event.EventDetailedDTO;
 import com.wde.eventplanner.utils.FileManager;
 
 import java.io.File;
@@ -53,6 +54,28 @@ public class EventsViewModel extends ViewModel {
 
     public void clearErrorMessage() {
         errorMessage.setValue(null);
+    }
+
+    public LiveData<EventDetailedDTO> getEvent(UUID id, boolean isGuest, UUID guestId) {
+        MutableLiveData<EventDetailedDTO> eventLiveData = new MutableLiveData<>();
+
+        ClientUtils.eventsService.getEvent(id, isGuest, guestId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<EventDetailedDTO> call, @NonNull Response<EventDetailedDTO> response) {
+                if (response.isSuccessful()) {
+                    eventLiveData.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch service. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<EventDetailedDTO> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+
+        return eventLiveData;
     }
 
     public void fetchTopEvents() {

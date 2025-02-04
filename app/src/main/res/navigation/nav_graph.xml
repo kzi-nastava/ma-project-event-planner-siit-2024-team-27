@@ -183,6 +183,10 @@
         android:id="@+id/nav_product_detail_organizer"
         android:name="com.wde.eventplanner.fragments.organizer.ProductDetailFragment"
         tools:layout="@layout/fragment_organizer_product_detail" />
+    <fragment
+        android:id="@+id/nav_event_detail_organizer"
+        android:name="com.wde.eventplanner.fragments.organizer.EventDetailFragment"
+        tools:layout="@layout/fragment_organizer_event_detail" />
 
     <fragment
         android:id="@+id/nav_service_detail_seller"
@@ -194,6 +198,11 @@
         tools:layout="@layout/fragment_seller_product_detail" />
 
     <fragment
+        android:id="@+id/nav_event_detail_guest"
+        android:name="com.wde.eventplanner.fragments.guest.EventDetailFragment"
+        tools:layout="@layout/fragment_guest_event_detail" />
+
+    <fragment
         android:id="@+id/nav_service_detail_user"
         android:name="com.wde.eventplanner.fragments.common.ServiceDetailFragment"
         tools:layout="@layout/fragment_user_service_detail" />
@@ -201,4 +210,8 @@
         android:id="@+id/nav_product_detail_user"
         android:name="com.wde.eventplanner.fragments.common.ProductDetailFragment"
         tools:layout="@layout/fragment_user_product_detail" />
+    <fragment
+        android:id="@+id/nav_event_detail_user"
+        android:name="com.wde.eventplanner.fragments.common.EventDetailFragment"
+        tools:layout="@layout/fragment_user_event_detail" />
 </navigation>
