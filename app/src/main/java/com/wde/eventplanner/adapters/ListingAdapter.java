@@ -1,7 +1,7 @@
 package com.wde.eventplanner.adapters;
 
+import android.content.Context;
 import android.graphics.Paint;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,12 +10,10 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.wde.eventplanner.R;
-import com.wde.eventplanner.utils.TokenManager;
+import com.wde.eventplanner.utils.MenuManager;
 import com.wde.eventplanner.databinding.CardListingBinding;
 import com.wde.eventplanner.models.listing.Listing;
 import com.wde.eventplanner.models.listing.ListingType;
-import com.wde.eventplanner.models.user.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,20 +63,12 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
         holder.binding.listingCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", listing.getRating()));
 
         if (navController != null) {
-            Bundle bundle = new Bundle();
-            bundle.putString("staticId", listing.getId());
-            bundle.putInt("version", listing.getVersion());
-            UserRole role = TokenManager.getRole(holder.binding.getRoot().getContext());
-            holder.binding.cardView.setOnClickListener(v -> navController.navigate(getFragmentId(role, listing), bundle));
+            String id = listing.getId();
+            String type = listing.getType().toString();
+            String version = listing.getVersion().toString();
+            Context context = holder.binding.getRoot().getContext();
+            holder.binding.cardView.setOnClickListener(v -> MenuManager.navigateToFragment(type, id, version, context, navController));
         }
-    }
-
-    private static int getFragmentId(UserRole role, Listing listing) {
-        if (role == UserRole.ORGANIZER)
-            return listing.getType() == ListingType.SERVICE ? R.id.ServiceDetailOrganizerFragment : R.id.ProductDetailOrganizerFragment;
-        else if (role == UserRole.SELLER)
-            return listing.getType() == ListingType.SERVICE ? R.id.ServiceDetailSellerFragment : R.id.ProductDetailSellerFragment;
-        return listing.getType() == ListingType.SERVICE ? R.id.ServiceDetailUserFragment : R.id.ProductDetailUserFragment;
     }
 
     @Override

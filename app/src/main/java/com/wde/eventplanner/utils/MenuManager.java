@@ -50,9 +50,30 @@ public class MenuManager {
     }
 
     public static void navigateToFragment(String type, String entityId, Context context, NavController navController) {
-        UserRole role = TokenManager.getRole(context);
+        navigateToFragment(type, entityId, null, context, navController);
+    }
+
+    public static void navigateToFragment(String type, String entityId, String version, Context context, NavController navController) {
         Bundle bundle = new Bundle();
         type = type.toUpperCase();
+
+        if (type.equals("SERVICE") || type.equals("PRODUCT")) {
+            bundle.putString("staticId", entityId);
+            if (version != null && !version.isBlank())
+                bundle.putString("version", version);
+        }
+
+        if (type.equals("EVENT"))
+            bundle.putString("id", entityId);
+
+        UserRole role = TokenManager.getRole(context);
+        int fragmentId = getFragmentId(type, role);
+
+        if (fragmentId != -1)
+            navController.navigate(fragmentId, bundle);
+    }
+
+    private static int getFragmentId(String type, UserRole role) {
         int fragmentId = -1;
 
         if (role == UserRole.ORGANIZER) {
@@ -60,22 +81,26 @@ public class MenuManager {
                 fragmentId = R.id.nav_service_detail_organizer;
             else if (type.equals("PRODUCT"))
                 fragmentId = R.id.nav_product_detail_organizer;
+            else if (type.equals("EVENT"))
+                fragmentId = R.id.nav_event_detail_organizer;
         } else if (role == UserRole.SELLER) {
             if (type.equals("SERVICE"))
                 fragmentId = R.id.nav_service_detail_seller;
             else if (type.equals("PRODUCT"))
                 fragmentId = R.id.nav_product_detail_seller;
+            else if (type.equals("EVENT"))
+                fragmentId = R.id.nav_event_detail_user;
+        } else if (role == UserRole.GUEST && type.equals("EVENT")) {
+            fragmentId = R.id.nav_event_detail_guest;
         } else {
             if (type.equals("SERVICE"))
                 fragmentId = R.id.nav_service_detail_user;
             else if (type.equals("PRODUCT"))
                 fragmentId = R.id.nav_product_detail_user;
+            else if (type.equals("EVENT"))
+                fragmentId = R.id.nav_event_detail_user;
         }
 
-        if (type.equals("SERVICE") || type.equals("PRODUCT"))
-            bundle.putString("staticId", entityId);
-
-        if (fragmentId != -1)
-            navController.navigate(fragmentId, bundle);
+        return fragmentId;
     }
 }

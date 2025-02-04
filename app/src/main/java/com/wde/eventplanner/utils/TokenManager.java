@@ -21,6 +21,7 @@ public class TokenManager {
     private UUID profileId;
     private UserRole role;
     private String token;
+    private UUID userId;
 
     private TokenManager(Context context) {
         try {
@@ -41,14 +42,17 @@ public class TokenManager {
                 String payload = new String(Base64.getUrlDecoder().decode(parts[1]));
                 String role = new JSONObject(payload).getJSONArray("roles").get(0).toString();
                 String profileId = new JSONObject(payload).getString("profileId");
+                String userId = new JSONObject(payload).getString("userId");
                 this.role = UserRole.valueOf(role.toUpperCase());
                 this.profileId = UUID.fromString(profileId);
+                this.userId = UUID.fromString(userId);
                 return;
             }
         } catch (Exception ignored) {
         }
         this.role = UserRole.ANONYMOUS;
         this.profileId = null;
+        this.userId = null;
     }
 
     public static synchronized TokenManager getInstance(Context context) {
@@ -75,11 +79,16 @@ public class TokenManager {
         return getInstance(context).profileId;
     }
 
+    public static UUID getUserId(Context context) {
+        return getInstance(context).userId;
+    }
+
     public static void clearToken(Context context) {
         TokenManager instance = getInstance(context);
         instance.sharedPreferences.edit().remove("token").apply();
         instance.role = UserRole.ANONYMOUS;
         instance.profileId = null;
+        instance.userId = null;
         instance.token = null;
     }
 }

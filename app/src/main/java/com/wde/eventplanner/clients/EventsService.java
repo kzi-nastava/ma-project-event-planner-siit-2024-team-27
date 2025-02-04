@@ -5,6 +5,7 @@ import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.event.EventAdminDTO;
 import com.wde.eventplanner.models.event.EventComplexView;
 import com.wde.eventplanner.models.event.EventActivitiesDTO;
+import com.wde.eventplanner.models.event.EventDetailedDTO;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -45,4 +46,7 @@ public interface EventsService {
 
     @GET("events/{id}/pdf")
     Call<ResponseBody> getPdfReport(@Path("id") UUID id);
+
+    @GET("events/{id}/detailed-view/{isGuest}/{userId}")
+    Call<EventDetailedDTO> getEvent(@Path("id") UUID id, @Path("isGuest") boolean isGuest, @Path("userId") UUID userId);
 }
