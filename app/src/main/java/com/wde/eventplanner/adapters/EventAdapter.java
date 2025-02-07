@@ -1,6 +1,8 @@
 package com.wde.eventplanner.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -52,7 +54,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = events.get(position);
-        Picasso.get().load(event.getImages().get(0)).into(holder.binding.eventCardPicture);
+        if (!event.getImages().isEmpty())
+            Picasso.get().load(event.getImages().get(0)).into(holder.binding.eventCardPicture);
+        else
+            holder.binding.eventCardPicture.setImageDrawable(new ColorDrawable(Color.parseColor("#303030")));
         holder.binding.eventCardTitle.setText(event.getName());
         holder.binding.eventCardTime.setText(event.getTime().format(DateTimeFormatter.ofPattern("HH:mm")));
         holder.binding.eventCardDate.setText(event.getDate().format(DateTimeFormatter.ofPattern("d.M.yyyy.")));

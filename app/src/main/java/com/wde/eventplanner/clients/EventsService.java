@@ -1,6 +1,7 @@
 package com.wde.eventplanner.clients;
 
 import com.wde.eventplanner.models.Page;
+import com.wde.eventplanner.models.event.CreateEventDTO;
 import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.event.EventAdminDTO;
 import com.wde.eventplanner.models.event.EventComplexView;
@@ -10,11 +11,13 @@ import com.wde.eventplanner.models.event.EventDetailedDTO;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -37,6 +40,12 @@ public interface EventsService {
 
     @GET("events/{id}/my-events")
     Call<ArrayList<EventComplexView>> getEventsFromOrganizer(@Path("id") UUID id);
+
+    @POST("events")
+    Call<Event> createEvent(@Body CreateEventDTO createEventDTO);
+
+    @PUT("events/images")
+    Call<Void> putImages(@Body RequestBody body);
 
     @POST("events/agenda")
     Call<ArrayList<UUID>> createAgenda(@Body EventActivitiesDTO eventActivitiesDTO);
