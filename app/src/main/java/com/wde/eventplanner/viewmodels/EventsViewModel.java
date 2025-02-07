@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.wde.eventplanner.clients.ClientUtils;
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.AgendaItem;
+import com.wde.eventplanner.models.event.CreateEventDTO;
 import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.models.event.EventActivitiesDTO;
 import com.wde.eventplanner.models.event.EventAdminDTO;
@@ -18,8 +19,12 @@ import com.wde.eventplanner.utils.FileManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -174,6 +179,54 @@ public class EventsViewModel extends ViewModel {
             }
         });
         return ids;
+    }
+
+    public LiveData<Event> createEvent(CreateEventDTO createEventDTO) {
+        MutableLiveData<Event> event = new MutableLiveData<>();
+        ClientUtils.eventsService.createEvent(createEventDTO).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
+                if (response.isSuccessful()) {
+                    event.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to create event. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+        return event;
+    }
+
+    public LiveData<Response<Void>> putImages(List<File> imageFiles, UUID eventId) {
+        MutableLiveData<Response<Void>> responseMessage = new MutableLiveData<>();
+
+        MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("eventId", eventId.toString());
+
+        for (File imageFile : imageFiles) {
+            RequestBody fileRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+            requestBodyBuilder.addFormDataPart("images", imageFile.getName(), fileRequestBody);
+        }
+
+        ClientUtils.eventsService.putImages(requestBodyBuilder.build()).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                responseMessage.postValue(response);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                Response<Void> errorResponse = Response.error(500, ResponseBody.create(MediaType.parse("text/plain"), "Failed to add the image"));
+                responseMessage.postValue(errorResponse);
+            }
+        });
+
+        return responseMessage;
     }
 
     public LiveData<File> downloadReport(UUID eventId, String eventName) {

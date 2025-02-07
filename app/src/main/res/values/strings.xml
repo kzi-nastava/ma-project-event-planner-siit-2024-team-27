@@ -121,4 +121,8 @@
     <string name="_13_12_2024">13.12.2024</string>
     <string name="_4_5">4.5</string>
     <string name="sign_up">Sign Up</string>
+    <string name="type">Type</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="guest_count">Guest count</string>
 </resources>

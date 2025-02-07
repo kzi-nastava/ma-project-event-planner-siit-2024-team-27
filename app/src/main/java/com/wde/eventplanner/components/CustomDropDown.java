@@ -84,8 +84,12 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     }
 
     public void disableAutoComplete() {
+        disableAutoComplete(true);
+    }
+
+    public void disableAutoComplete(boolean disableBackground) {
         if (getAdapter() != null) ((DropdownAdapter<?>) getAdapter()).ignoreFiltering = true;
-        setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+        if (disableBackground) setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
         setInputType(InputType.TYPE_NULL);
         isAutoCompleteDisabled = true;
         setCursorVisible(false);
