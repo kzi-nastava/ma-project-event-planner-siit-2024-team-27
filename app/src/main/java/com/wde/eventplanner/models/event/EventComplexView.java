@@ -1,6 +1,7 @@
 package com.wde.eventplanner.models.event;
 
 import com.wde.eventplanner.models.productBudgetItem.ProductBudgetItemDTO;
+import com.wde.eventplanner.models.serviceBudgetItem.ServiceBudgetItem;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,7 +30,6 @@ public class EventComplexView {
     private Double longitude;
     private Double latitude;
     private List<ProductBudgetItemDTO> productBudgetItems;
-//    private List<ServiceBudgetItem> serviceBudgetItems; // todo when service buying is added
-//    private List<String> images; // todo image service
-    // todo: event activities
+    private List<ServiceBudgetItem> serviceBudgetItems;
+    private List<String> images;
 }

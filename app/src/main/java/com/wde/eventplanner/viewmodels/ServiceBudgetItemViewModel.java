@@ -90,4 +90,34 @@ public class ServiceBudgetItemViewModel extends ViewModel {
 
         return success;
     }
+
+    public void updateServiceBudgetItem(ServiceBudgetItem serviceBudgetItem) {
+        ClientUtils.serviceBudgetItemService.updateServiceBudgetItem(serviceBudgetItem.getId(), serviceBudgetItem.getMaxPrice()).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (!response.isSuccessful())
+                    errorMessage.postValue("Failed to update service budget item. Code: " + response.code());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void deleteServiceBudgetItem(ServiceBudgetItem serviceBudgetItem) {
+        ClientUtils.serviceBudgetItemService.deleteServiceBudgetItem(serviceBudgetItem.getEventId(), serviceBudgetItem.getServiceCategoryId()).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (!response.isSuccessful())
+                    errorMessage.postValue("Failed to delete service budget item. Code: " + response.code());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
 }

@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CreateEventDTO {
+    private UUID eventId;
     private String name;
     private String description;
     private String city;

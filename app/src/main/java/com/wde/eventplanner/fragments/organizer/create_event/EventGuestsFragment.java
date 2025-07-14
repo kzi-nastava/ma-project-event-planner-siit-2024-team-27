@@ -31,19 +31,21 @@ public class EventGuestsFragment extends Fragment implements ViewPagerAdapter.Ha
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentEventGuestsBinding.inflate(inflater, container, false);
-        createEventViewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
-        invitationsViewModel = new ViewModelProvider(requireActivity()).get(InvitationsViewModel.class);
+        if (binding == null) {
+            binding = FragmentEventGuestsBinding.inflate(inflater, container, false);
+            createEventViewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
+            invitationsViewModel = new ViewModelProvider(requireActivity()).get(InvitationsViewModel.class);
 
-        binding.guestListEmailInput.setOnEditorActionListener(this::onEmailInputEditorAction);
-        binding.guestListInviteButton.setOnClickListener((v) -> addGuest());
-        binding.pdfButton.setOnClickListener((v) -> downloadPdf());
+            binding.guestListEmailInput.setOnEditorActionListener(this::onEmailInputEditorAction);
+            binding.guestListInviteButton.setOnClickListener((v) -> addGuest());
+            binding.pdfButton.setOnClickListener((v) -> downloadPdf());
 
-        binding.guestList.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
-        binding.guestList.addItemDecoration(new ItemDividerDecoration(getContext(), getResources()));
-        binding.guestList.setAdapter(new GuestListAdapter(createEventViewModel.guestList));
-        if (createEventViewModel.guestList.isEmpty())
-            binding.guestList.setVisibility(View.GONE);
+            binding.guestList.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+            binding.guestList.addItemDecoration(new ItemDividerDecoration(getContext(), getResources()));
+            binding.guestList.setAdapter(new GuestListAdapter(createEventViewModel.guestList));
+            if (createEventViewModel.guestList.isEmpty())
+                binding.guestList.setVisibility(View.GONE);
+        }
 
         return binding.getRoot();
     }
@@ -90,7 +92,7 @@ public class EventGuestsFragment extends Fragment implements ViewPagerAdapter.Ha
     }
 
     private void downloadPdf() {
-        // download pdf
+        // todo download pdf
     }
 
     @Override

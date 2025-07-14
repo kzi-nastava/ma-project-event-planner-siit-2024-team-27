@@ -24,23 +24,25 @@ public class EventAgendaFragment extends Fragment implements ViewPagerAdapter.Ha
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentEventAgendaBinding.inflate(inflater, container, false);
-        createEventViewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
+        if (binding == null) {
+            binding = FragmentEventAgendaBinding.inflate(inflater, container, false);
+            createEventViewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
 
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
-        binding.recyclerView.setNestedScrollingEnabled(false);
+            binding.recyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+            binding.recyclerView.setNestedScrollingEnabled(false);
 
-        binding.addButton.setOnClickListener(v -> {
-            if (createEventViewModel.agendaItems.stream().allMatch(AgendaItem::isFilled)) {
-                createEventViewModel.agendaItems.add(new AgendaItem());
-                RecyclerView.Adapter<?> adapter = binding.recyclerView.getAdapter();
-                if (adapter != null)
-                    adapter.notifyItemChanged(createEventViewModel.agendaItems.size() - 1);
-            } else
-                SingleToast.show(requireContext(), "Fill out all previous items!");
-        });
+            binding.addButton.setOnClickListener(v -> {
+                if (createEventViewModel.agendaItems.stream().allMatch(AgendaItem::isFilled)) {
+                    createEventViewModel.agendaItems.add(new AgendaItem());
+                    RecyclerView.Adapter<?> adapter = binding.recyclerView.getAdapter();
+                    if (adapter != null)
+                        adapter.notifyItemChanged(createEventViewModel.agendaItems.size() - 1);
+                } else
+                    SingleToast.show(requireContext(), "Fill out all previous items!");
+            });
 
-        binding.recyclerView.setAdapter(new AgendaItemAdapter(createEventViewModel.agendaItems, getParentFragmentManager()));
+            binding.recyclerView.setAdapter(new AgendaItemAdapter(createEventViewModel.agendaItems, getParentFragmentManager()));
+        }
 
         return binding.getRoot();
     }

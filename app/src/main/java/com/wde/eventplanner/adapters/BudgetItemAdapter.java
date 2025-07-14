@@ -17,6 +17,7 @@ import com.wde.eventplanner.models.listingCategory.ListingCategory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.BudgetItemViewHolder> {
     public interface BudgetItemAdapterCallback {
@@ -50,7 +51,7 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
         CustomDropDown<ListingCategory> categoryDropdown = holder.binding.categoryDropdown;
         CustomDropDown<ListingType> typeDropdown = holder.binding.typeDropdown;
 
-        holder.binding.budgetTextbox.setText("");
+        holder.binding.budgetTextbox.setText(budgetItem.getMaxPrice() != null ? budgetItem.getMaxPrice().toString() : "");
 
         typeDropdown.clearItems();
 
@@ -81,6 +82,19 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
             budgetItemAdapterCallback.changeFilter();
             categoryDropdown.setEnabled(true);
         });
+
+        if (budgetItem.getListingType() != null) {
+            typeDropdown.setText(budgetItem.getListingType().toString());
+            budgetItemAdapterCallback.changeFilter();
+            categoryDropdown.setEnabled(true);
+        }
+
+        if (budgetItem.getListingCategoryId() != null) {
+            IntStream.range(0, listingCategories.size())
+                    .filter(i -> listingCategories.get(i).getId().equals(budgetItem.getListingCategoryId()))
+                    .findFirst().ifPresent(categoryDropdown::setSelected);
+            budgetItemAdapterCallback.changeFilter();
+        }
 
         if (holder.textWatcher != null)
             holder.binding.budgetTextbox.removeTextChangedListener(holder.textWatcher);
