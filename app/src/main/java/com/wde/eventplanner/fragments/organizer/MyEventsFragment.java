@@ -27,6 +27,7 @@ import com.wde.eventplanner.databinding.FragmentMyEventsBinding;
 import com.wde.eventplanner.fragments.common.homepage.all_events.EventFilterDialogFragment;
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.event.Event;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 
 import java.time.ZoneId;
@@ -38,7 +39,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyEventsFragment extends Fragment implements EventFilterDialogFragment.EventsFilterListener {
-    private String searchTerms, category, city, after, before, minRating, maxRating;
+    private String searchTerms, category, city, after, before, minRating, maxRating, profileId;
     private final AtomicInteger selectedPosition = new AtomicInteger(0);
     private final AtomicBoolean orderDesc = new AtomicBoolean(true);
     private FragmentMyEventsBinding binding;
@@ -81,6 +82,8 @@ public class MyEventsFragment extends Fragment implements EventFilterDialogFragm
         binding.eventsRecyclerView.setAdapter(eventsViewModel.getEvents().isInitialized() && eventsViewModel.getEvents().getValue() != null ?
                 new EventAdapter(eventsViewModel.getEvents().getValue().getContent(), NavHostFragment.findNavController(this)) :
                 new EventAdapter(NavHostFragment.findNavController(this)));
+
+        profileId = String.valueOf(TokenManager.getProfileId(binding.getRoot().getContext()));
 
         refreshEvents();
 
@@ -141,14 +144,14 @@ public class MyEventsFragment extends Fragment implements EventFilterDialogFragm
 
     private void refreshEvents() {
         String order = orderDesc.get() ? "desc" : "asc";
-        eventsViewModel.fetchEvents(searchTerms, city, category, after, before, minRating, maxRating, selectedValue, order, currentPage.toString(), "10");
+        eventsViewModel.fetchEvents(searchTerms, city, category, after, before, minRating, maxRating, selectedValue, order, currentPage.toString(), "10", profileId);
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private void eventsChanged(Page<Event> events) {
         if (binding.eventsRecyclerView.getAdapter() != null) {
             totalPages = events.getTotalPages();
-            binding.pageTextView.setText(String.format(Locale.ENGLISH, "%d / %d", currentPage + 1, totalPages));
+            binding.pageTextView.setText(String.format(Locale.ENGLISH, "%d / %d", currentPage + 1, Math.max(totalPages, 1)));
             EventAdapter adapter = (EventAdapter) binding.eventsRecyclerView.getAdapter();
             ArrayList<Event> eventsTmp = new ArrayList<>(events.getContent());
             adapter.events.clear();

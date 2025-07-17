@@ -17,7 +17,15 @@ import com.google.android.material.tabs.TabLayout;
 import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.databinding.FragmentCreateEventBinding;
+import com.wde.eventplanner.models.event.ListingBudgetItemDTO;
+import com.wde.eventplanner.models.productBudgetItem.ProductBudgetItemDTO;
+import com.wde.eventplanner.models.serviceBudgetItem.ServiceBudgetItem;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.CreateEventViewModel;
+import com.wde.eventplanner.viewmodels.EventsViewModel;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class CreateEventFragment extends Fragment {
     private FragmentCreateEventBinding binding;
@@ -27,7 +35,30 @@ public class CreateEventFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCreateEventBinding.inflate(inflater, container, false);
 
-        (new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class)).clearAllData();
+        try {
+            CreateEventViewModel createEventViewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
+            createEventViewModel.clearAllData();
+
+            EventsViewModel viewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
+            String eventId = requireArguments().getString("id");
+            String organizerId = TokenManager.getUserId(requireContext()).toString();
+
+            viewModel.fetchEventFromOrganizer(organizerId, eventId).observe(getViewLifecycleOwner(), (eventComplexView -> {
+                createEventViewModel.event = eventComplexView;
+                createEventViewModel.budgetItems.addAll(
+                        eventComplexView.getProductBudgetItems().stream().map(ProductBudgetItemDTO::toListingBudgetItem).collect(Collectors.toList())
+                );
+                createEventViewModel.budgetItems.addAll(
+                        eventComplexView.getServiceBudgetItems().stream().map(ServiceBudgetItem::toListingBudgetItem).collect(Collectors.toList())
+                );
+                createEventViewModel.originalBudgetItems = createEventViewModel.budgetItems.stream().map(ListingBudgetItemDTO::new).collect(Collectors.toCollection(ArrayList::new));
+                viewModel.fetchAgenda(eventId).observe(getViewLifecycleOwner(), (agendaItems ->
+                        createEventViewModel.agendaItems = agendaItems));
+            }));
+
+        } catch (Exception ignored) {
+        }
+
         binding.tabLayout.addOnTabSelectedListener(new OnTabSelectedListener());
         binding.getRoot().setOnTouchListener(this::dispatchTouchEvent);
         binding.viewPager.setOnTouchListener(this::dispatchTouchEvent);

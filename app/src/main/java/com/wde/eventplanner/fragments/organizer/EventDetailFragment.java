@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,7 +54,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
         boolean isGuest = TokenManager.getRole(requireContext()) == UserRole.GUEST;
         eventsViewModel.getEvent(UUID.fromString(id), isGuest, TokenManager.getUserId(requireContext()))
-                .observe(getViewLifecycleOwner(), this::populateServiceData);
+                .observe(getViewLifecycleOwner(), this::populateEventData);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) mapFragment.getMapAsync(this);
@@ -62,9 +63,17 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         return binding.getRoot();
     }
 
-    private void populateServiceData(EventDetailedDTO event) {
+    private void populateEventData(EventDetailedDTO event) {
         binding.pdfButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName())
                 .observe(getViewLifecycleOwner(), file -> FileManager.openPdf(requireContext(), file)));
+
+        binding.deleteButton.setOnClickListener(v -> {
+            eventsViewModel.deleteEvent(event.getId(), TokenManager.getUserId(binding.getRoot().getContext()));
+            requireActivity().getSupportFragmentManager().popBackStack();
+        });
+
+        binding.editButton.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.CreateEventFragment, requireArguments()));
 
         binding.eventTitle.setText(event.getName());
         binding.organizerName.setText(event.getOrganizerCredentials());

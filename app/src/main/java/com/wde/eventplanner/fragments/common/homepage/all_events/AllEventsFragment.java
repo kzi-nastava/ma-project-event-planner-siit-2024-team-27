@@ -136,14 +136,14 @@ public class AllEventsFragment extends Fragment implements EventFilterDialogFrag
 
     private void refreshEvents() {
         String order = orderDesc.get() ? "desc" : "asc";
-        eventsViewModel.fetchEvents(searchTerms, city, category, after, before, minRating, maxRating, selectedValue, order, currentPage.toString(), "10");
+        eventsViewModel.fetchEvents(searchTerms, city, category, after, before, minRating, maxRating, selectedValue, order, currentPage.toString(), "10", null);
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private void eventsChanged(Page<Event> events) {
         if (binding.eventsRecyclerView.getAdapter() != null) {
             totalPages = events.getTotalPages();
-            binding.pageTextView.setText(String.format(Locale.ENGLISH, "%d / %d", currentPage + 1, totalPages));
+            binding.pageTextView.setText(String.format(Locale.ENGLISH, "%d / %d", currentPage + 1, Math.max(totalPages, 1)));
             EventAdapter adapter = (EventAdapter) binding.eventsRecyclerView.getAdapter();
             ArrayList<Event> eventsTmp = new ArrayList<>(events.getContent());
             adapter.events.clear();

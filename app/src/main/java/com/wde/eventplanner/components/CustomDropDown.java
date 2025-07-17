@@ -100,7 +100,7 @@ public class CustomDropDown<T> extends MaterialAutoCompleteTextView {
     }
 
     @SuppressWarnings("unchecked")
-    public void onDropdownItemClicked(AdapterView<?> parent, View v, int position, long id) {
+    private void onDropdownItemClicked(AdapterView<?> parent, View v, int position, long id) {
         selected = (CustomDropDownItem<T>) parent.getItemAtPosition(position);
         if (callback != null) callback.accept(selected.value);
     }

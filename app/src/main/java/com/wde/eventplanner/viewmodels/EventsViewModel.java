@@ -83,6 +83,26 @@ public class EventsViewModel extends ViewModel {
         return eventLiveData;
     }
 
+    public void deleteEvent(UUID id, UUID userId) {
+        MutableLiveData<String> responseBody = new MutableLiveData<>();
+
+        ClientUtils.eventsService.deleteEvent(id, userId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if (response.isSuccessful()) {
+                    responseBody.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to delete event. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
+
     public void fetchTopEvents() {
         ClientUtils.eventsService.getTopEvents().enqueue(new Callback<>() {
             @Override
@@ -120,13 +140,13 @@ public class EventsViewModel extends ViewModel {
     }
 
     public void fetchEvents() {
-        fetchEvents(null, null, null, null, null, null, null, null, null, null, null);
+        fetchEvents(null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     public void fetchEvents(String searchTerms, String city, String category, String dateRangeStart, String dateRangeEnd,
-                            String minRating, String maxRating, String sortBy, String order, String page, String size) {
+                            String minRating, String maxRating, String sortBy, String order, String page, String size, String organizerId) {
         ClientUtils.eventsService.getEvents(searchTerms, city, category, dateRangeStart,
-                dateRangeEnd, minRating, maxRating, sortBy, order, page, size).enqueue(new Callback<>() {
+                dateRangeEnd, minRating, maxRating, sortBy, order, page, size, organizerId).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Page<Event>> call, @NonNull Response<Page<Event>> response) {
                 if (response.isSuccessful()) {
@@ -161,9 +181,53 @@ public class EventsViewModel extends ViewModel {
         });
     }
 
+    public LiveData<EventComplexView> fetchEventFromOrganizer(String organizerId, String eventId) {
+        MutableLiveData<EventComplexView> eventComplexViewData = new MutableLiveData<>();
+
+        ClientUtils.eventsService.getEventFromOrganizer(UUID.fromString(organizerId), UUID.fromString(eventId)).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<EventComplexView> call, @NonNull Response<EventComplexView> response) {
+                if (response.isSuccessful()) {
+                    eventComplexViewData.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch event. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<EventComplexView> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+
+        return eventComplexViewData;
+    }
+
+    public LiveData<ArrayList<AgendaItem>> fetchAgenda(String eventId) {
+        MutableLiveData<ArrayList<AgendaItem>> agendaItems = new MutableLiveData<>();
+
+        ClientUtils.eventsService.getAgenda(UUID.fromString(eventId)).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<AgendaItem>> call, @NonNull Response<ArrayList<AgendaItem>> response) {
+                if (response.isSuccessful()) {
+                    agendaItems.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch agenda items. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<AgendaItem>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+
+        return agendaItems;
+    }
+
     public LiveData<ArrayList<UUID>> createAgenda(ArrayList<AgendaItem> agendaItems) {
         MutableLiveData<ArrayList<UUID>> ids = new MutableLiveData<>();
-        ClientUtils.eventsService.createAgenda(new EventActivitiesDTO(agendaItems)).enqueue(new Callback<>() {
+        ClientUtils.eventsService.createAgenda(new EventActivitiesDTO(agendaItems, null)).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UUID>> call, @NonNull Response<ArrayList<UUID>> response) {
                 if (response.isSuccessful()) {
@@ -179,6 +243,25 @@ public class EventsViewModel extends ViewModel {
             }
         });
         return ids;
+    }
+
+    public LiveData<Void> updateAgenda(ArrayList<AgendaItem> agendaItems, UUID eventId) {
+        MutableLiveData<Void> done = new MutableLiveData<>();
+        ClientUtils.eventsService.updateAgenda(new EventActivitiesDTO(agendaItems, eventId)).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful())
+                    done.postValue(null);
+                else
+                    errorMessage.postValue("Failed to update agenda. Code: " + response.code());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+        return done;
     }
 
     public LiveData<Event> createEvent(CreateEventDTO createEventDTO) {
@@ -199,6 +282,25 @@ public class EventsViewModel extends ViewModel {
             }
         });
         return event;
+    }
+
+    public LiveData<Void> updateEvent(CreateEventDTO createEventDTO) {
+        MutableLiveData<Void> done = new MutableLiveData<>();
+        ClientUtils.eventsService.updateEvent(createEventDTO).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful())
+                    done.postValue(null);
+                 else
+                    errorMessage.postValue("Failed to create event. Code: " + response.code());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+        return done;
     }
 
     public LiveData<Response<Void>> putImages(List<File> imageFiles, UUID eventId) {

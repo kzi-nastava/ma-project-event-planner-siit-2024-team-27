@@ -17,6 +17,7 @@ import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentEventBudgetBinding;
 import com.wde.eventplanner.models.event.ListingBudgetItemDTO;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
+import com.wde.eventplanner.viewmodels.CreateEventViewModel;
 import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 
 import java.util.ArrayList;
@@ -24,44 +25,45 @@ import java.util.Locale;
 
 public class EventBudgetFragment extends Fragment implements ViewPagerAdapter.HasTitle, BudgetItemAdapter.BudgetItemAdapterCallback {
     private FragmentEventBudgetBinding binding;
-    private ListingCategoriesViewModel listingCategoriesViewModel;
+    private CreateEventViewModel createEventViewModel;
     private ArrayList<ListingBudgetItemDTO> budgetItems;
-    private ArrayList<ListingCategory> listingCategories;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentEventBudgetBinding.inflate(inflater, container, false);
+        createEventViewModel = new ViewModelProvider(requireActivity()).get(CreateEventViewModel.class);
+        budgetItems = createEventViewModel.budgetItems;
 
-        budgetItems = new ArrayList<>();
+        if (binding == null) {
+            binding = FragmentEventBudgetBinding.inflate(inflater, container, false);
 
-        ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
-        listingCategoriesViewModel = viewModelProvider.get(ListingCategoriesViewModel.class);
-        listingCategoriesViewModel.fetchActiveListingCategories();
+            ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
+            ListingCategoriesViewModel listingCategoriesViewModel = viewModelProvider.get(ListingCategoriesViewModel.class);
+            listingCategoriesViewModel.fetchActiveListingCategories();
 
-        // todo temp event id, when other steps are over, put it in the constructor and pass it here
-        RecommendedCategoriesDialog recommendedCategoriesDialog = new RecommendedCategoriesDialog("a8b8d5b9-d1b2-47e1-b5a6-3efac3b6b832");
-        binding.recommendedCategoriesButton.setOnClickListener(
-                v -> recommendedCategoriesDialog.show(getParentFragmentManager(), "recommendedCategoriesDialog"));
+            binding.recommendedCategoriesButton.setOnClickListener(
+                    v -> new RecommendedCategoriesDialog(createEventViewModel.eventTypeId)
+                            .show(getParentFragmentManager(), "recommendedCategoriesDialog"));
 
-        binding.listingBudgetItemsRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
-        binding.listingBudgetItemsRecyclerView.setNestedScrollingEnabled(false);
+            binding.listingBudgetItemsRecyclerView.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
+            binding.listingBudgetItemsRecyclerView.setNestedScrollingEnabled(false);
 
-        binding.addCategoryButton.setOnClickListener(v -> {
-            if (budgetItems
-                    .stream()
-                    .allMatch(pbi -> pbi.getListingCategoryId() != null &&
-                            pbi.getListingType() != null &&
-                            pbi.getMaxPrice() != null)) {
-                budgetItems.add(new ListingBudgetItemDTO());
-                binding.listingBudgetItemsRecyclerView.getAdapter().notifyItemChanged(budgetItems.size() - 1);
+            binding.addCategoryButton.setOnClickListener(v -> {
+                if (budgetItems
+                        .stream()
+                        .allMatch(pbi -> pbi.getListingCategoryId() != null &&
+                                pbi.getListingType() != null &&
+                                pbi.getMaxPrice() != null)) {
+                    budgetItems.add(new ListingBudgetItemDTO());
+                    binding.listingBudgetItemsRecyclerView.getAdapter().notifyItemChanged(budgetItems.size() - 1);
 
-            } else {
-                SingleToast.show(requireContext(), "Fill out all previous items");
-            }
-        });
+                } else {
+                    SingleToast.show(requireContext(), "Fill out all previous items");
+                }
+            });
 
-        listingCategoriesViewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), (activeCategories) ->
-            binding.listingBudgetItemsRecyclerView.setAdapter(new BudgetItemAdapter(budgetItems, activeCategories, this)));
+            listingCategoriesViewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), (activeCategories) ->
+                    binding.listingBudgetItemsRecyclerView.setAdapter(new BudgetItemAdapter(budgetItems, activeCategories, this)));
+        }
 
         return binding.getRoot();
     }
@@ -99,6 +101,8 @@ public class EventBudgetFragment extends Fragment implements ViewPagerAdapter.Ha
                 );
             }
         }
+
+        totalAmount();
     }
 
     @Override
