@@ -28,7 +28,7 @@ import com.wde.eventplanner.R;
 import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentRegistrationSellerBinding;
-import com.wde.eventplanner.models.user.RegistrationRequest;
+import com.wde.eventplanner.models.user.Profile;
 import com.wde.eventplanner.utils.FileManager;
 import com.wde.eventplanner.viewmodels.UsersViewModel;
 
@@ -83,7 +83,7 @@ public class RegistrationSellerFragment extends Fragment {
 
     private void registerSeller() {
         if (binding.inputName.getText() == null || binding.inputSurname.getText() == null || binding.inputEmail.getText() == null || binding.inputPassword.getText() == null || binding.inputRepeatPassword.getText() == null ||
-                binding.inputCompanyName.getText() == null || binding.inputPhone.getText() == null || binding.inputDescription.getText() == null || binding.inputAddress.getText() == null) {
+                binding.inputPhone.getText() == null || binding.inputDescription.getText() == null || binding.inputAddress.getText() == null) {
             SingleToast.show(requireContext(), "Error occurred, please try again!");
             return;
         }
@@ -93,14 +93,13 @@ public class RegistrationSellerFragment extends Fragment {
         String email = binding.inputEmail.getText().toString().trim();
         String password = binding.inputPassword.getText().toString().trim();
         String repeatPassword = binding.inputRepeatPassword.getText().toString().trim();
-        String companyName = binding.inputCompanyName.getText().toString().trim();
         String phone = binding.inputPhone.getText().toString().trim();
         String description = binding.inputDescription.getText().toString().trim();
         String address = binding.inputAddress.getText().toString().trim();
         String city = (String) binding.inputCity.getSelected();
 
         // Input Validation
-        if (name.isBlank() || surname.isBlank() || email.isBlank() || password.isBlank() || repeatPassword.isBlank() || companyName.isBlank() || city == null || city.isBlank()) {
+        if (name.isBlank() || surname.isBlank() || email.isBlank() || password.isBlank() || repeatPassword.isBlank() || city == null || city.isBlank()) {
             SingleToast.show(requireContext(), "Please fill in all the required fields");
             return;
         }
@@ -145,7 +144,7 @@ public class RegistrationSellerFragment extends Fragment {
             return;
         }
 
-        RegistrationRequest request = new RegistrationRequest(email, password, true, false, "SELLER", name, surname, city, address, phone); // todo companyName and description
+        Profile request = new Profile(email, password, true, false, "SELLER", name, surname, city, address, phone, description);
         viewModel.register(request).observe(getViewLifecycleOwner(), response -> {
             if (response.isBlank())
                 SingleToast.show(requireContext(), "There is an existing account with the same email.");

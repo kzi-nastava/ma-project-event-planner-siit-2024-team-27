@@ -12,6 +12,10 @@
         android:icon="@drawable/ic_storefront"
         android:title="@string/my_listings" />
     <item
+        android:id="@+id/nav_calendar_seller"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/calendar" />
+    <item
         android:id="@+id/nav_notifications"
         android:icon="@drawable/ic_notifications"
         android:title="@string/notifications" />

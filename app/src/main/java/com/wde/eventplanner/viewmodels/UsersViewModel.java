@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
-import com.wde.eventplanner.models.user.RegistrationRequest;
+import com.wde.eventplanner.models.user.Profile;
 import com.wde.eventplanner.models.user.Token;
 import com.wde.eventplanner.models.user.User;
 
@@ -40,10 +40,10 @@ public class UsersViewModel extends ViewModel {
         return token;
     }
 
-    public LiveData<String> register(RegistrationRequest registrationRequest) {
+    public LiveData<String> register(Profile profile) {
         MutableLiveData<String> responseMessage = new MutableLiveData<>();
 
-        ClientUtils.usersService.register(registrationRequest).enqueue(new Callback<>() {
+        ClientUtils.usersService.register(profile).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                 responseMessage.postValue(response.isSuccessful() ? response.body() : "");
@@ -56,6 +56,60 @@ public class UsersViewModel extends ViewModel {
         });
 
         return responseMessage;
+    }
+
+    public LiveData<Profile> update(UUID id, Profile profile) {
+        MutableLiveData<Profile> responseMessage = new MutableLiveData<>();
+
+        ClientUtils.usersService.update(id, profile).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                responseMessage.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                responseMessage.postValue(null);
+            }
+        });
+
+        return responseMessage;
+    }
+
+    public LiveData<Profile> get(UUID id) {
+        MutableLiveData<Profile> responseMessage = new MutableLiveData<>();
+
+        ClientUtils.usersService.get(id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Profile> call, @NonNull Response<Profile> response) {
+                responseMessage.postValue(response.body());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Profile> call, @NonNull Throwable t) {
+                responseMessage.postValue(null);
+            }
+        });
+
+        return responseMessage;
+    }
+
+    public LiveData<Void> delete(UUID id) {
+        MutableLiveData<Void> done = new MutableLiveData<>();
+
+        ClientUtils.usersService.delete(id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                done.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                done.postValue(null);
+            }
+        });
+
+        return done;
     }
 
     public LiveData<Response<String>> putImage(File imageFile, UUID profileId) {

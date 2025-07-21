@@ -72,11 +72,15 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         boolean isGuest = TokenManager.getRole(requireContext()) == UserRole.GUEST;
         UUID userId = TokenManager.getUserId(requireContext());
         userId = userId != null ? userId : UUID.randomUUID();
-        eventsViewModel.getEvent(UUID.fromString(id), isGuest, userId)
-                .observe(getViewLifecycleOwner(), this::populateServiceData);
+        eventsViewModel.getEvent(UUID.fromString(id), isGuest, userId).observe(getViewLifecycleOwner(), this::populateEventData);
+        binding.favouriteButton.setOnClickListener(v -> {
+            guestsViewModel.setEventFavourite(TokenManager.getUserId(requireContext()), id).observe(getViewLifecycleOwner(), x -> fetchEvent());
+        });
     }
 
-    private void populateServiceData(EventDetailedDTO event) {
+    private void populateEventData(EventDetailedDTO event) {
+        binding.favouriteButton.setIconResource(event.getIsFavorite() ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite);
+
         binding.pdfButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName())
                 .observe(getViewLifecycleOwner(), file -> FileManager.openPdf(requireContext(), file)));
 

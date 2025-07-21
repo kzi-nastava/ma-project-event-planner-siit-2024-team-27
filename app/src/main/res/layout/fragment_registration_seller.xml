@@ -141,34 +141,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/repeatPasswordLayout" />
 
-        <!-- Company Name -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/companyNameLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:hint="@string/company_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/companyInfoLabel">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputCompanyName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <!-- Phone -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phoneLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:hint="@string/phone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/companyNameLayout">
+            app:layout_constraintTop_toBottomOf="@id/companyInfoLabel">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputPhone"

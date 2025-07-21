@@ -11,7 +11,7 @@ def getIpAddress() {
 
 android {
     namespace 'com.wde.eventplanner'
-    compileSdk 34
+    compileSdk 36
 
     viewBinding {
         enabled = true
@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "com.wde.eventplanner"
         minSdk 30
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
         buildConfigField "String", "IP_ADDR", "\"" + getIpAddress() + "\""
@@ -69,4 +69,5 @@ dependencies {
     implementation libs.converter.gson
     implementation libs.logging.interceptor
     implementation libs.play.services.maps
+    implementation libs.material.calendar.view
 }

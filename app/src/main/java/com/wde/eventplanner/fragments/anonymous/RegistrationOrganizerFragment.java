@@ -28,7 +28,7 @@ import com.wde.eventplanner.R;
 import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.databinding.FragmentRegistrationOrganizerBinding;
-import com.wde.eventplanner.models.user.RegistrationRequest;
+import com.wde.eventplanner.models.user.Profile;
 import com.wde.eventplanner.utils.FileManager;
 import com.wde.eventplanner.viewmodels.UsersViewModel;
 
@@ -138,7 +138,7 @@ public class RegistrationOrganizerFragment extends Fragment {
             return;
         }
 
-        RegistrationRequest request = new RegistrationRequest(email, password, true, false, "EVENTORGANIZER", name, surname, city, address, phone);
+        Profile request = new Profile(email, password, true, false, "EVENTORGANIZER", name, surname, city, address, phone, null);
         viewModel.register(request).observe(getViewLifecycleOwner(), response -> {
             if (response.isBlank())
                 SingleToast.show(requireContext(), "There is an existing account with the same email.");

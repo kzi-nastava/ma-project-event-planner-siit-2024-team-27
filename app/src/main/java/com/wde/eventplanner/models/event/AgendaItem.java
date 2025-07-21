@@ -1,5 +1,7 @@
 package com.wde.eventplanner.models.event;
 
+import java.util.UUID;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AgendaItem {
+    private UUID id;
     private String name;
     private String description;
     private String startTime;

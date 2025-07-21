@@ -21,5 +21,6 @@ public class EventDetailedDTO {
     private Double averageRating;
     private List<String> images;
     private String organizerCredentials;
+    private Boolean isFavorite;
     private boolean isAccepted;
 }
