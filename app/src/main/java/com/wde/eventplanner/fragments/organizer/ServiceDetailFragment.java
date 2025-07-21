@@ -11,11 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.CommentAdapter;
 import com.wde.eventplanner.adapters.ImageAdapter;
 import com.wde.eventplanner.databinding.FragmentOrganizerServiceDetailBinding;
 import com.wde.eventplanner.models.Comment;
+import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.services.Service;
+import com.wde.eventplanner.utils.TokenManager;
+import com.wde.eventplanner.viewmodels.EventOrganizerViewModel;
 import com.wde.eventplanner.viewmodels.ServicesViewModel;
 
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ public class ServiceDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOrganizerServiceDetailBinding.inflate(inflater, container, false);
         ServicesViewModel servicesViewModel = new ViewModelProvider(requireActivity()).get(ServicesViewModel.class);
+        EventOrganizerViewModel eventOrganizerViewModel = new ViewModelProvider(requireActivity()).get(EventOrganizerViewModel.class);
 
         String staticId = requireArguments().getString("staticId");
         int version = requireArguments().getInt("version");
@@ -38,6 +43,17 @@ public class ServiceDetailFragment extends Fragment {
 
         servicesViewModel.getService().observe(getViewLifecycleOwner(), this::populateServiceData);
         servicesViewModel.fetchService(staticId);
+
+        eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.SERVICE, staticId).observe(getViewLifecycleOwner(), isFavourte ->
+                binding.favouriteButton.setIconResource(isFavourte ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)
+        );
+
+        binding.favouriteButton.setOnClickListener(v -> {
+            eventOrganizerViewModel.setListingFavourite(TokenManager.getUserId(requireContext()), ListingType.SERVICE, staticId).observe(getViewLifecycleOwner(), x ->
+                    eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.SERVICE, staticId).observe(getViewLifecycleOwner(), isFavourte ->
+                            binding.favouriteButton.setIconResource(isFavourte ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)
+                    ));
+        });
 
         return binding.getRoot();
     }

@@ -30,6 +30,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wde.eventplanner.R;
+import com.wde.eventplanner.models.user.UserRole;
 import com.wde.eventplanner.services.NotificationService;
 import com.wde.eventplanner.utils.MenuManager;
 import com.wde.eventplanner.utils.SingleToast;
@@ -51,13 +52,22 @@ public class MainActivity extends AppCompatActivity {
             R.id.nav_homepage,
             R.id.nav_events,
             R.id.nav_market,
+            R.id.nav_favourite_listings,
+            R.id.nav_favourite_events,
             R.id.nav_my_listings,
             R.id.nav_my_events,
             R.id.nav_notifications,
+            R.id.nav_calendar_guest,
+            R.id.nav_calendar_organizer,
+            R.id.nav_calendar_seller,
             R.id.nav_event_types,
             R.id.nav_listing_categories,
             R.id.nav_reviews,
             R.id.nav_statistics,
+            R.id.nav_admin_profile,
+            R.id.nav_organizer_profile,
+            R.id.nav_seller_profile,
+            R.id.nav_guest_profile,
             R.id.nav_login
     };
 
@@ -94,12 +104,19 @@ public class MainActivity extends AppCompatActivity {
                     binding.loginButton.setSelected(true);
                 else if (destination.getId() != R.id.nav_close)
                     binding.loginButton.setSelected(false);
+
+                if (destination.getId() == R.id.nav_admin_profile || destination.getId() == R.id.nav_organizer_profile ||
+                        destination.getId() == R.id.nav_seller_profile || destination.getId() == R.id.nav_guest_profile)
+                    binding.profileButton.setSelected(true);
+                else if (destination.getId() != R.id.nav_close)
+                    binding.profileButton.setSelected(false);
             });
 
             binding.navigationView.setNavigationItemSelectedListener(item -> {
                 if (item.getItemId() != R.id.nav_close) {
                     if (notCurrent(navController, item.getItemId()))
                         navController.navigate(item.getItemId());
+                    binding.profileButton.setSelected(false);
                     binding.loginButton.setSelected(false);
                 }
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
@@ -117,6 +134,25 @@ public class MainActivity extends AppCompatActivity {
                 TokenManager.clearToken(this);
                 MenuManager.adjustMenu(this);
                 NotificationService.unsubscribe();
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+            });
+
+            binding.profileButton.setOnClickListener(view -> {
+                UserRole role = TokenManager.getRole(this);
+                int profileFragment;
+
+                if (role == UserRole.ADMIN)
+                    profileFragment = R.id.nav_admin_profile;
+                else if (role == UserRole.ORGANIZER)
+                    profileFragment = R.id.nav_organizer_profile;
+                else if (role == UserRole.SELLER)
+                    profileFragment = R.id.nav_seller_profile;
+                else
+                    profileFragment = R.id.nav_guest_profile;
+
+                if (notCurrent(navController, profileFragment))
+                    navController.navigate(profileFragment);
+                binding.profileButton.setSelected(true);
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             });
 

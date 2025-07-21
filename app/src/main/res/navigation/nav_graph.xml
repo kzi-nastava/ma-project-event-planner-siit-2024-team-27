@@ -45,6 +45,26 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_organizer_profile"
+        android:name="com.wde.eventplanner.fragments.organizer.ProfileFragment"
+        tools:layout="@layout/fragment_organizer_profile" />
+
+    <fragment
+        android:id="@+id/nav_seller_profile"
+        android:name="com.wde.eventplanner.fragments.seller.ProfileFragment"
+        tools:layout="@layout/fragment_seller_profile" />
+
+    <fragment
+        android:id="@+id/nav_guest_profile"
+        android:name="com.wde.eventplanner.fragments.guest.ProfileFragment"
+        tools:layout="@layout/fragment_guest_profile" />
+
+    <fragment
+        android:id="@+id/nav_admin_profile"
+        android:name="com.wde.eventplanner.fragments.admin.ProfileFragment"
+        tools:layout="@layout/fragment_admin_profile" />
+
+    <fragment
         android:id="@+id/nav_login"
         android:name="com.wde.eventplanner.fragments.anonymous.LoginFragment"
         tools:layout="@layout/fragment_login">
@@ -158,6 +178,28 @@
         android:id="@+id/nav_notifications"
         android:name="com.wde.eventplanner.fragments.common.notifications.NotificationsFragment"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/nav_calendar_guest"
+        android:name="com.wde.eventplanner.fragments.guest.CalendarFragment"
+        tools:layout="@layout/fragment_calendar_events" />
+    <fragment
+        android:id="@+id/nav_calendar_organizer"
+        android:name="com.wde.eventplanner.fragments.organizer.CalendarFragment"
+        tools:layout="@layout/fragment_calendar_events" />
+    <fragment
+        android:id="@+id/nav_calendar_seller"
+        android:name="com.wde.eventplanner.fragments.seller.calendar.CalendarFragment"
+        tools:layout="@layout/fragment_calendar_services" />
+
+    <fragment
+        android:id="@+id/nav_favourite_listings"
+        android:name="com.wde.eventplanner.fragments.organizer.FavouriteListingsFragment"
+        tools:layout="@layout/fragment_favourite_listings" />
+    <fragment
+        android:id="@+id/nav_favourite_events"
+        android:name="com.wde.eventplanner.fragments.guest.FavouriteEventsFragment"
+        tools:layout="@layout/fragment_favourite_events" />
     <fragment
         android:id="@+id/nav_event_types"
         android:name="com.wde.eventplanner.fragments.admin.event_categories.EventTypesFragment"
