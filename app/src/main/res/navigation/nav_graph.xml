@@ -129,6 +129,18 @@
         <argument
             android:name="version"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_ProductDetailSellerFragment_to_EditProductFragment"
+            app:destination="@id/EditProductFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EditProductFragment"
+        android:name="com.wde.eventplanner.fragments.seller.edit_listing.EditProductFragment"
+        tools:layout="@layout/fragment_edit_product">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
     </fragment>
 
     <fragment

@@ -73,28 +73,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/productCategoryLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            app:endIconDrawable="@drawable/ic_down_arrow"
-            app:endIconMode="custom"
-            app:endIconTint="@color/pale_text"
-            app:expandedHintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/discountLayout"
-            app:placeholderText="@string/category">
-
-            <com.wde.eventplanner.components.CustomDropDown
-                android:id="@+id/inputProductCategory"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:imeOptions="actionNext"
-                android:paddingHorizontal="16dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/eventCategoriesLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -105,7 +83,7 @@
             app:expandedHintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/productCategoryLayout"
+            app:layout_constraintTop_toBottomOf="@id/discountLayout"
             app:placeholderText="@string/event_types">
 
             <com.wde.eventplanner.components.MultiDropDown
@@ -184,46 +162,6 @@
                 android:minLines="4" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/suggestionCategoryLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="@string/category_suggestion"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/descriptionLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputSuggestionCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/categoryDescriptionLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:enabled="false"
-            android:hint="@string/category_suggestion_description"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/suggestionCategoryLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputCategoryDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:imeOptions="actionNext"
-                android:inputType="textMultiLine"
-                android:minHeight="80dp"
-                android:minLines="2" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/images"
             android:layout_width="match_parent"
@@ -231,15 +169,15 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/categoryDescriptionLayout" />
+            app:layout_constraintTop_toBottomOf="@id/descriptionLayout" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/createButton"
+            android:id="@+id/editButton"
             style="@style/CustomAccentButtonStyle"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="24dp"
-            android:text="@string/create_product"
+            android:text="@string/edit_product"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/images" />

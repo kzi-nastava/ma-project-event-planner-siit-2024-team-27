@@ -45,8 +45,7 @@ public class ProductDetailFragment extends Fragment {
             // todo chat
         });
 
-        productsViewModel.getProduct().observe(getViewLifecycleOwner(), this::populateProductData);
-        productsViewModel.fetchProduct(staticId);
+        productsViewModel.getProduct(staticId).observe(getViewLifecycleOwner(), this::populateProductData);
 
         return binding.getRoot();
     }

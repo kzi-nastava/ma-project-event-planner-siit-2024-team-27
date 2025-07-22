@@ -41,11 +41,15 @@ public class ProductDetailFragment extends Fragment {
 
         binding.editButton.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.CreateListingFragment);
+            navController.navigate(R.id.EditProductFragment, requireArguments());
         });
 
-        productsViewModel.getProduct().observe(getViewLifecycleOwner(), this::populateProductData);
-        productsViewModel.fetchProduct(staticId);
+        binding.deleteButton.setOnClickListener(v -> {
+            productsViewModel.deleteProduct(staticId).observe(getViewLifecycleOwner(),
+                    x -> requireActivity().getSupportFragmentManager().popBackStack());
+        });
+
+        productsViewModel.getProduct(staticId).observe(getViewLifecycleOwner(), this::populateProductData);
 
         return binding.getRoot();
     }
