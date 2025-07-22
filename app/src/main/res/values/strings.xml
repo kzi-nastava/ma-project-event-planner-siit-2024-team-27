@@ -141,4 +141,8 @@
     <string name="category_suggestion">Category suggestion</string>
     <string name="edit_service">Edit service</string>
     <string name="edit_product">Edit product</string>
+    <string name="update">Update</string>
+    <string name="catalogue">Catalogue</string>
+    <string name="final_price">Final price</string>
+    <string name="original_price">Original price</string>
 </resources>
