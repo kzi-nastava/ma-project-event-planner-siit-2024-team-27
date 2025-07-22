@@ -6,10 +6,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
+import com.wde.eventplanner.models.products.CatalogueProduct;
+import com.wde.eventplanner.models.products.UpdateCatalogueProduct;
+import com.wde.eventplanner.models.services.CatalogueService;
 import com.wde.eventplanner.models.services.EditServiceDTO;
 import com.wde.eventplanner.models.services.Service;
+import com.wde.eventplanner.models.services.UpdateCatalogueService;
+import com.wde.eventplanner.utils.FileManager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +25,7 @@ import java.util.UUID;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -198,5 +205,71 @@ public class ServicesViewModel extends ViewModel {
             }
         });
         return done;
+    }
+
+    public LiveData<ArrayList<CatalogueService>> getCatalogue(String id) {
+        MutableLiveData<ArrayList<CatalogueService>> catalogue = new MutableLiveData<>();
+        ClientUtils.servicesService.getCatalogue(id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<CatalogueService>> call, @NonNull Response<ArrayList<CatalogueService>> response) {
+                if (response.isSuccessful()) {
+                    catalogue.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch catalogue. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<CatalogueService>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+        return catalogue;
+    }
+
+    public LiveData<Void> updateCatalogue(String id, ArrayList<CatalogueService> catalogue) {
+        MutableLiveData<Void> done = new MutableLiveData<>();
+        ClientUtils.servicesService.updateCatalogue(id, new UpdateCatalogueService(catalogue)).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    done.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to update catalogue. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+        return done;
+    }
+
+    public LiveData<File> downloadCatalogue(String id) {
+        MutableLiveData<File> file = new MutableLiveData<>();
+        ClientUtils.servicesService.getPdfCatalogue(id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try (ResponseBody responseBody = response.body()) {
+                        if (responseBody != null) {
+                            String fileName = "service_catalogue.pdf";
+                            file.postValue(FileManager.saveFileToDownloads(responseBody.byteStream(), fileName));
+                        } else
+                            errorMessage.postValue("Failed to retrieve PDF. Response body is null.");
+                    } catch (IOException e) {
+                        errorMessage.postValue("Failed to save pdf catalogue. Error: " + e.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                errorMessage.postValue("Failed to download pdf catalogue. Code: " + t.getMessage());
+            }
+        });
+        return file;
     }
 }

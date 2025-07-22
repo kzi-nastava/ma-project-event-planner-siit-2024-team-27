@@ -1,15 +1,20 @@
 package com.wde.eventplanner.clients;
 
+import com.wde.eventplanner.models.services.CatalogueService;
 import com.wde.eventplanner.models.services.EditServiceDTO;
 import com.wde.eventplanner.models.services.Service;
+import com.wde.eventplanner.models.services.UpdateCatalogueService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -36,4 +41,13 @@ public interface ServicesService {
 
     @DELETE("services/{id}")
     Call<Void> deleteService(@Path("id") String id);
+
+    @GET("services/{id}/my-services/catalogue")
+    Call<ArrayList<CatalogueService>> getCatalogue(@Path("id") String id);
+
+    @POST("services/{id}/update-catalogue")
+    Call<Void> updateCatalogue(@Path("id") String id, @Body UpdateCatalogueService catalogue);
+
+    @GET("services/{id}/catalogue-pdf")
+    Call<ResponseBody> getPdfCatalogue(@Path("id") String id);
 }
