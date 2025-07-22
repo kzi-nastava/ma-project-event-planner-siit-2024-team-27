@@ -142,7 +142,7 @@ public class AllListingsFragment extends Fragment implements ListingFilterDialog
 
     private void refreshEvents() {
         String order = orderDesc.get() ? "desc" : "asc";
-        listingsViewModel.fetchListings(searchTerms, type, category, minPrice, maxPrice, minRating, maxRating, selectedValue, order, currentPage.toString(), "10");
+        listingsViewModel.fetchListings(searchTerms, type, category, minPrice, maxPrice, minRating, maxRating, selectedValue, order, currentPage, 10);
     }
 
     @SuppressLint("NotifyDataSetChanged")

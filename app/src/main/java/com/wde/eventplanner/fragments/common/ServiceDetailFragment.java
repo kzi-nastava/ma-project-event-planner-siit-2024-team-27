@@ -45,8 +45,7 @@ public class ServiceDetailFragment extends Fragment {
             // todo chat
         });
 
-        servicesViewModel.getService().observe(getViewLifecycleOwner(), this::populateServiceData);
-        servicesViewModel.fetchService(staticId);
+        servicesViewModel.getService(staticId).observe(getViewLifecycleOwner(), this::populateServiceData);
 
         return binding.getRoot();
     }

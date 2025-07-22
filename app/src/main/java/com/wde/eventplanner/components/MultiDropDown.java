@@ -4,8 +4,6 @@ import static com.wde.eventplanner.utils.CustomGraphicUtils.dp2px;
 import static com.wde.eventplanner.utils.CustomGraphicUtils.hideKeyboard;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.text.InputType;
 import android.util.AttributeSet;
@@ -65,7 +63,6 @@ public class MultiDropDown<T> extends MaterialAutoCompleteTextView {
         setOnClickListener(v -> showDropDown());
         setOnItemClickListener(this::onDropdownItemClicked);
         setDropDownVerticalOffset(dp2px(getResources(), 1));
-        setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
         setOnFocusChangeListener((v, hasFocus) -> {
             hideKeyboard(getContext(), this);
             if (hasFocus) showDropDown();

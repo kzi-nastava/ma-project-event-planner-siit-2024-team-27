@@ -1,10 +1,8 @@
-package com.wde.eventplanner.fragments.seller.create_listing;
+package com.wde.eventplanner.fragments.seller.edit_listing;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,40 +13,38 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.ImageDeletableAdapter;
-import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.components.CustomDropDown;
 import com.wde.eventplanner.components.MultiDropDown;
-import com.wde.eventplanner.databinding.FragmentCreateServiceBinding;
+import com.wde.eventplanner.databinding.FragmentEditServiceBinding;
 import com.wde.eventplanner.models.event.EventType;
-import com.wde.eventplanner.models.listing.ListingType;
-import com.wde.eventplanner.models.listingCategory.ListingCategory;
+import com.wde.eventplanner.models.services.EditServiceDTO;
 import com.wde.eventplanner.utils.FileManager;
 import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
-import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 import com.wde.eventplanner.viewmodels.ServicesViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.HasTitle {
+public class EditServiceFragment extends Fragment {
     private final ArrayList<Uri> images = new ArrayList<>();
-    private FragmentCreateServiceBinding binding;
     private ServicesViewModel servicesViewModel;
+    private FragmentEditServiceBinding binding;
+    private String staticId;
 
     @Override
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ListingCategoriesViewModel listingCategoriesViewModel = new ViewModelProvider(requireActivity()).get(ListingCategoriesViewModel.class);
         EventTypesViewModel eventTypesViewModel = new ViewModelProvider(requireActivity()).get(EventTypesViewModel.class);
         servicesViewModel = new ViewModelProvider(requireActivity()).get(ServicesViewModel.class);
-        binding = FragmentCreateServiceBinding.inflate(inflater, container, false);
+        binding = FragmentEditServiceBinding.inflate(inflater, container, false);
+        staticId = requireArguments().getString("staticId");
 
         binding.getRoot().setOnTouchListener((v, event) -> {
             binding.inputConfirmationType.onTouchOutsideDropDown(v, event);
-            binding.inputServiceCategory.onTouchOutsideDropDown(v, event);
             binding.inputAvailability.onTouchOutsideDropDown(v, event);
             binding.inputVisibility.onTouchOutsideDropDown(v, event);
             binding.inputEventTypes.onTouchOutsideDropDown(v, event);
@@ -73,49 +69,14 @@ public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.
         CustomDropDown<Boolean> publicDropdown = binding.inputVisibility;
         binding.inputVisibility.disableAutoComplete(false);
         publicDropdown.setItems(new ArrayList<>(List.of(
-                new CustomDropDown.CustomDropDownItem<>("Public", false),
-                new CustomDropDown.CustomDropDownItem<>("Private", true))));
-
-        binding.inputSuggestionCategory.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if (s.toString().isEmpty()) {
-                    binding.serviceCategoryLayout.setEnabled(true);
-                    binding.categoryDescriptionLayout.setEnabled(false);
-                } else {
-                    binding.serviceCategoryLayout.setEnabled(false);
-                    binding.categoryDescriptionLayout.setEnabled(true);
-                }
-            }
-        });
+                new CustomDropDown.CustomDropDownItem<>("Private", true),
+                new CustomDropDown.CustomDropDownItem<>("Public", false))));
 
         binding.images.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.images.setAdapter(new ImageDeletableAdapter(this, images));
         binding.images.setNestedScrollingEnabled(false);
 
-        binding.createButton.setOnClickListener(v -> createService());
-
-        listingCategoriesViewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), categories -> {
-            @SuppressWarnings("unchecked")
-            CustomDropDown<ListingCategory> categoryDropdown = binding.inputServiceCategory;
-            categories = categories.stream().filter(c -> c.getListingType() == ListingType.SERVICE).collect(Collectors.toCollection(ArrayList::new));
-            categoryDropdown.changeValues(categories, ListingCategory::getName);
-        });
-        listingCategoriesViewModel.getErrorMessage().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) {
-                SingleToast.show(requireContext(), error);
-                listingCategoriesViewModel.clearErrorMessage();
-            }
-        });
-        listingCategoriesViewModel.fetchActiveListingCategories();
+        binding.editButton.setOnClickListener(v -> editService());
 
         eventTypesViewModel.getEventTypes().observe(getViewLifecycleOwner(), types -> {
             @SuppressWarnings("unchecked")
@@ -130,19 +91,33 @@ public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.
         });
         eventTypesViewModel.fetchEventTypes();
 
+        servicesViewModel.getEditService(staticId).observe(getViewLifecycleOwner(), this::populateServiceData);
+        servicesViewModel.getService(staticId).observe(getViewLifecycleOwner(), s -> {
+            FileManager.downloadImagesToLocal(requireContext(), s.getImages(), images, (ImageDeletableAdapter) binding.images.getAdapter());
+        });
+
         return binding.getRoot();
     }
 
-    @Override
-    public String getTitle() {
-        return "Service";
+    private void populateServiceData(EditServiceDTO service) {
+        binding.inputName.setText(service.getName());
+        binding.inputAvailability.setSelected(service.getIsAvailable() ? 0 : 1);
+        binding.inputPrice.setText(String.format(Locale.US, "%d", service.getPrice().intValue()));
+        binding.inputDiscount.setText(String.format(Locale.US, "%d", Double.valueOf(100 * service.getSalePercentage()).intValue()));
+        binding.inputReservationPeriod.setText(String.format(Locale.US, "%d", service.getReservationDeadline()));
+        binding.inputCancellationPeriod.setText(String.format(Locale.US, "%d", service.getCancellationDeadline()));
+        binding.inputConfirmationType.setSelected(service.getIsConfirmationManual() ? 0 : 1);
+        binding.inputVisibility.setSelected(service.getIsPrivate() ? 0 : 1);
+        binding.inputMinDuration.setText(String.format(Locale.US, "%d", service.getMinimumDuration()));
+        binding.inputMaxDuration.setText(String.format(Locale.US, "%d", service.getMaximumDuration()));
+        binding.inputDescription.setText(service.getDescription());
+        //event types
     }
 
-    public void createService() {
-        if (binding.inputName.getText() == null || binding.inputDescription.getText() == null || binding.inputSuggestionCategory.getText() == null
-                || binding.inputCategoryDescription.getText() == null || binding.inputPrice.getText() == null || binding.inputDiscount.getText() == null
-                || binding.inputReservationPeriod.getText() == null || binding.inputCancellationPeriod.getText() == null || binding.inputMinDuration.getText() == null
-                || binding.inputMaxDuration.getText() == null) {
+    public void editService() {
+        if (binding.inputName.getText() == null || binding.inputDescription.getText() == null || binding.inputPrice.getText() == null
+                || binding.inputDiscount.getText() == null || binding.inputReservationPeriod.getText() == null || binding.inputCancellationPeriod.getText() == null
+                || binding.inputMinDuration.getText() == null || binding.inputMaxDuration.getText() == null) {
             SingleToast.show(requireContext(), "Error occurred, please try again!");
             return;
         }
@@ -152,18 +127,12 @@ public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.
         Boolean isConfirmationManual = (Boolean) binding.inputConfirmationType.getSelected();
         Boolean isPrivate = (Boolean) binding.inputVisibility.getSelected();
         String description = binding.inputDescription.getText().toString().trim();
-        String suggestedCategory = binding.inputSuggestionCategory.getText().toString().trim();
-        String suggestedCategoryDescription = binding.inputCategoryDescription.getText().toString().trim();
 
-        @SuppressWarnings("unchecked")
-        CustomDropDown<ListingCategory> categoryDropdown = binding.inputServiceCategory;
-        String serviceCategoryId = categoryDropdown.getSelected() == null ? null : categoryDropdown.getSelected().getId();
         @SuppressWarnings("unchecked")
         ArrayList<EventType> availableEventTypes = binding.inputEventTypes.getSelected();
 
         // Input Validation
         if (name.isBlank() || isAvailable == null || isConfirmationManual == null || isPrivate == null || description.isBlank()
-                || ((serviceCategoryId == null || serviceCategoryId.isBlank()) && (suggestedCategory.isBlank() || suggestedCategoryDescription.isBlank()))
                 || availableEventTypes == null || availableEventTypes.isEmpty()) {
             SingleToast.show(requireContext(), "Please fill in all the required fields");
             return;
@@ -194,9 +163,8 @@ public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.
             imageFiles = null;
         }
 
-        servicesViewModel.createService(imageFiles, name, isAvailable, price, salePercentage, serviceCategoryId, reservationDeadline,
-                cancellationDeadline, isConfirmationManual, isPrivate, minimumDuration, maximumDuration, description, suggestedCategory,
-                suggestedCategoryDescription, availableEventTypeIds).observe(getViewLifecycleOwner(), service -> {
+        servicesViewModel.updateService(imageFiles, staticId, name, isAvailable, price, salePercentage, reservationDeadline, cancellationDeadline, isConfirmationManual,
+                isPrivate, minimumDuration, maximumDuration, description, availableEventTypeIds).observe(getViewLifecycleOwner(), service -> {
             getParentFragmentManager().popBackStack();
         });
     }
