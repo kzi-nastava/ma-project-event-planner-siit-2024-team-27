@@ -24,6 +24,7 @@ import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
 import com.wde.eventplanner.utils.FileManager;
 import com.wde.eventplanner.utils.SingleToast;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.EventTypesViewModel;
 import com.wde.eventplanner.viewmodels.ListingCategoriesViewModel;
 import com.wde.eventplanner.viewmodels.ServicesViewModel;
@@ -185,6 +186,11 @@ public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.
             return;
         }
 
+        if (salePercentage > 1) {
+            SingleToast.show(requireContext(), "Discount must be smaller than 100%");
+            return;
+        }
+
         ArrayList<File> imageFiles = new ArrayList<>();
         try {
             for (Uri image : images)
@@ -194,9 +200,14 @@ public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.
             imageFiles = null;
         }
 
-        servicesViewModel.createService(imageFiles, name, isAvailable, price, salePercentage, serviceCategoryId, reservationDeadline,
-                cancellationDeadline, isConfirmationManual, isPrivate, minimumDuration, maximumDuration, description, suggestedCategory,
-                suggestedCategoryDescription, availableEventTypeIds).observe(getViewLifecycleOwner(), service -> {
+        if (suggestedCategory.isBlank())
+            suggestedCategoryDescription = "";
+        else
+            serviceCategoryId = "";
+
+        servicesViewModel.createService(imageFiles, TokenManager.getUserId(binding.getRoot().getContext()), name, isAvailable, price, salePercentage,
+                serviceCategoryId, reservationDeadline, cancellationDeadline, isConfirmationManual, isPrivate, minimumDuration, maximumDuration, description,
+                suggestedCategory, suggestedCategoryDescription, availableEventTypeIds).observe(getViewLifecycleOwner(), service -> {
             getParentFragmentManager().popBackStack();
         });
     }

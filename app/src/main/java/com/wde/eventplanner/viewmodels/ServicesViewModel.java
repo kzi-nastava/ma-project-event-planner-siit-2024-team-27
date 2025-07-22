@@ -82,7 +82,7 @@ public class ServicesViewModel extends ViewModel {
         return RequestBody.create(value, MediaType.parse("text/plain"));
     }
 
-    public LiveData<Service> createService(List<File> images, String name, Boolean isAvailable, Double price, Double salePercentage, String serviceCategoryId,
+    public LiveData<Service> createService(List<File> images, UUID sellerId, String name, Boolean isAvailable, Double price, Double salePercentage, String serviceCategoryId,
                                            Integer reservationDeadline, Integer cancellationDeadline, Boolean isConfirmationManual, Boolean isPrivate,
                                            Integer minimumDuration, Integer maximumDuration, String description, String suggestedCategory,
                                            String suggestedCategoryDescription, List<String> availableEventTypeIds) {
@@ -94,6 +94,7 @@ public class ServicesViewModel extends ViewModel {
             for (File file : images)
                 fileParts.add(MultipartBody.Part.createFormData("images", file.getName(), RequestBody.create(file, MediaType.parse("image/*"))));
 
+        put(fields, "sellerId", sellerId);
         put(fields, "name", name);
         put(fields, "isAvailable", isAvailable);
         put(fields, "price", price);
@@ -110,8 +111,8 @@ public class ServicesViewModel extends ViewModel {
         put(fields, "suggestedCategoryDescription", suggestedCategoryDescription);
 
         if (availableEventTypeIds != null)
-            for (String id : availableEventTypeIds)
-                fields.put("availableEventTypeIds", toRB(id));
+            for (int i = 0; i < availableEventTypeIds.size(); i++)
+                fields.put("availableEventTypeIds[" + i + "]", toRB(availableEventTypeIds.get(i)));
 
         ClientUtils.servicesService.createService(fileParts, fields).enqueue(new Callback<>() {
             @Override
@@ -157,8 +158,8 @@ public class ServicesViewModel extends ViewModel {
         put(fields, "description", description);
 
         if (availableEventTypeIds != null)
-            for (String id : availableEventTypeIds)
-                fields.put("availableEventTypeIds", toRB(id));
+            for (int i = 0; i < availableEventTypeIds.size(); i++)
+                fields.put("availableEventTypeIds[" + i + "]", toRB(availableEventTypeIds.get(i)));
 
         ClientUtils.servicesService.updateService(fileParts, fields).enqueue(new Callback<>() {
             @Override
@@ -166,7 +167,7 @@ public class ServicesViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     service.postValue(response.body());
                 } else {
-                    errorMessage.postValue("Failed to create service. Code: " + response.code());
+                    errorMessage.postValue("Failed to update service. Code: " + response.code());
                 }
             }
 

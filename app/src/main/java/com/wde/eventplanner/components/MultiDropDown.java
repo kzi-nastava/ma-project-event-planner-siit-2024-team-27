@@ -55,6 +55,17 @@ public class MultiDropDown<T> extends MaterialAutoCompleteTextView {
         updateSelection();
     }
 
+    @SuppressWarnings("unchecked")
+    public void setSelected(Function<T, Boolean> isSelected) {
+        selectedItems.clear();
+        MultiDropdownAdapter<?> adapter = ((MultiDropdownAdapter<?>) getAdapter());
+        adapter.items.forEach(item -> {
+            if (isSelected.apply((T) item.value))
+                selectedItems.add((MultiDropDownItem<T>) item);
+        });
+        updateSelection();
+    }
+
     private void setUp() {
         setThreshold(0);
         setSaveEnabled(false);

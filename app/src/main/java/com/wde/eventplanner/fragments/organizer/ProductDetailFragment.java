@@ -41,8 +41,7 @@ public class ProductDetailFragment extends Fragment {
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.comments.setNestedScrollingEnabled(false);
 
-        productsViewModel.getProduct().observe(getViewLifecycleOwner(), this::populateProductData);
-        productsViewModel.fetchProduct(staticId);
+        productsViewModel.getProduct(staticId).observe(getViewLifecycleOwner(), this::populateProductData);
 
         eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.PRODUCT, staticId).observe(getViewLifecycleOwner(), isFavourte ->
                 binding.favouriteButton.setIconResource(isFavourte ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)
