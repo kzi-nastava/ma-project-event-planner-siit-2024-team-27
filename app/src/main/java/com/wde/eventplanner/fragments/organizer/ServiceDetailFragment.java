@@ -41,8 +41,7 @@ public class ServiceDetailFragment extends Fragment {
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.comments.setNestedScrollingEnabled(false);
 
-        servicesViewModel.getService().observe(getViewLifecycleOwner(), this::populateServiceData);
-        servicesViewModel.fetchService(staticId);
+        servicesViewModel.getService(staticId).observe(getViewLifecycleOwner(), this::populateServiceData);
 
         eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.SERVICE, staticId).observe(getViewLifecycleOwner(), isFavourte ->
                 binding.favouriteButton.setIconResource(isFavourte ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)

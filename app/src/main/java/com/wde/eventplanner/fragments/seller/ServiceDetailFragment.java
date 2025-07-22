@@ -41,11 +41,15 @@ public class ServiceDetailFragment extends Fragment {
 
         binding.editButton.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.CreateListingFragment);
+            navController.navigate(R.id.EditServiceFragment, requireArguments());
         });
 
-        servicesViewModel.getService().observe(getViewLifecycleOwner(), this::populateServiceData);
-        servicesViewModel.fetchService(staticId);
+        binding.deleteButton.setOnClickListener(v -> {
+            servicesViewModel.deleteService(staticId).observe(getViewLifecycleOwner(),
+                    x -> requireActivity().getSupportFragmentManager().popBackStack());
+        });
+
+        servicesViewModel.getService(staticId).observe(getViewLifecycleOwner(), this::populateServiceData);
 
         return binding.getRoot();
     }

@@ -27,10 +27,12 @@ import com.wde.eventplanner.databinding.FragmentMyListingsBinding;
 import com.wde.eventplanner.fragments.common.homepage.all_listings.ListingFilterDialogFragment;
 import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;
+import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.ListingsViewModel;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -43,11 +45,13 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
     private String selectedValue = "name";
     private Integer currentPage = 0;
     private Integer totalPages;
+    private UUID userId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyListingsBinding.inflate(inflater, container, false);
         ViewModelProvider viewModelProvider = new ViewModelProvider(requireActivity());
+        userId = TokenManager.getUserId(binding.getRoot().getContext());
 
         binding.createListingButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.CreateListingFragment));
 
@@ -79,7 +83,7 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
                 new ListingAdapter(listingsViewModel.getListings().getValue().getContent(), NavHostFragment.findNavController(this)) :
                 new ListingAdapter(NavHostFragment.findNavController(this)));
 
-        refreshEvents();
+        refreshListings();
 
         return binding.getRoot();
     }
@@ -91,7 +95,7 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
             orderDesc.set(!value.equals(selectedValue) || !orderDesc.get());
             selectedPosition.set(position);
             selectedValue = value;
-            refreshEvents();
+            refreshListings();
         }
 
         @Override
@@ -101,12 +105,12 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
 
     private void onClickPrevious(View v) {
         currentPage = Math.max(0, currentPage - 1);
-        refreshEvents();
+        refreshListings();
     }
 
     private void onClickNext(View v) {
         currentPage = Math.min(totalPages - 1, currentPage + 1);
-        refreshEvents();
+        refreshListings();
     }
 
     private boolean onSearchInputEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -117,7 +121,7 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
                 searchTerms = !searchTerms.isBlank() ? searchTerms : null;
             }
             hideKeyboard(requireContext(), binding.getRoot());
-            refreshEvents();
+            refreshListings();
             return true;
         }
         return false;
@@ -130,12 +134,12 @@ public class MyListingsFragment extends Fragment implements ListingFilterDialogF
         this.maxPrice = maxPrice;
         this.minRating = minRating;
         this.maxRating = maxRating;
-        refreshEvents();
+        refreshListings();
     }
 
-    private void refreshEvents() {
+    private void refreshListings() {
         String order = orderDesc.get() ? "desc" : "asc";
-        listingsViewModel.fetchListings(searchTerms, type, category, minPrice, maxPrice, minRating, maxRating, selectedValue, order, "0", "10");
+        listingsViewModel.fetchListings(userId, searchTerms, type, category, minPrice, maxPrice, minRating, maxRating, selectedValue, order, currentPage, 10);
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -10,6 +10,7 @@ import com.wde.eventplanner.models.Page;
 import com.wde.eventplanner.models.listing.Listing;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,7 +60,7 @@ public class ListingsViewModel extends ViewModel {
     }
 
     public void fetchListings(String searchTerms, String type, String category, String minPrice, String maxPrice,
-                              String minRating, String maxRating, String sortBy, String order, String page, String size) {
+                              String minRating, String maxRating, String sortBy, String order, Integer page, Integer size) {
         ClientUtils.listingsService.getListings(searchTerms, type, category, minPrice, maxPrice,
                 minRating, maxRating, sortBy, order, page, size).enqueue(new Callback<>() {
             @Override
@@ -68,6 +69,26 @@ public class ListingsViewModel extends ViewModel {
                     listingsLiveData.postValue(response.body());
                 } else {
                     errorMessage.postValue("Failed to fetch listings. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Page<Listing>> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void fetchListings(UUID sellerId, String searchTerms, String type, String category, String minPrice, String maxPrice,
+                              String minRating, String maxRating, String sortBy, String order, Integer page, Integer size) {
+        ClientUtils.listingsService.getListings(sellerId, searchTerms, type, category, minPrice, maxPrice,
+                minRating, maxRating, sortBy, order, page, size).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Page<Listing>> call, @NonNull Response<Page<Listing>> response) {
+                if (response.isSuccessful()) {
+                    listingsLiveData.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch sellers listings. Code: " + response.code());
                 }
             }
 

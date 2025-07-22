@@ -115,6 +115,9 @@
         <argument
             android:name="version"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_ServiceDetailSellerFragment_to_EditServiceFragment"
+            app:destination="@id/EditServiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/ProductDetailSellerFragment"
@@ -126,6 +129,15 @@
         <argument
             android:name="version"
             app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EditServiceFragment"
+        android:name="com.wde.eventplanner.fragments.seller.edit_listing.EditServiceFragment"
+        tools:layout="@layout/fragment_edit_service">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
     </fragment>
 
     <fragment

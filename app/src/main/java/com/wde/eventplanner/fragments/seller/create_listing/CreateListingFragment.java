@@ -12,16 +12,13 @@ import com.wde.eventplanner.adapters.ViewPagerAdapter;
 import com.wde.eventplanner.databinding.FragmentCreateListingBinding;
 
 public class CreateListingFragment extends Fragment {
-    private FragmentCreateListingBinding binding;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentCreateListingBinding.inflate(inflater, container, false);
+        FragmentCreateListingBinding binding = FragmentCreateListingBinding.inflate(inflater, container, false);
 
         binding.viewPager.setAdapter(new ViewPagerAdapter<>(getParentFragmentManager(), new CreateProductFragment(), new CreateServiceFragment()));
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
         return binding.getRoot();
     }
-
 }
