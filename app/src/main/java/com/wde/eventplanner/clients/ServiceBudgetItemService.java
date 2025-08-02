@@ -25,7 +25,7 @@ public interface ServiceBudgetItemService {
     @DELETE("service-budget-items/{eventId}/{categoryId}")
     Call<Void> deleteServiceBudgetItem(@Path("eventId") UUID eventId, @Path("categoryId") UUID categoryId);
 
-    @GET("service-budget-items/{serviceId}")
+    @GET("service-budget-items/{serviceId}/slots")
     Call<List<BookingSlots>> getSlotsForService(@Path("serviceId") UUID serviceId);
 
     @POST("service-budget-items/buy")

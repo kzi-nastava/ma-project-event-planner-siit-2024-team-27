@@ -1,5 +1,8 @@
 package com.wde.eventplanner.fragments.seller;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,19 +22,22 @@ import com.wde.eventplanner.adapters.ImageAdapter;
 import com.wde.eventplanner.databinding.FragmentSellerProductDetailBinding;
 import com.wde.eventplanner.models.Comment;
 import com.wde.eventplanner.models.products.Product;
+import com.wde.eventplanner.viewmodels.ListingReviewsViewModel;
 import com.wde.eventplanner.viewmodels.ProductsViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class ProductDetailFragment extends Fragment {
     private FragmentSellerProductDetailBinding binding;
+    private ListingReviewsViewModel listingReviewsViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSellerProductDetailBinding.inflate(inflater, container, false);
         ProductsViewModel productsViewModel = new ViewModelProvider(requireActivity()).get(ProductsViewModel.class);
+        listingReviewsViewModel = new ViewModelProvider(requireActivity()).get(ListingReviewsViewModel.class);
 
         String staticId = requireArguments().getString("staticId");
         int version = requireArguments().getInt("version");
@@ -61,26 +67,29 @@ public class ProductDetailFragment extends Fragment {
         } else {
             binding.discountedPrice.setText(null);
         }
-        if (product.getRating() != null) {
+
+        if (product.getRating() != null)
             binding.rating.setText(String.format(Locale.US, "%.1f", product.getRating()));
-        } else {
+        else
             binding.rating.setText("n\\a");
-        }
 
         binding.price.setText(String.format(Locale.US, "%.2f€", product.getPrice()));
         binding.productTitle.setText(product.getName());
-        binding.companyName.setText("Company name"); // todo when seller gets his product list
+        binding.companyName.setText(product.getSellerNameAndSurname()); // todo seller page
         binding.description.setText(product.getDescription());
 
         ImageAdapter adapter = new ImageAdapter(getContext(), product.getImages());
         binding.viewPager.setAdapter(adapter);
 
-        // todo comments
-        List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        binding.comments.setAdapter(new CommentAdapter(comments));
+        listingReviewsViewModel.getReviews(product.getStaticProductId(), true).observe(getViewLifecycleOwner(), reviews -> {
+            ArrayList<Comment> comments = reviews.stream().map(review ->
+                    new Comment(review.getGuestName() + " " + review.getGuestSurname(), review.getComment())).collect(Collectors.toCollection(ArrayList::new));
+            binding.comments.setAdapter(new CommentAdapter(comments));
+
+            if (!comments.isEmpty()) {
+                binding.noCommentsTitle.setVisibility(GONE);
+                binding.comments.setVisibility(VISIBLE);
+            }
+        });
     }
 }

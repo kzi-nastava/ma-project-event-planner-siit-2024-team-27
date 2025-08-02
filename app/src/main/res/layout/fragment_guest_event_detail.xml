@@ -24,10 +24,10 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="0dp"
                 android:backgroundTint="@android:color/transparent"
-                android:padding="2dp"
-                android:translationZ="1dp"
                 android:outlineAmbientShadowColor="@android:color/transparent"
                 android:outlineSpotShadowColor="@android:color/transparent"
+                android:padding="2dp"
+                android:translationZ="1dp"
                 app:icon="@drawable/ic_favourite"
                 app:iconGravity="start"
                 app:iconSize="42dp"
@@ -152,7 +152,7 @@
                 android:id="@+id/contactButton"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="@string/contact" />
 
@@ -160,9 +160,20 @@
                 android:id="@+id/signUpButton"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/accent2"
                 android:text="@string/sign_up" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reviewButton"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/accent2"
+                android:text="@string/review"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -220,14 +231,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mapCard" />
 
+        <TextView
+            android:id="@+id/noCommentsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/no_comments_yet"
+            android:textColor="@color/pale_text"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentsTitle" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/commentsTitle" />
+            app:layout_constraintTop_toBottomOf="@id/noCommentsTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

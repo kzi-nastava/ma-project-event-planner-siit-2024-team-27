@@ -28,4 +28,5 @@ public class Service {
     private Integer reservationDeadLine;
     private List<UUID> availableEventTypeIds;
     private Double rating;
+    private String sellerNameAndSurname;
 }
