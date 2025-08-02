@@ -16,6 +16,10 @@
         android:icon="@drawable/ic_catalogue"
         android:title="@string/catalogue" />
     <item
+        android:id="@+id/nav_chat_inbox"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chat" />
+    <item
         android:id="@+id/nav_calendar_seller"
         android:icon="@drawable/ic_calendar"
         android:title="@string/calendar" />

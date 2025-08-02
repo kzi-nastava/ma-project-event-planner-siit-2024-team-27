@@ -12,13 +12,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.wde.eventplanner.R;
 import com.wde.eventplanner.adapters.CommentAdapter;
 import com.wde.eventplanner.adapters.ImageAdapter;
 import com.wde.eventplanner.databinding.FragmentUserServiceDetailBinding;
 import com.wde.eventplanner.models.Comment;
+import com.wde.eventplanner.models.chat.CreateChat;
+import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.services.Service;
+import com.wde.eventplanner.utils.TokenManager;
+import com.wde.eventplanner.viewmodels.ChatsViewModel;
 import com.wde.eventplanner.viewmodels.ListingReviewsViewModel;
 import com.wde.eventplanner.viewmodels.ServicesViewModel;
 
@@ -29,22 +35,20 @@ import java.util.stream.Collectors;
 public class ServiceDetailFragment extends Fragment {
     private FragmentUserServiceDetailBinding binding;
     private ListingReviewsViewModel listingReviewsViewModel;
+    private ChatsViewModel chatsViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUserServiceDetailBinding.inflate(inflater, container, false);
         ServicesViewModel servicesViewModel = new ViewModelProvider(requireActivity()).get(ServicesViewModel.class);
         listingReviewsViewModel = new ViewModelProvider(requireActivity()).get(ListingReviewsViewModel.class);
+        chatsViewModel = new ViewModelProvider(requireActivity()).get(ChatsViewModel.class);
 
         String staticId = requireArguments().getString("staticId");
         int version = requireArguments().getInt("version");
 
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.comments.setNestedScrollingEnabled(false);
-
-        binding.contactButton.setOnClickListener(v -> {
-            // todo chat
-        });
 
         servicesViewModel.getService(staticId).observe(getViewLifecycleOwner(), this::populateServiceData);
 
@@ -81,6 +85,15 @@ public class ServiceDetailFragment extends Fragment {
                 binding.noCommentsTitle.setVisibility(GONE);
                 binding.comments.setVisibility(VISIBLE);
             }
+        });
+
+        binding.contactButton.setOnClickListener(v -> {
+            chatsViewModel.createChat(new CreateChat(ListingType.SERVICE, service.getStaticServiceId(), service.getVersion(), TokenManager.getProfileId(binding.getRoot().getContext()), service.getSellerProfileId()))
+                    .observe(getViewLifecycleOwner(), chat -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("chatId", chat.getChatId().toString());
+                        Navigation.findNavController(v).navigate(R.id.nav_chat, bundle);
+                    });
         });
     }
 }

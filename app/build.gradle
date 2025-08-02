@@ -70,4 +70,8 @@ dependencies {
     implementation libs.logging.interceptor
     implementation libs.play.services.maps
     implementation libs.material.calendar.view
+    implementation libs.java.websocket
+    implementation libs.stompprotocolandroid
+    implementation libs.rxjava
+    implementation libs.rxandroid
 }

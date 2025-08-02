@@ -29,4 +29,6 @@ public class Service {
     private List<UUID> availableEventTypeIds;
     private Double rating;
     private String sellerNameAndSurname;
+    private UUID sellerId;
+    private UUID sellerProfileId;
 }

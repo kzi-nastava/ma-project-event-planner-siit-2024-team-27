@@ -209,6 +209,20 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
+        android:id="@+id/nav_chat_inbox"
+        android:name="com.wde.eventplanner.fragments.common.chats.ChatInboxFragment"
+        tools:layout="@layout/fragment_chat_inbox">
+        <action
+            android:id="@+id/action_inbox_to_chat"
+            app:destination="@id/nav_chat" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.wde.eventplanner.fragments.common.chats.ChatFragment"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
         android:id="@+id/nav_calendar_guest"
         android:name="com.wde.eventplanner.fragments.guest.CalendarFragment"
         tools:layout="@layout/fragment_calendar_events" />

@@ -47,7 +47,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         int color = notification.isSeen() ? R.color.card : R.color.edge;
         holder.binding.notificationCard.setCardBackgroundColor(holder.itemView.getContext().getResources().getColor(color, null));
         holder.binding.notificationCard.setOnClickListener(v -> {
-            MenuManager.navigateToFragment(notification.getType(), notification.getId().toString(), holder.binding.getRoot().getContext(), navController);
+            MenuManager.navigateToFragment(notification.getType(), notification.getEntityId().toString(), holder.binding.getRoot().getContext(), navController);
         });
     }
 

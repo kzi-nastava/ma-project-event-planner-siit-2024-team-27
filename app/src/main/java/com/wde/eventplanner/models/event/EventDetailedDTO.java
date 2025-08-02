@@ -23,4 +23,6 @@ public class EventDetailedDTO {
     private String organizerCredentials;
     private Boolean isFavorite;
     private boolean isAccepted;
+    private UUID organizerId;
+    private UUID organizerProfileId;
 }

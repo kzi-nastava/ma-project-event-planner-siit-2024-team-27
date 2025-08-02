@@ -25,4 +25,6 @@ public class Product {
     private List<UUID> availableEventTypesIds;
     private Double rating;
     private String sellerNameAndSurname;
+    private UUID sellerId;
+    private UUID sellerProfileId;
 }

@@ -116,7 +116,7 @@
     <string name="organizer_name">Organizer name</string>
     <string name="novi_sad">Novi Sad</string>
     <string name="_13_15">13:15</string>
-    <string name="_13_12_2024">13.12.2024</string>
+    <string name="_13_12_2024">13.12.2024.</string>
     <string name="_4_5">4.5</string>
     <string name="sign_up">Sign Up</string>
     <string name="type">Type</string>
@@ -149,4 +149,9 @@
     <string name="create_review">Create a review</string>
     <string name="no_comments_yet">No comments yet…</string>
     <string name="best_product_ever">Best product ever</string>
+    <string name="chats">Chats</string>
+    <string name="best_title_ever">Best title ever</string>
+    <string name="best_user">Best User</string>
+    <string name="message">Message…</string>
+    <string name="chat">Chat</string>
 </resources>
