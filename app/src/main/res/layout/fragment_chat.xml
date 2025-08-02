@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:gravity="top|start"
             android:imeOptions="actionSend"
-            android:inputType="textCapSentences"
+            android:inputType="textCapSentences|textMultiLine"
             android:maxLines="5"
             android:paddingVertical="16dp" />
     </com.google.android.material.textfield.TextInputLayout>

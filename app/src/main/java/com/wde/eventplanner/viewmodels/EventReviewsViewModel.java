@@ -60,8 +60,6 @@ public class EventReviewsViewModel extends ViewModel {
             public void onResponse(@NonNull Call<ReviewDistribution> call, @NonNull Response<ReviewDistribution> response) {
                 if (response.isSuccessful()) {
                     reviewDistribution.postValue(response.body());
-                    // TODO: Remove this placeholder once backend data is available for integration. Currently for testing purposes only.
-                    // reviewDistribution.postValue(new ReviewDistribution(7, 4, 14, 10 ,1));
                 } else {
                     errorMessage.postValue("Failed to fetch review distribution. Code: " + response.code());
                 }

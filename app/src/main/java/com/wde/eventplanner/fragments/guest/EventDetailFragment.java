@@ -116,7 +116,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
         binding.description.setText(event.getDescription());
 
-        ImageAdapter adapter = new ImageAdapter(getContext(), event.getImages());
+        ImageAdapter adapter = new ImageAdapter(event.getImages());
         binding.viewPager.setAdapter(adapter);
 
         eventReviewsViewModel.getReviews(event.getId()).observe(getViewLifecycleOwner(), reviews -> {

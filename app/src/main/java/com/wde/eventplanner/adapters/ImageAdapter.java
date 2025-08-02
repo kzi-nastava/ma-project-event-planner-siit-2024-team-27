@@ -1,10 +1,9 @@
 package com.wde.eventplanner.adapters;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -13,16 +12,15 @@ import com.wde.eventplanner.databinding.ItemCarouselImageBinding;
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-    private List<String> images;
-    private Context context;
+    private final List<String> images;
 
-    public ImageAdapter(Context context, List<String> images) {
-        this.context = context;
+    public ImageAdapter(List<String> images) {
         this.images = images;
     }
 
+    @NonNull
     @Override
-    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemCarouselImageBinding binding = ItemCarouselImageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ImageViewHolder(binding);
     }

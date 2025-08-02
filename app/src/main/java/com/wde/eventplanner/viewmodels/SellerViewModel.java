@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
 import com.wde.eventplanner.models.event.CalendarEvent;
+import com.wde.eventplanner.models.user.Seller;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -44,5 +45,25 @@ public class SellerViewModel extends ViewModel {
             }
         });
         return calendar;
+    }
+
+    public LiveData<Seller> getSeller(UUID sellerId) {
+        MutableLiveData<Seller> seller = new MutableLiveData<>();
+        ClientUtils.sellerService.getSeller(sellerId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Seller> call, @NonNull Response<Seller> response) {
+                if (response.isSuccessful()) {
+                    seller.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch seller. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Seller> call, @NonNull Throwable t) {
+                errorMessage.postValue(t.getMessage());
+            }
+        });
+        return seller;
     }
 }
