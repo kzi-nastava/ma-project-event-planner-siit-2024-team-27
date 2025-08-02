@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             R.id.nav_catalogue,
             R.id.nav_my_events,
             R.id.nav_notifications,
+            R.id.nav_chat_inbox,
             R.id.nav_calendar_guest,
             R.id.nav_calendar_organizer,
             R.id.nav_calendar_seller,

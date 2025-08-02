@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.R;
@@ -19,9 +20,11 @@ import com.wde.eventplanner.adapters.CommentAdapter;
 import com.wde.eventplanner.adapters.ImageAdapter;
 import com.wde.eventplanner.databinding.FragmentOrganizerProductDetailBinding;
 import com.wde.eventplanner.models.Comment;
+import com.wde.eventplanner.models.chat.CreateChat;
 import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.products.Product;
 import com.wde.eventplanner.utils.TokenManager;
+import com.wde.eventplanner.viewmodels.ChatsViewModel;
 import com.wde.eventplanner.viewmodels.EventOrganizerViewModel;
 import com.wde.eventplanner.viewmodels.ListingReviewsViewModel;
 import com.wde.eventplanner.viewmodels.ProductsViewModel;
@@ -34,6 +37,7 @@ import java.util.stream.Collectors;
 public class ProductDetailFragment extends Fragment {
     private FragmentOrganizerProductDetailBinding binding;
     private ListingReviewsViewModel listingReviewsViewModel;
+    private ChatsViewModel chatsViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class ProductDetailFragment extends Fragment {
         ProductsViewModel productsViewModel = new ViewModelProvider(requireActivity()).get(ProductsViewModel.class);
         EventOrganizerViewModel eventOrganizerViewModel = new ViewModelProvider(requireActivity()).get(EventOrganizerViewModel.class);
         listingReviewsViewModel = new ViewModelProvider(requireActivity()).get(ListingReviewsViewModel.class);
+        chatsViewModel = new ViewModelProvider(requireActivity()).get(ChatsViewModel.class);
 
         String staticId = requireArguments().getString("staticId");
         int version = requireArguments().getInt("version");
@@ -105,6 +110,15 @@ public class ProductDetailFragment extends Fragment {
                 binding.noCommentsTitle.setVisibility(GONE);
                 binding.comments.setVisibility(VISIBLE);
             }
+        });
+
+        binding.contactButton.setOnClickListener(v -> {
+            chatsViewModel.createChat(new CreateChat(ListingType.PRODUCT, product.getStaticProductId(), product.getVersion(), TokenManager.getProfileId(binding.getRoot().getContext()), product.getSellerProfileId()))
+                    .observe(getViewLifecycleOwner(), chat -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("chatId", chat.getChatId().toString());
+                        Navigation.findNavController(v).navigate(R.id.nav_chat, bundle);
+                    });
         });
     }
 }

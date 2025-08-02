@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,11 +28,13 @@ import com.wde.eventplanner.adapters.CommentAdapter;
 import com.wde.eventplanner.adapters.ImageAdapter;
 import com.wde.eventplanner.databinding.FragmentGuestEventDetailBinding;
 import com.wde.eventplanner.models.Comment;
+import com.wde.eventplanner.models.chat.CreateChat;
 import com.wde.eventplanner.models.event.EventDetailedDTO;
 import com.wde.eventplanner.models.event.JoinEventDTO;
 import com.wde.eventplanner.models.user.UserRole;
 import com.wde.eventplanner.utils.FileManager;
 import com.wde.eventplanner.utils.TokenManager;
+import com.wde.eventplanner.viewmodels.ChatsViewModel;
 import com.wde.eventplanner.viewmodels.EventReviewsViewModel;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 import com.wde.eventplanner.viewmodels.GuestsViewModel;
@@ -48,6 +51,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
     private FragmentGuestEventDetailBinding binding;
     private EventsViewModel eventsViewModel;
     private GuestsViewModel guestsViewModel;
+    private ChatsViewModel chatsViewModel;
     private GoogleMap mMap;
 
     @Override
@@ -56,13 +60,10 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         eventReviewsViewModel = new ViewModelProvider(requireActivity()).get(EventReviewsViewModel.class);
         eventsViewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
         guestsViewModel = new ViewModelProvider(requireActivity()).get(GuestsViewModel.class);
+        chatsViewModel = new ViewModelProvider(requireActivity()).get(ChatsViewModel.class);
 
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
         binding.comments.setNestedScrollingEnabled(false);
-
-        binding.contactButton.setOnClickListener(v -> {
-            // todo chat
-        });
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) mapFragment.getMapAsync(this);
@@ -137,6 +138,15 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
         if (LocalDateTime.of(event.getDate(), event.getTime()).isBefore(LocalDateTime.now()))
             binding.signUpButton.setVisibility(GONE);
+
+        binding.contactButton.setOnClickListener(v -> {
+            chatsViewModel.createChat(new CreateChat(null, event.getId(), null, TokenManager.getProfileId(binding.getRoot().getContext()), event.getOrganizerProfileId()))
+                    .observe(getViewLifecycleOwner(), chat -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("chatId", chat.getChatId().toString());
+                        Navigation.findNavController(v).navigate(R.id.nav_chat, bundle);
+                    });
+        });
     }
 
     @Override

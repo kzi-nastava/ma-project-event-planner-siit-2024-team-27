@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ClientUtils {
     public static final String SERVICE_API_PATH = "http://" + BuildConfig.IP_ADDR + ":8080/api/v1/";
 
-    public static OkHttpClient buildHttpClient() {
+    private static OkHttpClient buildHttpClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -66,13 +66,13 @@ public class ClientUtils {
         }
     }
 
-    private static final Gson gson = new GsonBuilder().setLenient()
+    public static final Gson gson = new GsonBuilder().setLenient()
             .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
             .registerTypeAdapter(LocalTime.class, new LocalTimeDeserializer())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
             .create();
 
-    public static Retrofit retrofit = new Retrofit.Builder()
+    private static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVICE_API_PATH)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(buildHttpClient())
@@ -94,5 +94,6 @@ public class ClientUtils {
     public static GuestService guestService = retrofit.create(GuestService.class);
     public static EventOrganizerService eventOrganizerService = retrofit.create(EventOrganizerService.class);
     public static SellerService sellerService = retrofit.create(SellerService.class);
+    public static ChatsService chatsService = retrofit.create(ChatsService.class);
 }
 
