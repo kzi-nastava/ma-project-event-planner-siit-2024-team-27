@@ -27,9 +27,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class BuyProductChoseEventDialogFragment extends DialogFragment {
+    private ProductBudgetItemViewModel productBudgetItemViewModel;
     private DialogBuyProductChoseEventBinding binding;
-    private Product product;
-    ProductBudgetItemViewModel productBudgetItemViewModel;
+    private final Product product;
 
     public BuyProductChoseEventDialogFragment(Product product) {
         this.product = product;
@@ -47,8 +47,9 @@ public class BuyProductChoseEventDialogFragment extends DialogFragment {
 
         binding.closeButton.setOnClickListener(v -> dismiss());
         binding.buyButton.setOnClickListener(v -> buyProduct());
+        binding.eventDropdown.disableAutoComplete();
 
-        viewModel.fetchEventsFromOrganizer(TokenManager.getProfileId(requireContext()).toString());
+        viewModel.fetchEventsFromOrganizer(TokenManager.getUserId(requireContext()).toString());
         viewModel.getEventsComplexView().observe(getViewLifecycleOwner(), this::onEventsChanged);
 
         return binding.getRoot();
@@ -75,7 +76,7 @@ public class BuyProductChoseEventDialogFragment extends DialogFragment {
 
             Log.i("", String.valueOf(looselyFittingCategory));
 
-            List<UUID> matchingEventTypes = product.getAvailableEventTypesIds()
+            List<UUID> matchingEventTypes = product.getAvailableEventTypeIds()
                     .stream()
                     .filter(et -> et.equals(event.getEventTypeId()))
                     .collect(Collectors.toList());

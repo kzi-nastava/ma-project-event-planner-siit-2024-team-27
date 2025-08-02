@@ -292,7 +292,7 @@ public class EventInfoFragment extends Fragment implements ViewPagerAdapter.HasT
 
     private void sendInvitations(UUID eventId) {
         ArrayList<String> emails = createEventViewModel.guestList.stream().map(GuestInfo::getEmail).collect(Collectors.toCollection(ArrayList::new));
-        GuestList guestList = new GuestList(emails, eventId.toString(), "OrgName", "OrgSurname");  // todo replace fixed params
+        GuestList guestList = new GuestList(emails, eventId.toString(), "Event", "Organizer");
         if (!emails.isEmpty()) invitationsViewModel.sendInvitations(guestList).observe(getViewLifecycleOwner(), error -> {
             if (error != null) SingleToast.show(requireContext(), error);
         });

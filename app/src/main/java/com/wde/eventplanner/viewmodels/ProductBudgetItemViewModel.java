@@ -34,7 +34,6 @@ public class ProductBudgetItemViewModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<ProductBudgetItemDTO> call, @NonNull Response<ProductBudgetItemDTO> response) {
                 if (response.isSuccessful()) {
-                    // todo inform of successful purchase
                     productBudgetItemLiveData.postValue(response.body());
                 } else {
                     errorMessage.postValue("Failed to buy product. Code: " + response.code());

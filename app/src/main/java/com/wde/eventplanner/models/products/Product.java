@@ -22,7 +22,7 @@ public class Product {
     private Boolean isAvailable;
     private Boolean isPrivate;
     private UUID productCategoryId;
-    private List<UUID> availableEventTypesIds;
+    private List<UUID> availableEventTypeIds;
     private Double rating;
     private String sellerNameAndSurname;
     private UUID sellerId;

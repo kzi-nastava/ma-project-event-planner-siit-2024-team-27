@@ -38,7 +38,6 @@ public class EventGuestsFragment extends Fragment implements ViewPagerAdapter.Ha
 
             binding.guestListEmailInput.setOnEditorActionListener(this::onEmailInputEditorAction);
             binding.guestListInviteButton.setOnClickListener((v) -> addGuest());
-            binding.pdfButton.setOnClickListener((v) -> downloadPdf());
 
             binding.guestList.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
             binding.guestList.addItemDecoration(new ItemDividerDecoration(getContext(), getResources()));
@@ -89,10 +88,6 @@ public class EventGuestsFragment extends Fragment implements ViewPagerAdapter.Ha
             } else
                 SingleToast.show(requireContext(), "Guest is already invited!");
         }
-    }
-
-    private void downloadPdf() {
-        // todo download pdf
     }
 
     @Override
