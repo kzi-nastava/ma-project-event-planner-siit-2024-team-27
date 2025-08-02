@@ -75,10 +75,16 @@ public class ProductDetailFragment extends Fragment {
 
         binding.price.setText(String.format(Locale.US, "%.2f€", product.getPrice()));
         binding.productTitle.setText(product.getName());
-        binding.companyName.setText(product.getSellerNameAndSurname()); // todo seller page
+        binding.companyName.setText(product.getSellerNameAndSurname());
         binding.description.setText(product.getDescription());
 
-        ImageAdapter adapter = new ImageAdapter(getContext(), product.getImages());
+        binding.companyName.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("sellerId", product.getSellerId().toString());
+            NavHostFragment.findNavController(this).navigate(R.id.nav_seller_detail, bundle);
+        });
+
+        ImageAdapter adapter = new ImageAdapter(product.getImages());
         binding.viewPager.setAdapter(adapter);
 
         listingReviewsViewModel.getReviews(product.getStaticProductId(), true).observe(getViewLifecycleOwner(), reviews -> {

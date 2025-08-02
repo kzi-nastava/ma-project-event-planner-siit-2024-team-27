@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.wde.eventplanner.adapters.ChatMessageAdapter;
 import com.wde.eventplanner.clients.WebSocketClient;
 import com.wde.eventplanner.databinding.FragmentChatBinding;
+import com.wde.eventplanner.fragments.common.ReportDialog;
 import com.wde.eventplanner.models.chat.ChatMessage;
 import com.wde.eventplanner.utils.MenuManager;
 import com.wde.eventplanner.utils.SingleToast;
@@ -55,7 +55,9 @@ public class ChatFragment extends Fragment {
             binding.user.setText(chat.getChatPartnerNameAndSurname());
             binding.title.setText(chat.getListingName());
             toProfileId = chat.getChatPartnerId();
-            // todo report button
+
+            binding.reportButton.setOnClickListener(v ->
+                    new ReportDialog(chat.getChatPartnerId(), false).show(getParentFragmentManager(), "reportBlockDialog"));
 
             binding.title.setOnClickListener(v -> {
                 String type = chat.getListingType() == null ? "EVENT" : chat.getListingType().toString().toUpperCase();

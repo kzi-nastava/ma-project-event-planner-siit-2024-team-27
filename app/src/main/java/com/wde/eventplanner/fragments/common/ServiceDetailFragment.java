@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.R;
@@ -70,10 +71,16 @@ public class ServiceDetailFragment extends Fragment {
 
         binding.price.setText(String.format(Locale.US, "%.2f€/hr", service.getPrice()));
         binding.serviceTitle.setText(service.getName());
-        binding.companyName.setText(service.getSellerNameAndSurname()); // todo seller page
+        binding.companyName.setText(service.getSellerNameAndSurname());
         binding.description.setText(service.getDescription());
 
-        ImageAdapter adapter = new ImageAdapter(getContext(), service.getImages());
+        binding.companyName.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("sellerId", service.getSellerId().toString());
+            NavHostFragment.findNavController(this).navigate(R.id.nav_seller_detail, bundle);
+        });
+
+        ImageAdapter adapter = new ImageAdapter(service.getImages());
         binding.viewPager.setAdapter(adapter);
 
         listingReviewsViewModel.getReviews(service.getStaticServiceId(), false).observe(getViewLifecycleOwner(), reviews -> {

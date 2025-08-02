@@ -154,4 +154,14 @@
     <string name="best_user">Best User</string>
     <string name="message">Message…</string>
     <string name="chat">Chat</string>
+    <string name="seller_profile_picture">Seller profile picture</string>
+    <string name="best_seller_ever">Best seller ever</string>
+    <string name="report">Report</string>
+    <string name="example_example_com">example@example.com</string>
+    <string name="_381_1234_567">+381 1234 567</string>
+    <string name="block">Block</string>
+    <string name="best_author_ever">Best author ever</string>
+    <string name="best_report_ever">Best report ever</string>
+    <string name="user_reports">User reports</string>
+    <string name="reported_users">Reported users</string>
 </resources>

@@ -223,6 +223,11 @@
         tools:layout="@layout/fragment_chat" />
 
     <fragment
+        android:id="@+id/nav_seller_detail"
+        android:name="com.wde.eventplanner.fragments.common.SellerDetailFragment"
+        tools:layout="@layout/fragment_seller_detail" />
+
+    <fragment
         android:id="@+id/nav_calendar_guest"
         android:name="com.wde.eventplanner.fragments.guest.CalendarFragment"
         tools:layout="@layout/fragment_calendar_events" />
@@ -251,6 +256,10 @@
         android:id="@+id/nav_listing_categories"
         android:name="com.wde.eventplanner.fragments.admin.listing_categories.ListingCategoriesFragment"
         tools:layout="@layout/fragment_listing_categories" />
+    <fragment
+        android:id="@+id/nav_reports"
+        android:name="com.wde.eventplanner.fragments.admin.reports.ReportsFragment"
+        tools:layout="@layout/fragment_reports" />
     <fragment
         android:id="@+id/nav_reviews"
         android:name="com.wde.eventplanner.fragments.admin.reviews.ReviewsFragment"

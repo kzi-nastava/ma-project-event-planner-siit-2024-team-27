@@ -12,6 +12,7 @@ import com.wde.eventplanner.databinding.CardPendingReviewBinding;
 import com.wde.eventplanner.fragments.admin.reviews.ReviewsFragment;
 import com.wde.eventplanner.models.reviews.EventReviewResponse;
 import com.wde.eventplanner.models.reviews.ReviewHandling;
+import com.wde.eventplanner.utils.MenuManager;
 import com.wde.eventplanner.viewmodels.EventReviewsViewModel;
 
 import java.util.ArrayList;
@@ -49,10 +50,8 @@ public class PendingEventReviewAdapter extends RecyclerView.Adapter<PendingEvent
         holder.binding.authorTextView.setText(String.format("%s %s", review.getGuestName(), review.getGuestSurname()));
         holder.binding.reviewTextView.setText(review.getComment());
 
-//         todo event detailed view
-//         Bundle bundle = new Bundle();
-//         bundle.putString("eventId", review.getEventId().toString());
-//         holder.binding.detailButton.setOnClickListener(v -> navController.navigate(fragmentId, bundle));
+        holder.binding.detailButton.setOnClickListener(v ->
+                MenuManager.navigateToFragment("EVENT", review.getEventId().toString(), holder.binding.getRoot().getContext(), navController));
         holder.binding.approveButton.setOnClickListener(v -> viewModel.processReview(new ReviewHandling(review.getId(), true)));
         holder.binding.declineButton.setOnClickListener(v -> viewModel.processReview(new ReviewHandling(review.getId(), false)));
     }

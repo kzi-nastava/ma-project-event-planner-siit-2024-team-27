@@ -95,5 +95,6 @@ public class ClientUtils {
     public static EventOrganizerService eventOrganizerService = retrofit.create(EventOrganizerService.class);
     public static SellerService sellerService = retrofit.create(SellerService.class);
     public static ChatsService chatsService = retrofit.create(ChatsService.class);
+    public static UserReportsService userReportsService = retrofit.create(UserReportsService.class);
 }
 
