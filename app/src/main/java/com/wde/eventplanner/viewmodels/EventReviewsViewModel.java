@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.wde.eventplanner.clients.ClientUtils;
+import com.wde.eventplanner.models.event.EventReview;
 import com.wde.eventplanner.models.reviews.EventReviewResponse;
 import com.wde.eventplanner.models.reviews.ReviewDistribution;
 import com.wde.eventplanner.models.reviews.ReviewHandling;
@@ -93,5 +94,66 @@ public class EventReviewsViewModel extends ViewModel {
                 errorMessage.postValue(t.getMessage());
             }
         });
+    }
+
+    public LiveData<String> createReview(EventReview eventReview) {
+        MutableLiveData<String> done = new MutableLiveData<>();
+        ClientUtils.eventReviewsService.createReview(eventReview).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    done.postValue("Successfully created review!");
+                } else {
+                    done.postValue("Failed to create a review. Code: " + response.code());
+                    errorMessage.postValue("Failed to create a review. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                errorMessage.postValue("Error: " + t.getMessage());
+            }
+        });
+        return done;
+    }
+
+    public LiveData<Boolean> checkIfAllowed(UUID guestId, UUID eventId) {
+        MutableLiveData<Boolean> isAllowed = new MutableLiveData<>();
+        ClientUtils.eventReviewsService.checkIfAllowed(guestId, eventId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (response.isSuccessful()) {
+                    isAllowed.postValue(true);
+                } else {
+                    isAllowed.postValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                errorMessage.postValue(t.getMessage());
+            }
+        });
+        return isAllowed;
+    }
+
+    public LiveData<ArrayList<EventReviewResponse>> getReviews(UUID eventId) {
+        MutableLiveData<ArrayList<EventReviewResponse>> reviews = new MutableLiveData<>();
+        ClientUtils.eventReviewsService.getReviews(eventId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<EventReviewResponse>> call, @NonNull Response<ArrayList<EventReviewResponse>> response) {
+                if (response.isSuccessful()) {
+                    reviews.postValue(response.body());
+                } else {
+                    errorMessage.postValue("Failed to fetch event reviews. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<EventReviewResponse>> call, @NonNull Throwable t) {
+                errorMessage.postValue(t.getMessage());
+            }
+        });
+        return reviews;
     }
 }

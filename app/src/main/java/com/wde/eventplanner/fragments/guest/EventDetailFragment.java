@@ -1,5 +1,7 @@
 package com.wde.eventplanner.fragments.guest;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.wde.eventplanner.utils.MapsUtil.getLocationFromAddress;
 import static com.wde.eventplanner.utils.MapsUtil.joinCity;
 
@@ -30,16 +32,19 @@ import com.wde.eventplanner.models.event.JoinEventDTO;
 import com.wde.eventplanner.models.user.UserRole;
 import com.wde.eventplanner.utils.FileManager;
 import com.wde.eventplanner.utils.TokenManager;
+import com.wde.eventplanner.viewmodels.EventReviewsViewModel;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 import com.wde.eventplanner.viewmodels.GuestsViewModel;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class EventDetailFragment extends Fragment implements OnMapReadyCallback {
+    private EventReviewsViewModel eventReviewsViewModel;
     private FragmentGuestEventDetailBinding binding;
     private EventsViewModel eventsViewModel;
     private GuestsViewModel guestsViewModel;
@@ -48,6 +53,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGuestEventDetailBinding.inflate(inflater, container, false);
+        eventReviewsViewModel = new ViewModelProvider(requireActivity()).get(EventReviewsViewModel.class);
         eventsViewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
         guestsViewModel = new ViewModelProvider(requireActivity()).get(GuestsViewModel.class);
 
@@ -73,8 +79,18 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         UUID userId = TokenManager.getUserId(requireContext());
         userId = userId != null ? userId : UUID.randomUUID();
         eventsViewModel.getEvent(UUID.fromString(id), isGuest, userId).observe(getViewLifecycleOwner(), this::populateEventData);
+
         binding.favouriteButton.setOnClickListener(v -> {
             guestsViewModel.setEventFavourite(TokenManager.getUserId(requireContext()), id).observe(getViewLifecycleOwner(), x -> fetchEvent());
+        });
+
+        eventReviewsViewModel.checkIfAllowed(TokenManager.getUserId(binding.getRoot().getContext()), UUID.fromString(id)).observe(getViewLifecycleOwner(),
+                isAllowed -> {
+                    if (isAllowed) binding.reviewButton.setVisibility(VISIBLE);
+                });
+
+        binding.reviewButton.setOnClickListener(v -> {
+            new ReviewDialogFragment(UUID.fromString(id)).show(getParentFragmentManager(), "reviewEventDialog");
         });
     }
 
@@ -102,19 +118,25 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         ImageAdapter adapter = new ImageAdapter(getContext(), event.getImages());
         binding.viewPager.setAdapter(adapter);
 
-        // todo comments
-        List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        binding.comments.setAdapter(new CommentAdapter(comments));
+        eventReviewsViewModel.getReviews(event.getId()).observe(getViewLifecycleOwner(), reviews -> {
+            ArrayList<Comment> comments = reviews.stream().map(review ->
+                    new Comment(review.getGuestName() + " " + review.getGuestSurname(), review.getComment())).collect(Collectors.toCollection(ArrayList::new));
+            binding.comments.setAdapter(new CommentAdapter(comments));
+
+            if (!comments.isEmpty()) {
+                binding.noCommentsTitle.setVisibility(GONE);
+                binding.comments.setVisibility(VISIBLE);
+            }
+        });
 
         LatLng location = getLocationFromAddress(event.getAddress(), event.getCity(), requireContext());
         if (location != null) {
             mMap.addMarker(new MarkerOptions().position(location).title(event.getName()));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
         }
+
+        if (LocalDateTime.of(event.getDate(), event.getTime()).isBefore(LocalDateTime.now()))
+            binding.signUpButton.setVisibility(GONE);
     }
 
     @Override

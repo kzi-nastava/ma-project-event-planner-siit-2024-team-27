@@ -1,5 +1,7 @@
 package com.wde.eventplanner.fragments.common;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.wde.eventplanner.utils.MapsUtil.getLocationFromAddress;
 import static com.wde.eventplanner.utils.MapsUtil.joinCity;
 
@@ -29,15 +31,17 @@ import com.wde.eventplanner.models.event.EventDetailedDTO;
 import com.wde.eventplanner.models.user.UserRole;
 import com.wde.eventplanner.utils.FileManager;
 import com.wde.eventplanner.utils.TokenManager;
+import com.wde.eventplanner.viewmodels.EventReviewsViewModel;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class EventDetailFragment extends Fragment implements OnMapReadyCallback {
+    private EventReviewsViewModel eventReviewsViewModel;
     private FragmentUserEventDetailBinding binding;
     private EventsViewModel eventsViewModel;
     private GoogleMap mMap;
@@ -45,6 +49,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUserEventDetailBinding.inflate(inflater, container, false);
+        eventReviewsViewModel = new ViewModelProvider(requireActivity()).get(EventReviewsViewModel.class);
         eventsViewModel = new ViewModelProvider(requireActivity()).get(EventsViewModel.class);
 
         binding.comments.setLayoutManager(new LinearLayoutManager(binding.getRoot().getContext()));
@@ -85,13 +90,16 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         ImageAdapter adapter = new ImageAdapter(getContext(), event.getImages());
         binding.viewPager.setAdapter(adapter);
 
-        // todo comments
-        List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        binding.comments.setAdapter(new CommentAdapter(comments));
+        eventReviewsViewModel.getReviews(event.getId()).observe(getViewLifecycleOwner(), reviews -> {
+            ArrayList<Comment> comments = reviews.stream().map(review ->
+                    new Comment(review.getGuestName() + " " + review.getGuestSurname(), review.getComment())).collect(Collectors.toCollection(ArrayList::new));
+            binding.comments.setAdapter(new CommentAdapter(comments));
+
+            if (!comments.isEmpty()) {
+                binding.noCommentsTitle.setVisibility(GONE);
+                binding.comments.setVisibility(VISIBLE);
+            }
+        });
 
         LatLng location = getLocationFromAddress(event.getAddress(), event.getCity(), requireContext());
         if (location != null) {

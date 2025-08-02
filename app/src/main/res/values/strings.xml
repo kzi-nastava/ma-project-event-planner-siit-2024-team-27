@@ -145,4 +145,8 @@
     <string name="catalogue">Catalogue</string>
     <string name="final_price">Final price</string>
     <string name="original_price">Original price</string>
+    <string name="review">Review</string>
+    <string name="create_review">Create a review</string>
+    <string name="no_comments_yet">No comments yet…</string>
+    <string name="best_product_ever">Best product ever</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.wde.eventplanner.fragments.organizer;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,20 +23,24 @@ import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.products.Product;
 import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.EventOrganizerViewModel;
+import com.wde.eventplanner.viewmodels.ListingReviewsViewModel;
 import com.wde.eventplanner.viewmodels.ProductsViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class ProductDetailFragment extends Fragment {
     private FragmentOrganizerProductDetailBinding binding;
+    private ListingReviewsViewModel listingReviewsViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOrganizerProductDetailBinding.inflate(inflater, container, false);
         ProductsViewModel productsViewModel = new ViewModelProvider(requireActivity()).get(ProductsViewModel.class);
         EventOrganizerViewModel eventOrganizerViewModel = new ViewModelProvider(requireActivity()).get(EventOrganizerViewModel.class);
+        listingReviewsViewModel = new ViewModelProvider(requireActivity()).get(ListingReviewsViewModel.class);
 
         String staticId = requireArguments().getString("staticId");
         int version = requireArguments().getInt("version");
@@ -43,16 +50,24 @@ public class ProductDetailFragment extends Fragment {
 
         productsViewModel.getProduct(staticId).observe(getViewLifecycleOwner(), this::populateProductData);
 
-        eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.PRODUCT, staticId).observe(getViewLifecycleOwner(), isFavourte ->
-                binding.favouriteButton.setIconResource(isFavourte ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)
+        eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.PRODUCT, staticId).observe(getViewLifecycleOwner(), isFavourite ->
+                binding.favouriteButton.setIconResource(isFavourite ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)
         );
 
         binding.favouriteButton.setOnClickListener(v -> {
             eventOrganizerViewModel.setListingFavourite(TokenManager.getUserId(requireContext()), ListingType.PRODUCT, staticId).observe(getViewLifecycleOwner(), x ->
-                    eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.PRODUCT, staticId).observe(getViewLifecycleOwner(), isFavourte ->
-                            binding.favouriteButton.setIconResource(isFavourte ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)
+                    eventOrganizerViewModel.isListingFavourited(TokenManager.getUserId(requireContext()), ListingType.PRODUCT, staticId).observe(getViewLifecycleOwner(), isFavourite ->
+                            binding.favouriteButton.setIconResource(isFavourite ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite)
                     ));
         });
+
+        listingReviewsViewModel.checkIfAllowed(TokenManager.getUserId(binding.getRoot().getContext()), true, UUID.fromString(staticId)).observe(getViewLifecycleOwner(),
+                isAllowed -> {
+                    if (isAllowed) binding.reviewButton.setVisibility(VISIBLE);
+                });
+
+        binding.reviewButton.setOnClickListener(v ->
+                new ReviewDialogFragment(ListingType.PRODUCT, UUID.fromString(staticId)).show(getParentFragmentManager(), "reviewListingDialog"));
 
         return binding.getRoot();
     }
@@ -67,26 +82,29 @@ public class ProductDetailFragment extends Fragment {
         } else {
             binding.discountedPrice.setText(null);
         }
-        if (product.getRating() != null) {
+
+        if (product.getRating() != null)
             binding.rating.setText(String.format(Locale.US, "%.1f", product.getRating()));
-        } else {
+        else
             binding.rating.setText("n\\a");
-        }
 
         binding.price.setText(String.format(Locale.US, "%.2f€", product.getPrice()));
         binding.productTitle.setText(product.getName());
-        binding.companyName.setText("Company name"); // todo when seller gets his product list
+        binding.companyName.setText(product.getSellerNameAndSurname()); // todo seller page
         binding.description.setText(product.getDescription());
 
         ImageAdapter adapter = new ImageAdapter(getContext(), product.getImages());
         binding.viewPager.setAdapter(adapter);
 
-        // todo comments
-        List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        comments.add(new Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."));
-        binding.comments.setAdapter(new CommentAdapter(comments));
+        listingReviewsViewModel.getReviews(product.getStaticProductId(), true).observe(getViewLifecycleOwner(), reviews -> {
+            ArrayList<Comment> comments = reviews.stream().map(review ->
+                    new Comment(review.getGuestName() + " " + review.getGuestSurname(), review.getComment())).collect(Collectors.toCollection(ArrayList::new));
+            binding.comments.setAdapter(new CommentAdapter(comments));
+
+            if (!comments.isEmpty()) {
+                binding.noCommentsTitle.setVisibility(GONE);
+                binding.comments.setVisibility(VISIBLE);
+            }
+        });
     }
 }
