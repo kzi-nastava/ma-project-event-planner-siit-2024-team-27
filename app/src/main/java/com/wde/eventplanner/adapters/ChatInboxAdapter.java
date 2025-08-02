@@ -36,7 +36,10 @@ public class ChatInboxAdapter extends RecyclerView.Adapter<ChatInboxAdapter.Chat
         holder.binding.title.setText(chat.getListingName());
         holder.binding.message.setText(chat.getLastMessage());
         holder.binding.user.setText(chat.getChatPartnerNameAndSurname());
-        holder.binding.dateTextView.setText(DateTimeFormatter.ofPattern("d.M.yyyy.", Locale.ENGLISH).format(chat.getLastMessageDate()));
+        if (chat.getLastMessageDate() != null)
+            holder.binding.dateTextView.setText(DateTimeFormatter.ofPattern("d.M.yyyy.", Locale.ENGLISH).format(chat.getLastMessageDate()));
+        else
+            holder.binding.dateTextView.setText("");
         holder.binding.chatCard.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("chatId", chat.getChatId().toString());

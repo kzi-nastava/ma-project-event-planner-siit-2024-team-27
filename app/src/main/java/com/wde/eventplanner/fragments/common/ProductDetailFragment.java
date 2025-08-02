@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -24,6 +25,7 @@ import com.wde.eventplanner.models.Comment;
 import com.wde.eventplanner.models.chat.CreateChat;
 import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.products.Product;
+import com.wde.eventplanner.models.user.UserRole;
 import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.ChatsViewModel;
 import com.wde.eventplanner.viewmodels.ListingReviewsViewModel;
@@ -52,6 +54,15 @@ public class ProductDetailFragment extends Fragment {
         binding.comments.setNestedScrollingEnabled(false);
 
         productsViewModel.getProduct(staticId).observe(getViewLifecycleOwner(), this::populateProductData);
+
+        if (TokenManager.getRole(binding.getRoot().getContext()) == UserRole.ANONYMOUS
+                || TokenManager.getRole(binding.getRoot().getContext()) == UserRole.SELLER) {
+            binding.contactButton.setVisibility(GONE);
+
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) binding.descriptionTitle.getLayoutParams();
+            params.topMargin = 0;
+            binding.descriptionTitle.setLayoutParams(params);
+        }
 
         return binding.getRoot();
     }
