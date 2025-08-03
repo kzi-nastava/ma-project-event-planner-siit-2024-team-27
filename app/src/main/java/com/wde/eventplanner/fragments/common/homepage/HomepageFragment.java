@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.EventAdapter;
@@ -53,10 +54,12 @@ public class HomepageFragment extends Fragment {
         });
 
         binding.listingsRecyclerView.setAdapter(listingsViewModel.getTopListings().isInitialized() ?
-                new ListingAdapter(listingsViewModel.getTopListings().getValue()) : new ListingAdapter());
+                new ListingAdapter(listingsViewModel.getTopListings().getValue(), NavHostFragment.findNavController(this), true) :
+                new ListingAdapter(NavHostFragment.findNavController(this), true));
 
         binding.eventsRecyclerView.setAdapter(eventsViewModel.getTopEvents().isInitialized() ?
-                new EventAdapter(eventsViewModel.getTopEvents().getValue()) : new EventAdapter());
+                new EventAdapter(eventsViewModel.getTopEvents().getValue(), NavHostFragment.findNavController(this), true) :
+                new EventAdapter(NavHostFragment.findNavController(this), true));
 
         listingsViewModel.fetchTopListings();
         listingsViewModel.fetchListings();

@@ -9,6 +9,7 @@ import com.wde.eventplanner.clients.ClientUtils;
 import com.wde.eventplanner.models.user.Profile;
 import com.wde.eventplanner.models.user.Token;
 import com.wde.eventplanner.models.user.User;
+import com.wde.eventplanner.models.user.UserBlock;
 
 import java.io.File;
 import java.util.UUID;
@@ -98,6 +99,24 @@ public class UsersViewModel extends ViewModel {
         MutableLiveData<Void> done = new MutableLiveData<>();
 
         ClientUtils.usersService.delete(id).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                done.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                done.postValue(null);
+            }
+        });
+
+        return done;
+    }
+
+    public LiveData<Void> block(UserBlock userBlock) {
+        MutableLiveData<Void> done = new MutableLiveData<>();
+
+        ClientUtils.usersService.block(userBlock).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 done.postValue(null);

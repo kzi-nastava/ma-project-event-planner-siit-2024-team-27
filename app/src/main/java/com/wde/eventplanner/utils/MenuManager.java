@@ -53,7 +53,15 @@ public class MenuManager {
         navigateToFragment(type, entityId, null, context, navController);
     }
 
+    public static void navigateToFragment(String type, String entityId, Context context, NavController navController, UserRole role) {
+        navigateToFragment(type, entityId, null, context, navController, role);
+    }
+
     public static void navigateToFragment(String type, String entityId, String version, Context context, NavController navController) {
+        navigateToFragment(type, entityId, version, context, navController, null);
+    }
+
+    public static void navigateToFragment(String type, String entityId, String version, Context context, NavController navController, UserRole role) {
         Bundle bundle = new Bundle();
         type = type.toUpperCase();
 
@@ -66,8 +74,8 @@ public class MenuManager {
         if (type.equals("EVENT"))
             bundle.putString("id", entityId);
 
-        UserRole role = TokenManager.getRole(context);
-        int fragmentId = getFragmentId(type, role);
+        UserRole r = role == null ? TokenManager.getRole(context) : role;
+        int fragmentId = getFragmentId(type, r);
 
         if (fragmentId != -1)
             navController.navigate(fragmentId, bundle);

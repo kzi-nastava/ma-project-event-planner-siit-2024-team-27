@@ -14,9 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.wde.eventplanner.databinding.DialogReportBinding;
 import com.wde.eventplanner.models.reports.UserReport;
+import com.wde.eventplanner.models.user.UserBlock;
 import com.wde.eventplanner.utils.SingleToast;
 import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.UserReportsViewModel;
+import com.wde.eventplanner.viewmodels.UsersViewModel;
 
 import java.util.UUID;
 
@@ -32,6 +34,7 @@ public class ReportDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         DialogReportBinding binding = DialogReportBinding.inflate(inflater, container, false);
         UserReportsViewModel userReportsViewModel = new ViewModelProvider(requireActivity()).get(UserReportsViewModel.class);
+        UsersViewModel usersViewModel = new ViewModelProvider(requireActivity()).get(UsersViewModel.class);
 
         if (getDialog() != null && getDialog().getWindow() != null)
             getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -52,6 +55,13 @@ public class ReportDialog extends DialogFragment {
 
         if (hideBlockButton)
             binding.blockButton.setVisibility(GONE);
+
+        binding.blockButton.setOnClickListener(v -> {
+            usersViewModel.block(new UserBlock(TokenManager.getProfileId(binding.getRoot().getContext()), reportProfileId)).observe(getViewLifecycleOwner(), done -> {
+                SingleToast.show(binding.getRoot().getContext(), "User blocked successfully!");
+                dismiss();
+            });
+        });
 
         return binding.getRoot();
     }

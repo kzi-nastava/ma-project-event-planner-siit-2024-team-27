@@ -3,6 +3,7 @@ package com.wde.eventplanner.clients;
 import com.wde.eventplanner.models.user.Profile;
 import com.wde.eventplanner.models.user.Token;
 import com.wde.eventplanner.models.user.User;
+import com.wde.eventplanner.models.user.UserBlock;
 
 import java.util.UUID;
 
@@ -37,4 +38,7 @@ public interface UsersService {
 
     @DELETE("profiles/{id}")
     Call<Void> delete(@Path("id") UUID id);
+
+    @PUT("profiles/blocking")
+    Call<Void> block(@Body UserBlock userBlock);
 }

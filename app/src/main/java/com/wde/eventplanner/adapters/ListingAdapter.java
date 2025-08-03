@@ -10,6 +10,7 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.wde.eventplanner.models.user.UserRole;
 import com.wde.eventplanner.utils.MenuManager;
 import com.wde.eventplanner.databinding.CardListingBinding;
 import com.wde.eventplanner.models.listing.Listing;
@@ -22,24 +23,29 @@ import java.util.Locale;
 public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingViewHolder> {
     private final NavController navController;
     public final List<Listing> listings;
+    private final boolean isHomeScreen;
 
-    public ListingAdapter() {
+    public ListingAdapter(NavController navController, boolean isHomeScreen) {
+        this.navController = navController;
         this.listings = new ArrayList<>();
-        navController = null;
+        this.isHomeScreen = isHomeScreen;
+    }
+
+    public ListingAdapter(List<Listing> listings, NavController navController, boolean isHomeScreen) {
+        this.navController = navController;
+        this.isHomeScreen = isHomeScreen;
+        this.listings = listings;
     }
 
     public ListingAdapter(NavController navController) {
         this.navController = navController;
         this.listings = new ArrayList<>();
-    }
-
-    public ListingAdapter(List<Listing> listings) {
-        this.listings = listings;
-        navController = null;
+        this.isHomeScreen = false;
     }
 
     public ListingAdapter(List<Listing> listings, NavController navController) {
         this.navController = navController;
+        this.isHomeScreen = false;
         this.listings = listings;
     }
 
@@ -67,7 +73,8 @@ public class ListingAdapter extends RecyclerView.Adapter<ListingAdapter.ListingV
             String type = listing.getType().toString();
             String version = listing.getVersion().toString();
             Context context = holder.binding.getRoot().getContext();
-            holder.binding.cardView.setOnClickListener(v -> MenuManager.navigateToFragment(type, id, version, context, navController));
+            UserRole role = isHomeScreen ? UserRole.ANONYMOUS : null;
+            holder.binding.cardView.setOnClickListener(v -> MenuManager.navigateToFragment(type, id, version, context, navController, role));
         }
     }
 
