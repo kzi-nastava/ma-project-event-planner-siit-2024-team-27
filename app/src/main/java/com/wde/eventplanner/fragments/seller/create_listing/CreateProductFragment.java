@@ -180,13 +180,19 @@ public class CreateProductFragment extends Fragment implements ViewPagerAdapter.
                 imageFiles.add(FileManager.getFileFromUri(requireContext(), image));
         } catch (Exception e) {
             SingleToast.show(requireContext(), "Failed to load the images");
-            imageFiles = null;
+            return;
         }
 
-        if (suggestedCategory.isBlank())
-            suggestedCategoryDescription = "";
-        else
-            productCategoryId = "";
+        if (imageFiles.isEmpty()) {
+            SingleToast.show(requireContext(), "Please add at least one image");
+            return;
+        }
+
+        if (suggestedCategory.isBlank()) {
+            suggestedCategory = null;
+            suggestedCategoryDescription = null;
+        } else
+            productCategoryId = null;
 
         productsViewModel.createProduct(imageFiles, TokenManager.getUserId(binding.getRoot().getContext()), name, isAvailable, price, salePercentage, productCategoryId,
                 isPrivate, description, suggestedCategory, suggestedCategoryDescription, availableEventTypeIds).observe(getViewLifecycleOwner(), product -> {

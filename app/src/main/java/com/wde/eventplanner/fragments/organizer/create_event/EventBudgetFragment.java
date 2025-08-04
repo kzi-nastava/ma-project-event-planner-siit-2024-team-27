@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.wde.eventplanner.adapters.BudgetItemAdapter;
@@ -62,7 +63,8 @@ public class EventBudgetFragment extends Fragment implements ViewPagerAdapter.Ha
             });
 
             listingCategoriesViewModel.getActiveListingCategories().observe(getViewLifecycleOwner(), (activeCategories) ->
-                    binding.listingBudgetItemsRecyclerView.setAdapter(new BudgetItemAdapter(budgetItems, activeCategories, this)));
+                    binding.listingBudgetItemsRecyclerView.setAdapter(new BudgetItemAdapter(budgetItems, activeCategories, this,
+                            NavHostFragment.findNavController(this))));
         }
 
         return binding.getRoot();

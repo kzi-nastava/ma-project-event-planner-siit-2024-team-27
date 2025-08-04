@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wde.eventplanner.components.CustomDropDown;
@@ -13,10 +14,13 @@ import com.wde.eventplanner.databinding.CardEventBudgetItemBinding;
 import com.wde.eventplanner.models.event.ListingBudgetItemDTO;
 import com.wde.eventplanner.models.listing.ListingType;
 import com.wde.eventplanner.models.listingCategory.ListingCategory;
+import com.wde.eventplanner.models.user.UserRole;
+import com.wde.eventplanner.utils.MenuManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.BudgetItemViewHolder> {
@@ -26,16 +30,19 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
         void totalAmount();
     }
 
-    private List<ListingCategory> listingCategories;
-    private List<ListingBudgetItemDTO> budgetItems;
-    private BudgetItemAdapterCallback budgetItemAdapterCallback;
+    private final List<ListingCategory> listingCategories;
+    private final List<ListingBudgetItemDTO> budgetItems;
+    private final BudgetItemAdapterCallback budgetItemAdapterCallback;
+    private final NavController navController;
 
     public BudgetItemAdapter(List<ListingBudgetItemDTO> budgetItems,
                              List<ListingCategory> listingCategories,
-                             BudgetItemAdapterCallback budgetItemAdapterCallback) {
+                             BudgetItemAdapterCallback budgetItemAdapterCallback,
+                             NavController navController) {
         this.budgetItems = budgetItems;
         this.listingCategories = listingCategories;
         this.budgetItemAdapterCallback = budgetItemAdapterCallback;
+        this.navController = navController;
     }
 
     @NonNull
@@ -46,10 +53,17 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onBindViewHolder(@NonNull BudgetItemViewHolder holder, int position) {
         ListingBudgetItemDTO budgetItem = budgetItems.get(position);
         CustomDropDown<ListingCategory> categoryDropdown = holder.binding.categoryDropdown;
         CustomDropDown<ListingType> typeDropdown = holder.binding.typeDropdown;
+
+        holder.binding.typeDropdown.setEnabled(budgetItem.getId() == null);
+
+        holder.binding.deleteButton.setEnabled(budgetItem.getListingId() == null);
+        holder.binding.navigateToDetailButton.setEnabled(budgetItem.getListingId() != null);
+        holder.binding.budgetTextbox.setEnabled(budgetItem.getListingId() == null);
 
         holder.binding.budgetTextbox.setText(budgetItem.getMaxPrice() != null ? budgetItem.getMaxPrice().toString() : "");
 
@@ -61,11 +75,15 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
         holder.binding.deleteButton.setOnClickListener(v -> {
             int dynamicPosition = holder.getAdapterPosition();
             budgetItems.remove(dynamicPosition);
-            holder.binding.deleteButton.setOnClickListener(_v -> {
-            });
+            holder.binding.deleteButton.setOnClickListener(Function.identity()::apply);
             notifyItemRemoved(dynamicPosition);
             budgetItemAdapterCallback.totalAmount();
             budgetItemAdapterCallback.changeFilter();
+        });
+
+        holder.binding.navigateToDetailButton.setOnClickListener(v->{
+            MenuManager.navigateToFragment(budgetItem.getListingType().toString().toUpperCase(),
+                    budgetItem.getListingId(), budgetItem.getListingVersion().toString(), holder.binding.getRoot().getContext(), navController, UserRole.ANONYMOUS);
         });
 
         categoryDropdown.changeValues(new ArrayList<>(this.listingCategories), ListingCategory::getName);
@@ -119,6 +137,7 @@ public class BudgetItemAdapter extends RecyclerView.Adapter<BudgetItemAdapter.Bu
         };
 
         holder.binding.budgetTextbox.addTextChangedListener(holder.textWatcher);
+        holder.binding.categoryDropdown.setEnabled(budgetItem.getId() == null);
     }
 
     @Override

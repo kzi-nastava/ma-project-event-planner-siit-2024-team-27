@@ -197,13 +197,19 @@ public class CreateServiceFragment extends Fragment implements ViewPagerAdapter.
                 imageFiles.add(FileManager.getFileFromUri(requireContext(), image));
         } catch (Exception e) {
             SingleToast.show(requireContext(), "Failed to load the images");
-            imageFiles = null;
+            return;
         }
 
-        if (suggestedCategory.isBlank())
-            suggestedCategoryDescription = "";
-        else
-            serviceCategoryId = "";
+        if (imageFiles.isEmpty()) {
+            SingleToast.show(requireContext(), "Please add at least one image");
+            return;
+        }
+
+        if (suggestedCategory.isBlank()) {
+            suggestedCategory = null;
+            suggestedCategoryDescription = null;
+        } else
+            serviceCategoryId = null;
 
         servicesViewModel.createService(imageFiles, TokenManager.getUserId(binding.getRoot().getContext()), name, isAvailable, price, salePercentage,
                 serviceCategoryId, reservationDeadline, cancellationDeadline, isConfirmationManual, isPrivate, minimumDuration, maximumDuration, description,

@@ -142,6 +142,7 @@ public class EventInfoFragment extends Fragment implements ViewPagerAdapter.HasT
     private void OnCategoriesChanged(ArrayList<EventType> types) {
         @SuppressWarnings("unchecked")
         CustomDropDown<EventType> categoryDropdown = binding.categoryDropdown;
+        types = types.stream().filter(EventType::getIsActive).collect(Collectors.toCollection(ArrayList::new));
         categoryDropdown.changeValues(types, EventType::getName);
         if (createEventViewModel.event != null) fillData(types);
     }

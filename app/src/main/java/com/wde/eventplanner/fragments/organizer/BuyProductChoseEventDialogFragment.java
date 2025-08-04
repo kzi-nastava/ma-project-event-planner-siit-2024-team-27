@@ -105,7 +105,7 @@ public class BuyProductChoseEventDialogFragment extends DialogFragment {
                 buyProductDTO = new BuyProductDTO(
                         chosenEvent.getId(),
                         product.getStaticProductId(),
-                        fullfilledProductBudgetItemDTO.getProductCategoryId()
+                        fullfilledProductBudgetItemDTO.getId()
                 );
             }
 
