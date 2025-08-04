@@ -34,9 +34,9 @@ public class EventFilterDialogFragment extends DialogFragment {
 
     private final EventsFilterListener parent;
     private DialogEventFilterBinding binding;
-    private final Date before = new Date(0);
-    private final Date after = new Date(0);
     private boolean calendarIsOpen = false;
+    private Date before;
+    private Date after;
 
     public EventFilterDialogFragment(EventsFilterListener fragment) {
         this.parent = fragment;
@@ -45,6 +45,8 @@ public class EventFilterDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DialogEventFilterBinding.inflate(inflater, container, false);
         EventTypesViewModel viewModel = new ViewModelProvider(requireActivity()).get(EventTypesViewModel.class);
+        before = new Date(0);
+        after = new Date(0);
 
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);

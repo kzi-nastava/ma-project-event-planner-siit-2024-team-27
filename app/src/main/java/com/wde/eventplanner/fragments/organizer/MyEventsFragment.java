@@ -30,8 +30,7 @@ import com.wde.eventplanner.models.event.Event;
 import com.wde.eventplanner.utils.TokenManager;
 import com.wde.eventplanner.viewmodels.EventsViewModel;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -134,8 +133,8 @@ public class MyEventsFragment extends Fragment implements EventFilterDialogFragm
     public void onFilterPressed(String category, String city, Date after, Date before, String minRating, String maxRating) {
         this.category = category;
         this.city = city;
-        this.after = after != null ? after.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_INSTANT) : null;
-        this.before = before != null ? before.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_INSTANT) : null;
+        this.after = after != null ? new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(after) : null;
+        this.before = before != null ? new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(before) : null;
         this.minRating = minRating;
         this.maxRating = maxRating;
         currentPage = 0;
