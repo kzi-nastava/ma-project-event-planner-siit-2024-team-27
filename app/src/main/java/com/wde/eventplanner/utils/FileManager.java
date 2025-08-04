@@ -1,11 +1,14 @@
 package com.wde.eventplanner.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 
 import androidx.core.content.FileProvider;
@@ -68,25 +71,31 @@ public class FileManager {
         return result;
     }
 
-    public static File saveFileToDownloads(InputStream inputStream, String fileName) throws IOException {
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
-        OutputStream outputStream = new FileOutputStream(file);
+    public static Uri saveFileToDownloads(Context context, byte[] data, String fileName) throws IOException {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+        values.put(MediaStore.Downloads.MIME_TYPE, "application/pdf");
+        values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
 
-        byte[] buffer = new byte[4096];
-        int bytesRead;
-        while ((bytesRead = inputStream.read(buffer)) != -1)
-            outputStream.write(buffer, 0, bytesRead);
+        ContentResolver resolver = context.getContentResolver();
+        Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
 
-        outputStream.close();
-        inputStream.close();
+        if (uri == null)
+            throw new IOException("Failed to create new MediaStore record.");
 
-        return file;
+        try (OutputStream outputStream = resolver.openOutputStream(uri)) {
+            if (outputStream == null)
+                throw new IOException("Failed to get output stream.");
+            
+            outputStream.write(data);
+        }
+
+        return uri;
     }
 
-    public static void openPdf(Context context, File pdfFile) {
-        Uri pdfUri = FileProvider.getUriForFile(context, "com.wde.eventplanner.fileprovider", pdfFile);
+    public static void openPdf(Context context, Uri file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(pdfUri, "application/pdf");
+        intent.setDataAndType(file, "application/pdf");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         if (intent.resolveActivity(context.getPackageManager()) != null)

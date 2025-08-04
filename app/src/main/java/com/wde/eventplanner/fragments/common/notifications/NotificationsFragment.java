@@ -44,6 +44,7 @@ public class NotificationsFragment extends Fragment {
                 new NotificationsAdapter(viewModel.getNotifications().getValue(), NavHostFragment.findNavController(this)) :
                 new NotificationsAdapter(NavHostFragment.findNavController(this)));
 
+        viewModel.clearErrorMessage();
         viewModel.fetchNotifications();
         return binding.getRoot();
     }

@@ -62,9 +62,8 @@ public class EventStatisticsAdapter extends RecyclerView.Adapter<EventStatistics
                 new EventStatisticsDialogFragment(reviewDistribution).show(parent.getParentFragmentManager(), "graphDialog")
         ));
 
-        holder.binding.downloadButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName()).observe(parent.getViewLifecycleOwner(), file ->
-                FileManager.openPdf(parent.requireContext(), file)
-        ));
+        holder.binding.downloadButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName(), holder.binding.getRoot().getContext())
+                .observe(parent.getViewLifecycleOwner(), file -> FileManager.openPdf(parent.requireContext(), file)));
     }
 
     @Override

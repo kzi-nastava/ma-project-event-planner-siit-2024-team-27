@@ -69,7 +69,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
     }
 
     private void populateEventData(EventDetailedDTO event) {
-        binding.pdfButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName())
+        binding.pdfButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName(), binding.getRoot().getContext())
                 .observe(getViewLifecycleOwner(), file -> FileManager.openPdf(requireContext(), file)));
 
         binding.deleteButton.setOnClickListener(v -> {

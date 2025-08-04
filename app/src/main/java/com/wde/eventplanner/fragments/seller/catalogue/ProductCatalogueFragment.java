@@ -44,7 +44,7 @@ public class ProductCatalogueFragment extends Fragment implements ViewPagerAdapt
                 originalCatalogue.add(new CatalogueProduct(catalogueProduct));
         });
 
-        binding.pdfButton.setOnClickListener(v -> productsViewModel.downloadCatalogue(sellerId)
+        binding.pdfButton.setOnClickListener(v -> productsViewModel.downloadCatalogue(sellerId, binding.getRoot().getContext())
                 .observe(getViewLifecycleOwner(), file -> FileManager.openPdf(requireContext(), file)));
 
         binding.updateButton.setOnClickListener(v -> {

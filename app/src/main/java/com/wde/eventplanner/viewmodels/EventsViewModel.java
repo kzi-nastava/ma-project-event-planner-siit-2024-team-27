@@ -1,5 +1,8 @@
 package com.wde.eventplanner.viewmodels;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -291,7 +294,7 @@ public class EventsViewModel extends ViewModel {
             public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if (response.isSuccessful())
                     done.postValue(null);
-                 else
+                else
                     errorMessage.postValue("Failed to create event. Code: " + response.code());
             }
 
@@ -331,8 +334,8 @@ public class EventsViewModel extends ViewModel {
         return responseMessage;
     }
 
-    public LiveData<File> downloadReport(UUID eventId, String eventName) {
-        MutableLiveData<File> file = new MutableLiveData<>();
+    public LiveData<Uri> downloadReport(UUID eventId, String eventName, Context context) {
+        MutableLiveData<Uri> file = new MutableLiveData<>();
         ClientUtils.eventsService.getPdfReport(eventId).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -340,7 +343,7 @@ public class EventsViewModel extends ViewModel {
                     try (ResponseBody responseBody = response.body()) {
                         if (responseBody != null) {
                             String fileName = "event_" + eventName.strip().replaceAll("\\s+", "_").toLowerCase() + "_report.pdf";
-                            file.postValue(FileManager.saveFileToDownloads(responseBody.byteStream(), fileName));
+                            file.postValue(FileManager.saveFileToDownloads(context, responseBody.bytes(), fileName));
                         } else
                             errorMessage.postValue("Failed to retrieve PDF. Response body is null.");
                     } catch (IOException e) {

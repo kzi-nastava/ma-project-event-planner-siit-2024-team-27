@@ -98,7 +98,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
     private void populateEventData(EventDetailedDTO event) {
         binding.favouriteButton.setIconResource(event.getIsFavorite() ? R.drawable.ic_favourite_filled : R.drawable.ic_favourite);
 
-        binding.pdfButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName())
+        binding.pdfButton.setOnClickListener(v -> eventsViewModel.downloadReport(event.getId(), event.getName(), binding.getRoot().getContext())
                 .observe(getViewLifecycleOwner(), file -> FileManager.openPdf(requireContext(), file)));
 
         UUID userId = TokenManager.getUserId(requireContext());

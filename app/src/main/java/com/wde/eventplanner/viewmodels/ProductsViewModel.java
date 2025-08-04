@@ -1,5 +1,8 @@
 package com.wde.eventplanner.viewmodels;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -41,7 +44,7 @@ public class ProductsViewModel extends ViewModel {
 
     public LiveData<Product> getProduct(String id) {
         MutableLiveData<Product> product = new MutableLiveData<>();
-        ClientUtils.productsService.getProductLatestVersion(UUID.fromString(id)).enqueue(new Callback<Product>() {
+        ClientUtils.productsService.getProductLatestVersion(UUID.fromString(id)).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
                 if (response.isSuccessful()) {
@@ -232,8 +235,8 @@ public class ProductsViewModel extends ViewModel {
         return done;
     }
 
-    public LiveData<File> downloadCatalogue(String id) {
-        MutableLiveData<File> file = new MutableLiveData<>();
+    public LiveData<Uri> downloadCatalogue(String id, Context context) {
+        MutableLiveData<Uri> file = new MutableLiveData<>();
         ClientUtils.productsService.getPdfCatalogue(id).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -241,7 +244,7 @@ public class ProductsViewModel extends ViewModel {
                     try (ResponseBody responseBody = response.body()) {
                         if (responseBody != null) {
                             String fileName = "product_catalogue.pdf";
-                            file.postValue(FileManager.saveFileToDownloads(responseBody.byteStream(), fileName));
+                            file.postValue(FileManager.saveFileToDownloads(context, responseBody.bytes(), fileName));
                         } else
                             errorMessage.postValue("Failed to retrieve PDF. Response body is null.");
                     } catch (IOException e) {

@@ -44,7 +44,7 @@ public class ServiceCatalogueFragment extends Fragment implements ViewPagerAdapt
                 originalCatalogue.add(new CatalogueService(catalogueService));
         });
 
-        binding.pdfButton.setOnClickListener(v -> servicesViewModel.downloadCatalogue(sellerId)
+        binding.pdfButton.setOnClickListener(v -> servicesViewModel.downloadCatalogue(sellerId, binding.getRoot().getContext())
                 .observe(getViewLifecycleOwner(), file -> FileManager.openPdf(requireContext(), file)));
 
         binding.updateButton.setOnClickListener(v -> {
