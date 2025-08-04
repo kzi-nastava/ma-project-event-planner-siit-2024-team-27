@@ -92,9 +92,9 @@ public class ProfileFragment extends Fragment {
                     .setTitle("Are you sure you want to delete your profile?")
                     .setPositiveButton("Delete", (dialogInterface, i) -> {
                         viewModel.delete(profileId);
+                        NotificationService.unsubscribe(TokenManager.getProfileId(binding.getRoot().getContext()));
                         TokenManager.clearToken(binding.getRoot().getContext());
                         MenuManager.adjustMenu(requireActivity());
-                        NotificationService.unsubscribe();
                     })
                     .setNegativeButton("Cancel", null)
                     .create().show();

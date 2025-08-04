@@ -66,7 +66,8 @@ public class NotificationService extends FirebaseMessagingService {
         FirebaseMessaging.getInstance().subscribeToTopic("user_" + profileId);
     }
 
-    public static void unsubscribe() {
+    public static void unsubscribe(UUID profileId) {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("user_" + profileId);
         FirebaseMessaging.getInstance().deleteToken();
     }
 }

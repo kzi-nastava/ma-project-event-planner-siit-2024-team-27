@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
             });
 
             binding.logoutButton.setOnClickListener(view -> {
+                NotificationService.unsubscribe(TokenManager.getProfileId(binding.getRoot().getContext()));
                 TokenManager.clearToken(this);
                 MenuManager.adjustMenu(this);
-                NotificationService.unsubscribe();
                 binding.drawerLayout.closeDrawer(GravityCompat.START);
             });
 
