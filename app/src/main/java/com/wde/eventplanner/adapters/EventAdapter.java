@@ -1,60 +1,94 @@
 package com.wde.eventplanner.adapters;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.wde.eventplanner.R;
-import com.wde.eventplanner.models.Event;
+import com.squareup.picasso.Picasso;
+import com.wde.eventplanner.databinding.CardEventBinding;
+import com.wde.eventplanner.models.event.Event;
+import com.wde.eventplanner.models.user.UserRole;
+import com.wde.eventplanner.utils.MenuManager;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder> {
+    private final NavController navController;
+    private final boolean isHomeScreen;
+    public final List<Event> events;
 
-    private List<Event> eventList;
+    public EventAdapter(NavController navController, boolean isHomeScreen) {
+        this.events = new ArrayList<>();
+        this.isHomeScreen = isHomeScreen;
+        this.navController = navController;
+    }
 
-    public EventAdapter(List<Event> eventList) {
-        this.eventList = eventList;
+    public EventAdapter(List<Event> eventList, NavController navController, boolean isHomeScreen) {
+        this.events = eventList;
+        this.isHomeScreen = isHomeScreen;
+        this.navController = navController;
+    }
+
+    public EventAdapter(NavController navController) {
+        this.navController = navController;
+        this.events = new ArrayList<>();
+        this.isHomeScreen = false;
+    }
+
+    public EventAdapter(List<Event> eventList, NavController navController) {
+        this.navController = navController;
+        this.isHomeScreen = false;
+        this.events = eventList;
     }
 
     @NonNull
     @Override
     public EventViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_event, parent, false);
-        return new EventViewHolder(view);
+        CardEventBinding binding = CardEventBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new EventViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        Event event = eventList.get(position);
-        holder.titleTextView.setText(event.getTitle());
-        holder.timeTextView.setText(event.getTime());
-        holder.dateTextView.setText(event.getDate());
-        holder.locationTextView.setText(event.getLocation());
-        holder.ratingTextView.setText(String.format("%2.1f", event.getRating()));
+        Event event = events.get(position);
+        if (!event.getImages().isEmpty())
+            Picasso.get().load(event.getImages().get(0)).into(holder.binding.eventCardPicture);
+        else
+            holder.binding.eventCardPicture.setImageDrawable(new ColorDrawable(Color.parseColor("#303030")));
+        holder.binding.eventCardTitle.setText(event.getName());
+        holder.binding.eventCardTime.setText(event.getTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+        holder.binding.eventCardDate.setText(event.getDate().format(DateTimeFormatter.ofPattern("d.M.yyyy.")));
+        holder.binding.eventCardLocation.setText(event.getCity());
+        holder.binding.eventCardRating.setText(String.format(Locale.ENGLISH, "%2.1f", event.getRating()));
+
+        if (navController != null) {
+            String id = event.getId().toString();
+            Context context = holder.binding.getRoot().getContext();
+            UserRole role = isHomeScreen ? UserRole.ANONYMOUS : null;
+            holder.binding.cardView.setOnClickListener(v -> MenuManager.navigateToFragment("EVENT", id, context, navController, role));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return eventList.size();
+        return events.size();
     }
 
     public static class EventViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView, timeTextView, dateTextView, locationTextView, ratingTextView;
+        CardEventBinding binding;
 
-        public EventViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            // Find the views in the layout
-            titleTextView = itemView.findViewById(R.id.eventCardTitle);
-            timeTextView = itemView.findViewById(R.id.eventCardTime);
-            dateTextView = itemView.findViewById(R.id.eventCardDate);
-            locationTextView = itemView.findViewById(R.id.eventCardLocation);
-            ratingTextView = itemView.findViewById(R.id.eventCardRating);
+        public EventViewHolder(CardEventBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

@@ -1,0 +1,129 @@
+package com.wde.eventplanner.utils;
+
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+
+import androidx.core.content.FileProvider;
+
+import com.wde.eventplanner.adapters.ImageDeletableAdapter;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class FileManager {
+    public static File getFileFromUri(Context context, Uri uri) throws IOException {
+        if ("content".equals(uri.getScheme()) && context.getPackageName().concat(".fileprovider").equals(uri.getAuthority())) {
+            String path = uri.getPath();
+            if (path == null)
+                throw new IOException("Invalid URI path: " + uri);
+            return new File(context.getCacheDir(), new File(path).getName());
+        }
+
+        String fileName = getFileName(context, uri);
+        File destinationFile = new File(context.getCacheDir(), fileName);
+
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
+             OutputStream outputStream = new FileOutputStream(destinationFile)) {
+            if (inputStream == null)
+                throw new IOException("Unable to open InputStream for URI: " + uri);
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1)
+                outputStream.write(buffer, 0, bytesRead);
+        }
+
+        return destinationFile;
+    }
+
+    private static String getFileName(Context context, Uri uri) {
+        String result = null;
+
+        if ("content".equals(uri.getScheme())) {
+            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (nameIndex != -1)
+                        result = cursor.getString(nameIndex);
+                }
+            }
+        }
+
+        if (result == null && uri.getPath() != null) {
+            result = uri.getPath();
+            result = result.substring(result.lastIndexOf('/') + 1);
+        }
+
+        return result;
+    }
+
+    public static Uri saveFileToDownloads(Context context, byte[] data, String fileName) throws IOException {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+        values.put(MediaStore.Downloads.MIME_TYPE, "application/pdf");
+        values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+
+        ContentResolver resolver = context.getContentResolver();
+        Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+
+        if (uri == null)
+            throw new IOException("Failed to create new MediaStore record.");
+
+        try (OutputStream outputStream = resolver.openOutputStream(uri)) {
+            if (outputStream == null)
+                throw new IOException("Failed to get output stream.");
+            
+            outputStream.write(data);
+        }
+
+        return uri;
+    }
+
+    public static void openPdf(Context context, Uri file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(file, "application/pdf");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        if (intent.resolveActivity(context.getPackageManager()) != null)
+            context.startActivity(intent);
+        else
+            SingleToast.show(context, "No PDF viewer app found!");
+    }
+
+    public static void downloadImagesToLocal(Context context, List<String> imageUrls, List<Uri> imageUris, ImageDeletableAdapter adapter) {
+        new Thread(() -> {
+            ArrayList<Uri> uris = new ArrayList<>();
+            for (String urlString : imageUrls) {
+                try (InputStream input = new URL(urlString).openStream()) {
+                    File file = new File(context.getCacheDir(), UUID.randomUUID() + ".jpg");
+                    try (OutputStream output = new FileOutputStream(file)) {
+                        byte[] buf = new byte[4096];
+                        int len;
+                        while ((len = input.read(buf)) > 0) output.write(buf, 0, len);
+                    }
+                    uris.add(FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            imageUris.addAll(uris);
+            ((Activity) context).runOnUiThread(() -> {
+                adapter.notifyItemRangeChanged(0, uris.size());
+            });
+        }).start();
+    }
+}

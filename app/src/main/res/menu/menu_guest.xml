@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_close"
+        android:icon="@drawable/ic_close"
+        android:title="@string/close" />
+    <item
+        android:id="@+id/nav_homepage"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/nav_events"
+        android:icon="@drawable/ic_event"
+        android:title="@string/events" />
+    <item
+        android:id="@+id/nav_market"
+        android:icon="@drawable/ic_storefront"
+        android:title="@string/market" />
+    <item
+        android:id="@+id/nav_favourite_events"
+        android:icon="@drawable/ic_favourite"
+        android:title="@string/favorites" />
+    <item
+        android:id="@+id/nav_chat_inbox"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chat" />
+    <item
+        android:id="@+id/nav_calendar_guest"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/calendar" />
+    <item
+        android:id="@+id/nav_notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications" />
+</menu>

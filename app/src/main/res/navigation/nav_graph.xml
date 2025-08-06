@@ -3,32 +3,309 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/HomepageFragment">
+    app:startDestination="@id/nav_homepage">
 
     <fragment
-        android:id="@+id/HomepageFragment"
-        android:name="com.wde.eventplanner.fragments.HomepageFragment"
-        tools:layout="@layout/fragment_homepage_screen"  />
+        android:id="@+id/nav_homepage"
+        android:name="com.wde.eventplanner.fragments.common.homepage.HomepageFragment"
+        tools:layout="@layout/fragment_homepage" />
 
     <fragment
-        android:id="@+id/LoginFragment"
-        android:name="com.wde.eventplanner.fragments.LoginFragment"
-        tools:layout="@layout/fragment_login_screen" >
+        android:id="@+id/nav_events"
+        android:name="com.wde.eventplanner.fragments.common.homepage.all_events.AllEventsFragment"
+        tools:layout="@layout/fragment_all_events" />
+
+    <fragment
+        android:id="@+id/nav_market"
+        android:name="com.wde.eventplanner.fragments.common.homepage.all_listings.AllListingsFragment"
+        tools:layout="@layout/fragment_all_listings" />
+
+    <fragment
+        android:id="@+id/nav_my_listings"
+        android:name="com.wde.eventplanner.fragments.seller.MyListingsFragment"
+        tools:layout="@layout/fragment_my_listings">
+        <action
+            android:id="@+id/action_seller_listings_to_create_listing"
+            app:destination="@id/CreateListingFragment" />
+        <action
+            android:id="@+id/action_SellerMyListingsFragment_to_SellerServiceDetailFragment"
+            app:destination="@id/ServiceDetailSellerFragment" />
+        <action
+            android:id="@+id/action_SellerMyListingsFragment_to_SellerProductDetailFragment"
+            app:destination="@id/ProductDetailSellerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_catalogue"
+        android:name="com.wde.eventplanner.fragments.seller.catalogue.CatalogueFragment"
+        tools:layout="@layout/fragment_catalogue" />
+
+    <fragment
+        android:id="@+id/nav_my_events"
+        android:name="com.wde.eventplanner.fragments.organizer.MyEventsFragment"
+        tools:layout="@layout/fragment_my_events">
+        <action
+            android:id="@+id/action_my_events_to_create_event"
+            app:destination="@id/CreateEventFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_organizer_profile"
+        android:name="com.wde.eventplanner.fragments.organizer.ProfileFragment"
+        tools:layout="@layout/fragment_organizer_profile" />
+
+    <fragment
+        android:id="@+id/nav_seller_profile"
+        android:name="com.wde.eventplanner.fragments.seller.ProfileFragment"
+        tools:layout="@layout/fragment_seller_profile" />
+
+    <fragment
+        android:id="@+id/nav_guest_profile"
+        android:name="com.wde.eventplanner.fragments.guest.ProfileFragment"
+        tools:layout="@layout/fragment_guest_profile" />
+
+    <fragment
+        android:id="@+id/nav_admin_profile"
+        android:name="com.wde.eventplanner.fragments.admin.ProfileFragment"
+        tools:layout="@layout/fragment_admin_profile" />
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.wde.eventplanner.fragments.anonymous.LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_to_organizer_registration"
             app:destination="@id/OrganizerRegistrationFragment" />
         <action
             android:id="@+id/action_login_to_seller_registration"
             app:destination="@id/SellerRegistrationFragment" />
+        <action
+            android:id="@+id/action_login_to_homepage"
+            app:destination="@id/nav_homepage" />
     </fragment>
 
     <fragment
         android:id="@+id/OrganizerRegistrationFragment"
-        android:name="com.wde.eventplanner.fragments.OrganizerRegistrationFragment"
-        tools:layout="@layout/fragment_organizer_registration_screen" />
+        android:name="com.wde.eventplanner.fragments.anonymous.RegistrationOrganizerFragment"
+        tools:layout="@layout/fragment_registration_organizer">
+        <action
+            android:id="@+id/action_organizer_registration_to_homepage"
+            app:destination="@id/nav_homepage" />
+    </fragment>
     <fragment
         android:id="@+id/SellerRegistrationFragment"
-        android:name="com.wde.eventplanner.fragments.SellerRegistrationFragment"
-        tools:layout="@layout/fragment_seller_registration_screen"  />
-    
+        android:name="com.wde.eventplanner.fragments.anonymous.RegistrationSellerFragment"
+        tools:layout="@layout/fragment_registration_seller">
+        <action
+            android:id="@+id/action_seller_registration_to_homepage"
+            app:destination="@id/nav_homepage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/CreateEventFragment"
+        android:name="com.wde.eventplanner.fragments.organizer.create_event.CreateEventFragment"
+        tools:layout="@layout/fragment_create_event" />
+
+    <fragment
+        android:id="@+id/CreateListingFragment"
+        android:name="com.wde.eventplanner.fragments.seller.create_listing.CreateListingFragment"
+        tools:layout="@layout/fragment_create_listing" />
+    <fragment
+        android:id="@+id/ServiceDetailSellerFragment"
+        android:name="com.wde.eventplanner.fragments.seller.ServiceDetailFragment"
+        tools:layout="@layout/fragment_seller_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_ServiceDetailSellerFragment_to_EditServiceFragment"
+            app:destination="@id/EditServiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProductDetailSellerFragment"
+        android:name="com.wde.eventplanner.fragments.seller.ProductDetailFragment"
+        tools:layout="@layout/fragment_seller_product_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_ProductDetailSellerFragment_to_EditProductFragment"
+            app:destination="@id/EditProductFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EditProductFragment"
+        android:name="com.wde.eventplanner.fragments.seller.edit_listing.EditProductFragment"
+        tools:layout="@layout/fragment_edit_product">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EditServiceFragment"
+        android:name="com.wde.eventplanner.fragments.seller.edit_listing.EditServiceFragment"
+        tools:layout="@layout/fragment_edit_service">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ServiceDetailOrganizerFragment"
+        android:name="com.wde.eventplanner.fragments.organizer.ServiceDetailFragment"
+        tools:layout="@layout/fragment_organizer_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProductDetailOrganizerFragment"
+        android:name="com.wde.eventplanner.fragments.organizer.ProductDetailFragment"
+        tools:layout="@layout/fragment_organizer_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ServiceDetailUserFragment"
+        android:name="com.wde.eventplanner.fragments.common.ServiceDetailFragment"
+        tools:layout="@layout/fragment_user_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProductDetailUserFragment"
+        android:name="com.wde.eventplanner.fragments.common.ProductDetailFragment"
+        tools:layout="@layout/fragment_user_service_detail">
+        <argument
+            android:name="staticId"
+            app:argType="string" />
+        <argument
+            android:name="version"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.wde.eventplanner.fragments.common.notifications.NotificationsFragment"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/nav_chat_inbox"
+        android:name="com.wde.eventplanner.fragments.common.chats.ChatInboxFragment"
+        tools:layout="@layout/fragment_chat_inbox">
+        <action
+            android:id="@+id/action_inbox_to_chat"
+            app:destination="@id/nav_chat" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.wde.eventplanner.fragments.common.chats.ChatFragment"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/nav_seller_detail"
+        android:name="com.wde.eventplanner.fragments.common.SellerDetailFragment"
+        tools:layout="@layout/fragment_seller_detail" />
+
+    <fragment
+        android:id="@+id/nav_calendar_guest"
+        android:name="com.wde.eventplanner.fragments.guest.CalendarFragment"
+        tools:layout="@layout/fragment_calendar_events" />
+    <fragment
+        android:id="@+id/nav_calendar_organizer"
+        android:name="com.wde.eventplanner.fragments.organizer.CalendarFragment"
+        tools:layout="@layout/fragment_calendar_events" />
+    <fragment
+        android:id="@+id/nav_calendar_seller"
+        android:name="com.wde.eventplanner.fragments.seller.calendar.CalendarFragment"
+        tools:layout="@layout/fragment_calendar_services" />
+
+    <fragment
+        android:id="@+id/nav_favourite_listings"
+        android:name="com.wde.eventplanner.fragments.organizer.FavouriteListingsFragment"
+        tools:layout="@layout/fragment_favourite_listings" />
+    <fragment
+        android:id="@+id/nav_favourite_events"
+        android:name="com.wde.eventplanner.fragments.guest.FavouriteEventsFragment"
+        tools:layout="@layout/fragment_favourite_events" />
+    <fragment
+        android:id="@+id/nav_event_types"
+        android:name="com.wde.eventplanner.fragments.admin.event_categories.EventTypesFragment"
+        tools:layout="@layout/fragment_event_types" />
+    <fragment
+        android:id="@+id/nav_listing_categories"
+        android:name="com.wde.eventplanner.fragments.admin.listing_categories.ListingCategoriesFragment"
+        tools:layout="@layout/fragment_listing_categories" />
+    <fragment
+        android:id="@+id/nav_reports"
+        android:name="com.wde.eventplanner.fragments.admin.reports.ReportsFragment"
+        tools:layout="@layout/fragment_reports" />
+    <fragment
+        android:id="@+id/nav_reviews"
+        android:name="com.wde.eventplanner.fragments.admin.reviews.ReviewsFragment"
+        tools:layout="@layout/fragment_reviews" />
+    <fragment
+        android:id="@+id/nav_statistics"
+        android:name="com.wde.eventplanner.fragments.admin.event_statistics.EventStatisticsFragment"
+        tools:layout="@layout/fragment_event_statistics" />
+
+    <fragment
+        android:id="@+id/nav_service_detail_organizer"
+        android:name="com.wde.eventplanner.fragments.organizer.ServiceDetailFragment"
+        tools:layout="@layout/fragment_organizer_service_detail" />
+    <fragment
+        android:id="@+id/nav_product_detail_organizer"
+        android:name="com.wde.eventplanner.fragments.organizer.ProductDetailFragment"
+        tools:layout="@layout/fragment_organizer_product_detail" />
+    <fragment
+        android:id="@+id/nav_event_detail_organizer"
+        android:name="com.wde.eventplanner.fragments.organizer.EventDetailFragment"
+        tools:layout="@layout/fragment_organizer_event_detail" />
+
+    <fragment
+        android:id="@+id/nav_service_detail_seller"
+        android:name="com.wde.eventplanner.fragments.seller.ServiceDetailFragment"
+        tools:layout="@layout/fragment_seller_service_detail" />
+    <fragment
+        android:id="@+id/nav_product_detail_seller"
+        android:name="com.wde.eventplanner.fragments.seller.ProductDetailFragment"
+        tools:layout="@layout/fragment_seller_product_detail" />
+
+    <fragment
+        android:id="@+id/nav_event_detail_guest"
+        android:name="com.wde.eventplanner.fragments.guest.EventDetailFragment"
+        tools:layout="@layout/fragment_guest_event_detail" />
+
+    <fragment
+        android:id="@+id/nav_service_detail_user"
+        android:name="com.wde.eventplanner.fragments.common.ServiceDetailFragment"
+        tools:layout="@layout/fragment_user_service_detail" />
+    <fragment
+        android:id="@+id/nav_product_detail_user"
+        android:name="com.wde.eventplanner.fragments.common.ProductDetailFragment"
+        tools:layout="@layout/fragment_user_product_detail" />
+    <fragment
+        android:id="@+id/nav_event_detail_user"
+        android:name="com.wde.eventplanner.fragments.common.EventDetailFragment"
+        tools:layout="@layout/fragment_user_event_detail" />
 </navigation>

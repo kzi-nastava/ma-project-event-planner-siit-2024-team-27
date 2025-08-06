@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="6dp"
-    android:elevation="2dp"
     app:cardBackgroundColor="@color/card"
     app:cardCornerRadius="18dp">
 
@@ -62,11 +61,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/listingCardOriginalPrice"
+                        android:id="@+id/listingCardOldPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="-4dp"
                         android:gravity="end"
-                        android:text="@string/discounted_price"
                         android:textColor="@color/edge3"
                         android:textSize="15sp" />
 

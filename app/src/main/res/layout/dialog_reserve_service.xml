@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:theme="@style/CardViewTextInputOverlay"
+    app:cardBackgroundColor="@color/edge"
+    app:cardCornerRadius="25dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="312dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/closeButton"
+            android:layout_width="42dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/edge"
+            android:paddingStart="8dp"
+            android:paddingTop="9dp"
+            android:paddingEnd="8dp"
+            app:cornerRadius="100dp"
+            app:icon="@drawable/ic_close"
+            app:iconGravity="top"
+            app:iconSize="22dp"
+            app:iconTint="@color/pale_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="@string/select_event_and_time"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/eventDropdownLayout"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="36dp"
+            android:layout_marginTop="24dp"
+            app:endIconDrawable="@drawable/ic_down_arrow"
+            app:endIconMode="custom"
+            app:endIconTint="@color/pale_text"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleView"
+            app:placeholderText="Event">
+
+            <com.wde.eventplanner.components.CustomDropDown
+                android:id="@+id/eventDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionDone"
+                android:paddingHorizontal="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/startDropdownLayout"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="36dp"
+            android:layout_marginTop="14dp"
+            app:endIconDrawable="@drawable/ic_down_arrow"
+            app:endIconMode="custom"
+            app:endIconTint="@color/pale_text"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eventDropdownLayout"
+            app:placeholderText="Start time">
+
+            <com.wde.eventplanner.components.CustomDropDown
+                android:id="@+id/startTimeDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionDone"
+                android:paddingHorizontal="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/endDropdownLayout"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="36dp"
+            android:layout_marginTop="14dp"
+            app:endIconDrawable="@drawable/ic_down_arrow"
+            app:endIconMode="custom"
+            app:endIconTint="@color/pale_text"
+            app:expandedHintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/startDropdownLayout"
+            app:placeholderText="End time">
+
+            <com.wde.eventplanner.components.CustomDropDown
+                android:id="@+id/endTimeDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionDone"
+                android:paddingHorizontal="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reserveButton"
+            android:layout_width="132dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="36dp"
+            android:text="@string/reserve"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/endDropdownLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

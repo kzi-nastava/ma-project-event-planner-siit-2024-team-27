@@ -1,0 +1,1114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cities">
+        <item>Ada</item>
+        <item>Adaševci</item>
+        <item>Adorjan</item>
+        <item>Adrani</item>
+        <item>Aleksa Šantić</item>
+        <item>Aleksandrovac</item>
+        <item>Aleksandrovo</item>
+        <item>Aleksinac</item>
+        <item>Aleksinački Rudnik</item>
+        <item>Alibunar</item>
+        <item>Aljinovići</item>
+        <item>Apatin</item>
+        <item>Aradac</item>
+        <item>Aranđelovac</item>
+        <item>Arilje</item>
+        <item>Azanja</item>
+        <item>Ašanja</item>
+        <item>Babušnica</item>
+        <item>Badnjevac</item>
+        <item>Badovinci</item>
+        <item>Bagrdan</item>
+        <item>Bajina Bašta</item>
+        <item>Bajmok</item>
+        <item>Bajša</item>
+        <item>Balajnac</item>
+        <item>Baljevac</item>
+        <item>Banatska Dubica</item>
+        <item>Banatska Palanka</item>
+        <item>Banatska Subotica</item>
+        <item>Banatska Topola</item>
+        <item>Banatski Brestovac</item>
+        <item>Banatski Despotovac</item>
+        <item>Banatski Dvor</item>
+        <item>Banatski Karlovac</item>
+        <item>Banatsko Aranđelovo</item>
+        <item>Banatsko Karađorđevo</item>
+        <item>Banatsko Novo Selo</item>
+        <item>Banatsko Veliko Selo</item>
+        <item>Banja (kod Priboja)</item>
+        <item>Banja Koviljača</item>
+        <item>Banja</item>
+        <item>Banjani</item>
+        <item>Banjska</item>
+        <item>Banovci-Dunav</item>
+        <item>Banovo Polje</item>
+        <item>Banoštor</item>
+        <item>Barajevo</item>
+        <item>Baranda</item>
+        <item>Barbatovac</item>
+        <item>Bare</item>
+        <item>Barice</item>
+        <item>Barič</item>
+        <item>Barlovo</item>
+        <item>Baroševac</item>
+        <item>Batajnica</item>
+        <item>Batočina</item>
+        <item>Batrovci</item>
+        <item>Batuse</item>
+        <item>Bavanište</item>
+        <item>Bač</item>
+        <item>Bačevci</item>
+        <item>Bačina</item>
+        <item>Bačinci</item>
+        <item>Bačka Palanka</item>
+        <item>Bačka Topola</item>
+        <item>Bački Breg</item>
+        <item>Bački Brestovac</item>
+        <item>Bački Gračac</item>
+        <item>Bački Jarak</item>
+        <item>Bački Monoštor</item>
+        <item>Bački Petrovac</item>
+        <item>Bački Sokolac</item>
+        <item>Bački Vinogradi</item>
+        <item>Bačko Dobro Polje</item>
+        <item>Bačko Gradište</item>
+        <item>Bačko Novo Selo</item>
+        <item>Bačko Petrovo Selo</item>
+        <item>Bašaid</item>
+        <item>Begeč</item>
+        <item>Bela Crkva</item>
+        <item>Bela Palanka</item>
+        <item>Bela Voda</item>
+        <item>Bela Zemlja</item>
+        <item>Belanovica</item>
+        <item>Bele Vode</item>
+        <item>Belegiš</item>
+        <item>Beli Potok</item>
+        <item>Beljina</item>
+        <item>Belo Blato</item>
+        <item>Beloljin</item>
+        <item>Belosavci</item>
+        <item>Belotinac</item>
+        <item>Beloševac</item>
+        <item>Belušić</item>
+        <item>Beograd</item>
+        <item>Beočin</item>
+        <item>Berkasovo</item>
+        <item>Bezdan</item>
+        <item>Bečej</item>
+        <item>Bešenovo</item>
+        <item>Beška</item>
+        <item>Bigrenica</item>
+        <item>Bikić Do</item>
+        <item>Bikovo</item>
+        <item>Biljača</item>
+        <item>Bingula</item>
+        <item>Bioska</item>
+        <item>Bistar</item>
+        <item>Bistrica</item>
+        <item>Blace</item>
+        <item>Blaževo</item>
+        <item>Bobovo</item>
+        <item>Bogaraš</item>
+        <item>Bogatić</item>
+        <item>Bogojevce</item>
+        <item>Bogojevo</item>
+        <item>Bogovađa</item>
+        <item>Bogovina</item>
+        <item>Bogutovac</item>
+        <item>Bojnik</item>
+        <item>Boka</item>
+        <item>Boljevac</item>
+        <item>Boljkovci</item>
+        <item>Bor</item>
+        <item>Borski Brestovac</item>
+        <item>Bosilegrad</item>
+        <item>Bosut</item>
+        <item>Botoš</item>
+        <item>Bočar</item>
+        <item>Bođani</item>
+        <item>Bošnjace</item>
+        <item>Bošnjane</item>
+        <item>Božetići</item>
+        <item>Boževac</item>
+        <item>Božica</item>
+        <item>Bradarac</item>
+        <item>Braničevo</item>
+        <item>Brankovina</item>
+        <item>Bratljevo</item>
+        <item>Braćevac</item>
+        <item>Brekovo</item>
+        <item>Bresnica</item>
+        <item>Brestovac</item>
+        <item>Brestovačka Banja</item>
+        <item>Brezjak</item>
+        <item>Brezna</item>
+        <item>Brezova</item>
+        <item>Brezovica</item>
+        <item>Brežđe</item>
+        <item>Brgule</item>
+        <item>Brodarevo</item>
+        <item>Brus</item>
+        <item>Brusnik</item>
+        <item>Brvenik</item>
+        <item>Brza Palanka</item>
+        <item>Brzan</item>
+        <item>Brzeće</item>
+        <item>Brzi Brod</item>
+        <item>Brđani</item>
+        <item>Budisava</item>
+        <item>Bujanovac</item>
+        <item>Bukorovac</item>
+        <item>Bukovac</item>
+        <item>Bukovica</item>
+        <item>Bukovik</item>
+        <item>Bunar</item>
+        <item>Burdimo</item>
+        <item>Burovac</item>
+        <item>Busilovac</item>
+        <item>Bučje</item>
+        <item>Buđanovci</item>
+        <item>Cerovac</item>
+        <item>Crepaja</item>
+        <item>Crkvine</item>
+        <item>Crna Bara</item>
+        <item>Crna Trava</item>
+        <item>Crnoklište</item>
+        <item>Crvena Crkva</item>
+        <item>Crvena Reka</item>
+        <item>Crvenka</item>
+        <item>Darosava</item>
+        <item>Debeljača</item>
+        <item>Debrc</item>
+        <item>Deliblato</item>
+        <item>Delimeđe</item>
+        <item>Deronje</item>
+        <item>Desimirovac</item>
+        <item>Despotovac</item>
+        <item>Despotovo</item>
+        <item>Devojački Bunar</item>
+        <item>Deč</item>
+        <item>Deževa</item>
+        <item>Dimitrovgrad</item>
+        <item>Divci</item>
+        <item>Divljaka</item>
+        <item>Divostin</item>
+        <item>Divoš</item>
+        <item>Divčibare</item>
+        <item>Dobra</item>
+        <item>Dobri Do</item>
+        <item>Dobrica</item>
+        <item>Dobrinci</item>
+        <item>Dobrić</item>
+        <item>Dolac</item>
+        <item>Doljevac</item>
+        <item>Dolovo</item>
+        <item>Donja Bela Reka</item>
+        <item>Donja Borina</item>
+        <item>Donja Gušterica</item>
+        <item>Donja Kamenica</item>
+        <item>Donja Ljubata</item>
+        <item>Donja Mutnica</item>
+        <item>Donja Orovica</item>
+        <item>Donja Rečica</item>
+        <item>Donja Trnava</item>
+        <item>Donja Šatornja</item>
+        <item>Donje Crnatovo</item>
+        <item>Donje Crniljevo</item>
+        <item>Donje Međurovo</item>
+        <item>Donje Vidovo</item>
+        <item>Donje Zuniče</item>
+        <item>Donji Dušnik</item>
+        <item>Donji Krčin</item>
+        <item>Donji Milanovac</item>
+        <item>Donji Stajevac</item>
+        <item>Doroslovo</item>
+        <item>Draginac</item>
+        <item>Draginje</item>
+        <item>Draglica</item>
+        <item>Dragobraća</item>
+        <item>Dragocvet</item>
+        <item>Dragolj</item>
+        <item>Dragovo</item>
+        <item>Dragoševac</item>
+        <item>Drajkovce</item>
+        <item>Dračić</item>
+        <item>Draževac</item>
+        <item>Drenovac</item>
+        <item>Drugovac</item>
+        <item>Dublje</item>
+        <item>Duboka</item>
+        <item>Dubovac</item>
+        <item>Dubovo</item>
+        <item>Dubočane</item>
+        <item>Dubravica</item>
+        <item>Dudovica</item>
+        <item>Duga Poljana</item>
+        <item>Dugo Polje</item>
+        <item>Dupljaja</item>
+        <item>Džep</item>
+        <item>Džigolj</item>
+        <item>Elemir</item>
+        <item>Erdevik</item>
+        <item>Erdeč</item>
+        <item>Ečka</item>
+        <item>Farkaždin</item>
+        <item>Feketić</item>
+        <item>Futog</item>
+        <item>Gadžin Han</item>
+        <item>Gaj</item>
+        <item>Gajdobra</item>
+        <item>Gakovo</item>
+        <item>Gamzigradska Banja</item>
+        <item>Gardinovci</item>
+        <item>Gibarac</item>
+        <item>Glavinci</item>
+        <item>Globoder</item>
+        <item>Glogonj</item>
+        <item>Glogovac</item>
+        <item>Gložan</item>
+        <item>Glušci</item>
+        <item>Gnjilan</item>
+        <item>Golobok</item>
+        <item>Golubac</item>
+        <item>Golubinci</item>
+        <item>Goračići</item>
+        <item>Gornja Dobrinja</item>
+        <item>Gornja Draguša</item>
+        <item>Gornja Lisina</item>
+        <item>Gornja Sabanta</item>
+        <item>Gornja Toplica</item>
+        <item>Gornja Toponica</item>
+        <item>Gornja Trepča</item>
+        <item>Gornja Trnava</item>
+        <item>Gornje Dvorane</item>
+        <item>Gornji Barbeš</item>
+        <item>Gornji Breg</item>
+        <item>Gornji Matejevac</item>
+        <item>Gornji Milanovac</item>
+        <item>Gornji Stepoš</item>
+        <item>Gornji Stupanj</item>
+        <item>Gospođinci</item>
+        <item>Gostun</item>
+        <item>Grabovac</item>
+        <item>Grabovci</item>
+        <item>Grabovica</item>
+        <item>Gradskovo</item>
+        <item>Gračanica</item>
+        <item>Grdelica</item>
+        <item>Grebenac</item>
+        <item>Grgurevci</item>
+        <item>Grlište</item>
+        <item>Grljan</item>
+        <item>Grocka</item>
+        <item>Grošnica</item>
+        <item>Gruža</item>
+        <item>Guberevac</item>
+        <item>Gudurica</item>
+        <item>Gunaroš</item>
+        <item>Guča</item>
+        <item>Guševac</item>
+        <item>Hajdukovo</item>
+        <item>Hajdučica</item>
+        <item>Hetin</item>
+        <item>Horgoš granični prelaz</item>
+        <item>Horgoš</item>
+        <item>Hrtkovci</item>
+        <item>Idvor</item>
+        <item>Ilandža</item>
+        <item>Ilinci</item>
+        <item>Ilićevo</item>
+        <item>Inđija</item>
+        <item>Irig</item>
+        <item>Ivanjica</item>
+        <item>Ivanovo</item>
+        <item>Izbište</item>
+        <item>Iđoš</item>
+        <item>Jabuka</item>
+        <item>Jabukovac</item>
+        <item>Jabučje</item>
+        <item>Jadranska Lešnica</item>
+        <item>Jagnjilo</item>
+        <item>Jagodina</item>
+        <item>Jamena</item>
+        <item>Jankov Most</item>
+        <item>Janošik</item>
+        <item>Jarak</item>
+        <item>Jarkovac</item>
+        <item>Jarmenovci</item>
+        <item>Jasenovo</item>
+        <item>Jasika</item>
+        <item>Jasikovica</item>
+        <item>Jasikovo</item>
+        <item>Jazak</item>
+        <item>Jazovo</item>
+        <item>Jaša Tomić</item>
+        <item>Jelašnica</item>
+        <item>Jelen Do</item>
+        <item>Jelovik</item>
+        <item>Jermenovci</item>
+        <item>Ježevica</item>
+        <item>Jovac</item>
+        <item>Jovanovac</item>
+        <item>Jošanica</item>
+        <item>Jošanička Banja</item>
+        <item>Jugbogdanovac</item>
+        <item>Junkovac</item>
+        <item>Kalna</item>
+        <item>Kaluđerica</item>
+        <item>Kamenica</item>
+        <item>Kanjiža</item>
+        <item>Kaona</item>
+        <item>Kaonik</item>
+        <item>Karan</item>
+        <item>Karavukovo</item>
+        <item>Karađorđevo</item>
+        <item>Karlovčić</item>
+        <item>Katun</item>
+        <item>Kać</item>
+        <item>Kačarevo</item>
+        <item>Kelebija gran. prelaz</item>
+        <item>Kelebija</item>
+        <item>Kevi</item>
+        <item>Kikinda</item>
+        <item>Kisač</item>
+        <item>Kladovo</item>
+        <item>Klek</item>
+        <item>Klenak</item>
+        <item>Klenike</item>
+        <item>Klenje</item>
+        <item>Klisura</item>
+        <item>Kličevac</item>
+        <item>Kljajićevo</item>
+        <item>Klokočevac</item>
+        <item>Knić</item>
+        <item>Knićanin</item>
+        <item>Knjaževac</item>
+        <item>Kobišnica</item>
+        <item>Koceljeva</item>
+        <item>Kokin Brod</item>
+        <item>Kolare</item>
+        <item>Kolari</item>
+        <item>Kolut</item>
+        <item>Komirić</item>
+        <item>Konak</item>
+        <item>Konarevo</item>
+        <item>Konjuh</item>
+        <item>Končarevo</item>
+        <item>Kopaonik</item>
+        <item>Koprivnica</item>
+        <item>Koraćica</item>
+        <item>Korbevac</item>
+        <item>Korbovo</item>
+        <item>Korenita</item>
+        <item>Korman</item>
+        <item>Kosančić</item>
+        <item>Kosjerić</item>
+        <item>Kosovo Polje</item>
+        <item>Kosovska Kamenica</item>
+        <item>Kosovska Mitrovica</item>
+        <item>Kostojevići</item>
+        <item>Kostolac</item>
+        <item>Kotraža</item>
+        <item>Kovačevac</item>
+        <item>Kovačica</item>
+        <item>Kovilj</item>
+        <item>Kovin</item>
+        <item>Kragujevac</item>
+        <item>Krajišnik</item>
+        <item>Kraljevci</item>
+        <item>Kraljevo</item>
+        <item>Kremna</item>
+        <item>Krepoljin</item>
+        <item>Kriva Feja</item>
+        <item>Krivaja</item>
+        <item>Krivelj</item>
+        <item>Krivi Vir</item>
+        <item>Krnjevo</item>
+        <item>Krnješevci</item>
+        <item>Krupac</item>
+        <item>Krupanj</item>
+        <item>Krušar</item>
+        <item>Krušedol</item>
+        <item>Kruševac</item>
+        <item>Kruševica</item>
+        <item>Kruščić</item>
+        <item>Krčedin</item>
+        <item>Kucura</item>
+        <item>Kukljin</item>
+        <item>Kukujevci</item>
+        <item>Kula</item>
+        <item>Kulina</item>
+        <item>Kulpin</item>
+        <item>Kumane</item>
+        <item>Kupci</item>
+        <item>Kupinik</item>
+        <item>Kupinovo</item>
+        <item>Kupusina</item>
+        <item>Kuršumlija</item>
+        <item>Kuršumlijska Banja</item>
+        <item>Kusadak</item>
+        <item>Kusić</item>
+        <item>Kuzmin</item>
+        <item>Kučevo</item>
+        <item>Kušiljevo</item>
+        <item>Kušići</item>
+        <item>Kuštilj</item>
+        <item>Lajkovac</item>
+        <item>Lalinac</item>
+        <item>Lalić</item>
+        <item>Laplje Selo</item>
+        <item>Lapovo (Varoš)</item>
+        <item>Lapovo</item>
+        <item>Lazarevac</item>
+        <item>Lazarevo</item>
+        <item>Laznica</item>
+        <item>Laćarak</item>
+        <item>Lađevci</item>
+        <item>Lebane</item>
+        <item>Lece</item>
+        <item>Ledinci</item>
+        <item>Lelić</item>
+        <item>Lenovac</item>
+        <item>Lepenac</item>
+        <item>Lepenica</item>
+        <item>Lepina</item>
+        <item>Leposavić</item>
+        <item>Leskovac</item>
+        <item>Lešak</item>
+        <item>Lešnica</item>
+        <item>Ležimir</item>
+        <item>Lipar</item>
+        <item>Lipe</item>
+        <item>Lipnički Šor</item>
+        <item>Lipolist</item>
+        <item>Lički Hanovi</item>
+        <item>Ljig</item>
+        <item>Ljuba</item>
+        <item>Ljuberađa</item>
+        <item>Ljubiš</item>
+        <item>Ljubovija</item>
+        <item>Ljukovo</item>
+        <item>Ljutovo</item>
+        <item>Lok</item>
+        <item>Lokve</item>
+        <item>Lovćenac</item>
+        <item>Loznica</item>
+        <item>Lozovik</item>
+        <item>Loćika</item>
+        <item>Lubnica</item>
+        <item>Lug</item>
+        <item>Lugavčina</item>
+        <item>Lukare</item>
+        <item>Lukino Selo</item>
+        <item>Lukićevo</item>
+        <item>Lukovo</item>
+        <item>Lukovska Banja</item>
+        <item>Lunovo Selo</item>
+        <item>Lučani</item>
+        <item>Lužnice</item>
+        <item>Maglić</item>
+        <item>Majdan</item>
+        <item>Majdanpek</item>
+        <item>Majilovac</item>
+        <item>Majur</item>
+        <item>Mala Bosna</item>
+        <item>Mala Krsna</item>
+        <item>Mala Moštanica</item>
+        <item>Mala Plana</item>
+        <item>Male Pijace</item>
+        <item>Male Pčelice</item>
+        <item>Mali Beograd</item>
+        <item>Mali Izvor</item>
+        <item>Mali Iđoš</item>
+        <item>Mali Jasenovac</item>
+        <item>Mali Požarevac</item>
+        <item>Mali Zvornik</item>
+        <item>Malo Crniće</item>
+        <item>Malo Krčmare</item>
+        <item>Malošište</item>
+        <item>Malča</item>
+        <item>Manojlovce</item>
+        <item>Manđelos</item>
+        <item>Maradik</item>
+        <item>Margita</item>
+        <item>Markovac</item>
+        <item>Markovica</item>
+        <item>Martinci</item>
+        <item>Martonoš</item>
+        <item>Maršić</item>
+        <item>Mataruška Banja</item>
+        <item>Mačkat</item>
+        <item>Mačvanska Mitrovica</item>
+        <item>Mačvanski Pričinović</item>
+        <item>Medoševac</item>
+        <item>Medveđa</item>
+        <item>Melenci</item>
+        <item>Melenci-Rusanda</item>
+        <item>Meljak</item>
+        <item>Merdare</item>
+        <item>Merošina</item>
+        <item>Merćez</item>
+        <item>Metlić</item>
+        <item>Metovnica</item>
+        <item>Međa</item>
+        <item>Međulužje</item>
+        <item>Međurečje</item>
+        <item>Mihajlovac</item>
+        <item>Mihajlovo</item>
+        <item>Mijatovac</item>
+        <item>Milatovac</item>
+        <item>Milentija</item>
+        <item>Miletićevo</item>
+        <item>Mileševo</item>
+        <item>Miloševac</item>
+        <item>Miloševo</item>
+        <item>Milutovac</item>
+        <item>Minićevo</item>
+        <item>Mionica</item>
+        <item>Mirosaljci</item>
+        <item>Miroševce</item>
+        <item>Mitrovac</item>
+        <item>Mišićevo</item>
+        <item>Mladenovac</item>
+        <item>Mladenovo</item>
+        <item>Mokra Gora</item>
+        <item>Mokrin</item>
+        <item>Mol</item>
+        <item>Molovin</item>
+        <item>Morović</item>
+        <item>Mozgovo</item>
+        <item>Mošorin</item>
+        <item>Mramor</item>
+        <item>Mramorak</item>
+        <item>Mrčajevci</item>
+        <item>Mršinci</item>
+        <item>Muhovac</item>
+        <item>Mužlja</item>
+        <item>Nadalj</item>
+        <item>Nakovo</item>
+        <item>Natalinci</item>
+        <item>Negotin</item>
+        <item>Neresnica</item>
+        <item>Neuzina</item>
+        <item>Neštin</item>
+        <item>Nikinci</item>
+        <item>Nikolinci</item>
+        <item>Nikoličevo</item>
+        <item>Niš</item>
+        <item>Niševac</item>
+        <item>Niška Banja</item>
+        <item>Nova Crnja</item>
+        <item>Nova Crvenka</item>
+        <item>Nova Gajdobra</item>
+        <item>Nova Pazova</item>
+        <item>Nova Varoš</item>
+        <item>Novi Banovci</item>
+        <item>Novi Beograd</item>
+        <item>Novi Bečej</item>
+        <item>Novi Bračin</item>
+        <item>Novi Itebej</item>
+        <item>Novi Karlovci</item>
+        <item>Novi Kneževac</item>
+        <item>Novi Kozarci</item>
+        <item>Novi Kozjak</item>
+        <item>Novi Pazar</item>
+        <item>Novi Sad</item>
+        <item>Novi Slankamen</item>
+        <item>Novi Žednik</item>
+        <item>Novo Miloševo</item>
+        <item>Novo Orahovo</item>
+        <item>Novo Selo</item>
+        <item>Noćaj</item>
+        <item>Obrenovac</item>
+        <item>Obrež</item>
+        <item>Obrovac</item>
+        <item>Odžaci</item>
+        <item>Ogar</item>
+        <item>Omoljica</item>
+        <item>Oparić</item>
+        <item>Opovo</item>
+        <item>Orane</item>
+        <item>Orašac</item>
+        <item>Oreškovica</item>
+        <item>Orid</item>
+        <item>Orlovat</item>
+        <item>Orom</item>
+        <item>Osanica</item>
+        <item>Osečina</item>
+        <item>Osipaonica</item>
+        <item>Ostojićevo</item>
+        <item>Ostrovica</item>
+        <item>Ostružnica</item>
+        <item>Ovčar Banja</item>
+        <item>Oštrelj</item>
+        <item>Padej</item>
+        <item>Padež</item>
+        <item>Padina</item>
+        <item>Palilula</item>
+        <item>Palić</item>
+        <item>Pambukovica</item>
+        <item>Panonija</item>
+        <item>Pančevo</item>
+        <item>Parage</item>
+        <item>Paraćin</item>
+        <item>Parteš</item>
+        <item>Parunovac</item>
+        <item>Pasjane</item>
+        <item>Pavliš</item>
+        <item>Pačir</item>
+        <item>Pecka</item>
+        <item>Pejkovac</item>
+        <item>Pepeljevac</item>
+        <item>Perlez</item>
+        <item>Perućac</item>
+        <item>Petlovača</item>
+        <item>Petrovac</item>
+        <item>Petrovaradin</item>
+        <item>Pećinci</item>
+        <item>Pečenjevce</item>
+        <item>Pinosava</item>
+        <item>Pirot</item>
+        <item>Pivnice</item>
+        <item>Plana</item>
+        <item>Plandište</item>
+        <item>Platičevo</item>
+        <item>Plavna</item>
+        <item>Plažane</item>
+        <item>Plemetina</item>
+        <item>Pleš</item>
+        <item>Pločica</item>
+        <item>Pobeda</item>
+        <item>Podgorac</item>
+        <item>Podunavci</item>
+        <item>Podvis</item>
+        <item>Podvrška</item>
+        <item>Poganovo</item>
+        <item>Pojate</item>
+        <item>Poljana</item>
+        <item>Poljska Ržana</item>
+        <item>Popinci</item>
+        <item>Popovac</item>
+        <item>Popučke</item>
+        <item>Porodin</item>
+        <item>Potočac</item>
+        <item>Poćuta</item>
+        <item>Počekovina</item>
+        <item>Požarevac</item>
+        <item>Požega</item>
+        <item>Prahovo</item>
+        <item>Pranjani</item>
+        <item>Predejane</item>
+        <item>Prekonoga</item>
+        <item>Preljina</item>
+        <item>Prevešt</item>
+        <item>Preševo</item>
+        <item>Preševo-terminal</item>
+        <item>Prhovo</item>
+        <item>Priboj Vranjski</item>
+        <item>Priboj</item>
+        <item>Prigrevica</item>
+        <item>Prijepolje</item>
+        <item>Prilički Kiseljak</item>
+        <item>Prilužje</item>
+        <item>Privina Glava</item>
+        <item>Pričević</item>
+        <item>Prnjavor (Mačvanski)</item>
+        <item>Prokuplje</item>
+        <item>Prolom Banja</item>
+        <item>Provo</item>
+        <item>Pružatovac</item>
+        <item>Pukovac</item>
+        <item>Putinci</item>
+        <item>Rabrovo</item>
+        <item>Radalj</item>
+        <item>Radinac</item>
+        <item>Radičević</item>
+        <item>Radljevo</item>
+        <item>Radojevo</item>
+        <item>Radovnica</item>
+        <item>Radujevac</item>
+        <item>Rainovača</item>
+        <item>Rajković</item>
+        <item>Rakovac</item>
+        <item>Rakovica</item>
+        <item>Ralja</item>
+        <item>Ranilović</item>
+        <item>Ranilug</item>
+        <item>Ranovac</item>
+        <item>Rastina</item>
+        <item>Rataje</item>
+        <item>Ratari</item>
+        <item>Ratina</item>
+        <item>Ratkovo</item>
+        <item>Ravna Dubrava</item>
+        <item>Ravni Topolovac</item>
+        <item>Ravni</item>
+        <item>Ravnje</item>
+        <item>Ravno Selo</item>
+        <item>Razbojna</item>
+        <item>Razgojna</item>
+        <item>Rača Kragujevačka</item>
+        <item>Rača</item>
+        <item>Rašanac</item>
+        <item>Raševica</item>
+        <item>Raška</item>
+        <item>Ražana</item>
+        <item>Ražanj</item>
+        <item>Rekovac</item>
+        <item>Resavica</item>
+        <item>Resnik</item>
+        <item>Rgotina</item>
+        <item>Ribare</item>
+        <item>Ribari</item>
+        <item>Ribariće</item>
+        <item>Ribarska Banja</item>
+        <item>Ripanj</item>
+        <item>Ristovac</item>
+        <item>Riđica</item>
+        <item>Rogača</item>
+        <item>Rogačica</item>
+        <item>Roge</item>
+        <item>Rogljevo</item>
+        <item>Roćevići</item>
+        <item>Rožanstvo</item>
+        <item>Rudna Glava</item>
+        <item>Rudnica</item>
+        <item>Rudnik</item>
+        <item>Rudno</item>
+        <item>Rudovci</item>
+        <item>Ruma</item>
+        <item>Rumenka</item>
+        <item>Ruski Krstur</item>
+        <item>Rusko Selo</item>
+        <item>Rutevac</item>
+        <item>Rušanj</item>
+        <item>Sajan</item>
+        <item>Sakule</item>
+        <item>Salaš Noćajski</item>
+        <item>Salaš</item>
+        <item>Samaila</item>
+        <item>Samoš</item>
+        <item>Sanad</item>
+        <item>Saraorci</item>
+        <item>Sastav Reka</item>
+        <item>Sastavci</item>
+        <item>Savinac</item>
+        <item>Savino Selo</item>
+        <item>Savski venac</item>
+        <item>Sedlare</item>
+        <item>Sefkerin</item>
+        <item>Selenča</item>
+        <item>Seleuš</item>
+        <item>Selevac</item>
+        <item>Senje</item>
+        <item>Senjski Rudnik</item>
+        <item>Senta</item>
+        <item>Sevojno</item>
+        <item>Seča Reka</item>
+        <item>Sečanica</item>
+        <item>Sečanj</item>
+        <item>Sibač</item>
+        <item>Sijarinska Banja</item>
+        <item>Sikirica</item>
+        <item>Sikole</item>
+        <item>Silbaš</item>
+        <item>Siokovac</item>
+        <item>Sip</item>
+        <item>Sipić</item>
+        <item>Sirig</item>
+        <item>Sirogojno</item>
+        <item>Sirča</item>
+        <item>Sivac</item>
+        <item>Sićevo</item>
+        <item>Sjenica</item>
+        <item>Skela</item>
+        <item>Skobalj</item>
+        <item>Skorenovac</item>
+        <item>Slatina</item>
+        <item>Slavkovica</item>
+        <item>Slovac</item>
+        <item>Smederevo</item>
+        <item>Smederevska Palanka</item>
+        <item>Smilovci</item>
+        <item>Smoljinac</item>
+        <item>Sokobanja</item>
+        <item>Sombor</item>
+        <item>Sonta</item>
+        <item>Sopot</item>
+        <item>Sot</item>
+        <item>Sočanica</item>
+        <item>Srbobran</item>
+        <item>Srednjevo</item>
+        <item>Sremska Kamenica</item>
+        <item>Sremska Mitrovica</item>
+        <item>Sremska Rača</item>
+        <item>Sremski Karlovci</item>
+        <item>Sremski Mihaljevci</item>
+        <item>Sremčica</item>
+        <item>Srpska Crnja</item>
+        <item>Srpski Itebej</item>
+        <item>Srpski Krstur</item>
+        <item>Srpski Miletić</item>
+        <item>Stajićevo</item>
+        <item>Stalać</item>
+        <item>Stanišić</item>
+        <item>Stapar</item>
+        <item>Stara Moravica</item>
+        <item>Stara Pazova</item>
+        <item>Stari Banovci</item>
+        <item>Stari Lec</item>
+        <item>Stari Slankamen</item>
+        <item>Stari grad</item>
+        <item>Stari Žednik</item>
+        <item>Staro Selo</item>
+        <item>Starčevo</item>
+        <item>Stave</item>
+        <item>Stejanovci</item>
+        <item>Stenjevac</item>
+        <item>Stepanovićevo</item>
+        <item>Stepojevac</item>
+        <item>Stojnik</item>
+        <item>Stopanja</item>
+        <item>Stragari</item>
+        <item>Straža</item>
+        <item>Strelac</item>
+        <item>Stubal</item>
+        <item>Stubica</item>
+        <item>Stubline</item>
+        <item>Studenica</item>
+        <item>Subotica (kod Svijanca)</item>
+        <item>Subotica</item>
+        <item>Subotinac</item>
+        <item>Subotište</item>
+        <item>Sukovo</item>
+        <item>Sumrakovac</item>
+        <item>Supska</item>
+        <item>Surduk</item>
+        <item>Surdulica</item>
+        <item>Surčin</item>
+        <item>Susek</item>
+        <item>Sutjeska</item>
+        <item>Sveti Ilija</item>
+        <item>Svetozar Miletić</item>
+        <item>Svilajnac</item>
+        <item>Svileuva</item>
+        <item>Svilojevo</item>
+        <item>Svojnovo</item>
+        <item>Svođe</item>
+        <item>Svrljig</item>
+        <item>Takovo</item>
+        <item>Taraš</item>
+        <item>Tavankut</item>
+        <item>Tekeriš</item>
+        <item>Tekija</item>
+        <item>Telečka</item>
+        <item>Temerin</item>
+        <item>Temska</item>
+        <item>Tešica</item>
+        <item>Titel</item>
+        <item>Toba</item>
+        <item>Tomaševac</item>
+        <item>Tomislavci</item>
+        <item>Topola</item>
+        <item>Topolovnik</item>
+        <item>Toponica</item>
+        <item>Torak</item>
+        <item>Torda</item>
+        <item>Tornjoš</item>
+        <item>Totovo Selo</item>
+        <item>Tovariševo</item>
+        <item>Trbušani</item>
+        <item>Trešnjevac</item>
+        <item>Trešnjevica</item>
+        <item>Trgovište</item>
+        <item>Trnavci</item>
+        <item>Trnjane</item>
+        <item>Trstenik</item>
+        <item>Trupale</item>
+        <item>Tršić</item>
+        <item>Tulare</item>
+        <item>Turekovac</item>
+        <item>Turija</item>
+        <item>Tutin</item>
+        <item>Ub</item>
+        <item>Ugao</item>
+        <item>Ugrinovci</item>
+        <item>Uljma</item>
+        <item>Umka</item>
+        <item>Urovica</item>
+        <item>Utrine</item>
+        <item>Uzdin</item>
+        <item>Uzovnica</item>
+        <item>Ušće</item>
+        <item>Užice</item>
+        <item>Vajska</item>
+        <item>Valjevo</item>
+        <item>Varda</item>
+        <item>Varna</item>
+        <item>Varoš</item>
+        <item>Varvarin</item>
+        <item>Vasilj</item>
+        <item>Vatin</item>
+        <item>Vašica</item>
+        <item>Velebit</item>
+        <item>Velesnica</item>
+        <item>Velika Drenova</item>
+        <item>Velika Grabovnica</item>
+        <item>Velika Greda</item>
+        <item>Velika Ivanča</item>
+        <item>Velika Jasikova</item>
+        <item>Velika Krsna</item>
+        <item>Velika Lomnica</item>
+        <item>Velika Moštanica</item>
+        <item>Velika Plana</item>
+        <item>Velika Reka</item>
+        <item>Velika Vrbnica</item>
+        <item>Veliki Borak</item>
+        <item>Veliki Crljeni</item>
+        <item>Veliki Gaj</item>
+        <item>Veliki Izvor</item>
+        <item>Veliki Popović</item>
+        <item>Veliki Radinci</item>
+        <item>Veliki Trnovac</item>
+        <item>Veliki Šiljegovac</item>
+        <item>Veliko Bonjince</item>
+        <item>Veliko Gradište</item>
+        <item>Veliko Laole</item>
+        <item>Veliko Orašje</item>
+        <item>Veliko Središte</item>
+        <item>Venčane</item>
+        <item>Veternik</item>
+        <item>Vilovo</item>
+        <item>Vina</item>
+        <item>Vionica</item>
+        <item>Visočka Ržana</item>
+        <item>Vitanovac</item>
+        <item>Vitkovac</item>
+        <item>Vitoševac</item>
+        <item>Viča</item>
+        <item>Višnjevac</item>
+        <item>Višnjićevo</item>
+        <item>Vladimirci</item>
+        <item>Vladimirovac</item>
+        <item>Vladičin Han</item>
+        <item>Vlajkovac</item>
+        <item>Vlase</item>
+        <item>Vlasotince</item>
+        <item>Vlaška</item>
+        <item>Vodanj</item>
+        <item>Voganj</item>
+        <item>Vojka</item>
+        <item>Vojska</item>
+        <item>Vojvoda Stepa</item>
+        <item>Vojvodinci</item>
+        <item>Voluja</item>
+        <item>Voždovac</item>
+        <item>Vranić</item>
+        <item>Vranje</item>
+        <item>Vranjska Banja</item>
+        <item>Vranovo</item>
+        <item>Vratarnica</item>
+        <item>Vraćevšnica</item>
+        <item>Vračar</item>
+        <item>Vračev Gaj</item>
+        <item>Vražogrnac</item>
+        <item>Vrba</item>
+        <item>Vrbas</item>
+        <item>Vrbica</item>
+        <item>Vrbovac</item>
+        <item>Vrdnik</item>
+        <item>Vreoci</item>
+        <item>Vrhpolje</item>
+        <item>Vrmdža</item>
+        <item>Vrnjačka Banja</item>
+        <item>Vrnjci</item>
+        <item>Vrćenovica</item>
+        <item>Vršac</item>
+        <item>Vukovac</item>
+        <item>Vučje</item>
+        <item>Zablaće</item>
+        <item>Zabojnica</item>
+        <item>Zabrežje</item>
+        <item>Zagajica</item>
+        <item>Zajača</item>
+        <item>Zaječar</item>
+        <item>Zaplanjska Toponica</item>
+        <item>Zasavica</item>
+        <item>Zavlaka</item>
+        <item>Zdravinje</item>
+        <item>Zemun</item>
+        <item>Zlatibor</item>
+        <item>Zlatica</item>
+        <item>Zlodol</item>
+        <item>Zlot</item>
+        <item>Zmajevo</item>
+        <item>Zminjak</item>
+        <item>Zrenjanin</item>
+        <item>Zubin Potok</item>
+        <item>Zuce</item>
+        <item>Zvezdan</item>
+        <item>Zvezdara</item>
+        <item>Zvečan</item>
+        <item>Zvonce</item>
+        <item>Ćićevac</item>
+        <item>Ćuprija</item>
+        <item>Čajetina</item>
+        <item>Čalma</item>
+        <item>Čantavir</item>
+        <item>Čačak</item>
+        <item>Čelarevo</item>
+        <item>Čenej</item>
+        <item>Čenta</item>
+        <item>Čerević</item>
+        <item>Čestereg</item>
+        <item>Čečina</item>
+        <item>Čitluk</item>
+        <item>Čoka</item>
+        <item>Čonoplja</item>
+        <item>Čortanovci</item>
+        <item>Čukarica</item>
+        <item>Čukojevac</item>
+        <item>Čumić</item>
+        <item>Čurug</item>
+        <item>Đala</item>
+        <item>Đunis</item>
+        <item>Đurđevo</item>
+        <item>Đurđin</item>
+        <item>Šabac</item>
+        <item>Šajkaš</item>
+        <item>Šarbanovac</item>
+        <item>Šarbanovac-Timok</item>
+        <item>Šašinci</item>
+        <item>Šepšin</item>
+        <item>Šetonje</item>
+        <item>Šid</item>
+        <item>Šilovo</item>
+        <item>Šimanovci</item>
+        <item>Šljivovac</item>
+        <item>Šljivovica</item>
+        <item>Šljivovo</item>
+        <item>Štavalj</item>
+        <item>Štitar</item>
+        <item>Štitare</item>
+        <item>Štrpce</item>
+        <item>Štubik</item>
+        <item>Šupljak</item>
+        <item>Šurjan</item>
+        <item>Žabalj</item>
+        <item>Žabari</item>
+        <item>Žagubica</item>
+        <item>Željuše</item>
+        <item>Žirovnica</item>
+        <item>Žitište</item>
+        <item>Žitkovac</item>
+        <item>Žitni Potok</item>
+        <item>Žitorađa</item>
+        <item>Žiča</item>
+        <item>Žuč</item>
+    </string-array>
+</resources>

@@ -1,42 +1,46 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.EventPlanner" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:windowBackground">@color/background</item> <!-- Reference a color here -->
+<resources>
+
+    <style name="Theme.EventPlanner" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/background</item>
         <item name="colorPrimaryDark">@color/background</item>
-        <!-- Other theme properties here -->
-    </style>
-
-    <style name="Theme.EventPlanner" parent="Base.Theme.EventPlanner">
         <item name="buttonStyle">@style/CustomButtonStyle</item>
+        <item name="materialButtonStyle">@style/CustomButtonStyle</item>
+        <item name="textInputStyle">@style/CustomTextInputStyle</item>
     </style>
 
-    <style name="CustomButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">#745697</item>
-        <item name="android:textColor">#FFFFFF</item>
+    <style name="CustomButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:textColor">@color/text</item>
+        <item name="backgroundTint">@color/edge2</item>
         <item name="android:textAllCaps">false</item>
+        <item name="rippleColor">@color/edge2</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="CustomAccentButtonStyle" parent="CustomButtonStyle">
+        <item name="backgroundTint">@color/accent2</item>
+        <item name="rippleColor">@color/accent2</item>
     </style>
 
     <style name="NavigationItemTextStyle">
-        <item name="android:textSize">18sp</item> <!-- Set the desired text size -->
+        <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="CustomSecondaryButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/secondary_button</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <style name="CustomTextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox.Dense">
-        <!-- Fill color for the text input background -->
+    <style name="CustomTextInputStyle" parent="Widget.Material3.TextInputLayout.FilledBox.Dense">
         <item name="boxBackgroundColor">@color/on_surface_container_highest</item>
-
-        <!-- Outline color for focused state -->
         <item name="boxStrokeColor">?attr/colorOnSurfaceVariant</item>
-
-        <!-- Hint text color -->
-        <item name="hintTextColor">#745697</item>
-
-        <!-- Text color inside the input field -->
+        <item name="hintTextColor">@color/accent2</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="placeholderTextColor">@color/pale_text</item>
         <item name="android:textColor">@color/on_surface_container_highest</item>
+    </style>
+
+    <style name="CustomOutlinedTextInputStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="placeholderTextColor">@color/pale_text</item>
+        <item name="expandedHintEnabled">false</item>
     </style>
 </resources>
